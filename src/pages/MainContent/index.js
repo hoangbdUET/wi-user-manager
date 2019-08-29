@@ -9,8 +9,8 @@ function MainContent(props) {
 	let routes = props.routes;
 	return (<div className={"MainContent"}>
 		<Switch>
-			{routes.map((aRoute, idx) => <Route key={idx} path={aRoute.path} exact component={require("../" + aRoute.component)} />)}
-			<Redirect exact from={"/"} to={props.default} />
+			{routes.map((aRoute, idx) => <Route key={idx} path={aRoute.path} name={aRoute.path} component={require("../" + aRoute.component)} />)}
+			<Redirect exact from="/" to={props.default} />
 		</Switch>
 	</div>)
 }
