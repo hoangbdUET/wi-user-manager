@@ -1,6 +1,9 @@
 {
   "name": "wi-user-manager",
   "version": "0.0.1",
+  "scripts": {
+    "start:dev": "webpack-dev-server --mode development --hot --inline --content-base=dist --history-api-fallback"
+  },
   "devDependencies": {
     "@babel/core": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
@@ -13,7 +16,8 @@
     "less-loader": "^5.0.0",
     "style-loader": "^1.0.0",
     "webpack": "^4.39.3",
-    "webpack-cli": "^3.3.7"
+    "webpack-cli": "^3.3.7",
+    "webpack-dev-server": "^3.8.0"
   },
   "dependencies": {
     "react": "^16.9.0",
