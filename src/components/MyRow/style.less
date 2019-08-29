@@ -1,0 +1,16 @@
+.MyRow {
+    display: flex;
+
+    & > div {
+        flex: 1;
+    }
+    padding: 6px 0;
+    user-select: none;
+    color: black;
+    background-color: transparent;
+
+    &.row-selected, .row-selected {
+        color: blue;
+        background-color: #eee;
+    }
+}
