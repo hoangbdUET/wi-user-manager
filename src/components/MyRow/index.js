@@ -13,7 +13,7 @@ function MyRow(props) {
             onClick={props.onClick} style={selectStyle}>
 		    {
                 props.cells.map((cell, idx) => (
-                    props.isHeader?(<div key={idx}>
+                    props.isHeader?(<div key={idx} onClick={(e) => props.onCellClicked(idx, cell)}>
                         {cell}
                         <div className="resizer"></div>
                     </div>):(<div key={idx}>

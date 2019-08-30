@@ -3,8 +3,10 @@
 
     & > div {
         flex: 1;
+        border-right: 1px solid #ccc;
+        padding: 6px;
     }
-    padding: 6px 0;
+    //padding: 6px;
     user-select: none;
     color: black;
     background-color: transparent;
@@ -12,5 +14,19 @@
     &.row-selected, .row-selected {
         color: blue;
         background-color: #eee;
+    }
+    &.row-header {
+        font-weight: 700;
+        border-bottom: 1px solid #ccc;
+        & > div {
+            padding-right: 0px;
+        }
+        .resizer {
+            width: 2px;
+            height: 100%;
+            background-color: #ccc;
+            cursor: ew-resize;
+            float:right;
+        }
     }
 }
