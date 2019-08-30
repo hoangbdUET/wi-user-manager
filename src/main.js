@@ -7,7 +7,7 @@ const Router = ReactRouter.BrowserRouter;
 const LeftNavigation = require('./pages/LeftNavigation');
 const MainContent = require('./pages/MainContent');
 console.log('main');
-
+require("./reset.css");
 const containerElem = document.getElementById('react-app');
 // ReactDOM.render(<Fragment><HelloWorld name="Hoang"/><GoodbyeWorld name="HoangBD"/></Fragment>, containerElem);
 ReactDOM.render((
