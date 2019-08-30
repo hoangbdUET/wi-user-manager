@@ -14,6 +14,9 @@ function MyList(props) {
 		searchStr: searchStr,
 		items: props.items || []
 	};
+
+    updateItems.call(this);
+
 	this.handleNextClick = handleNextClick.bind(this);
 
 	function handleNextClick(e) {
@@ -86,16 +89,27 @@ function MyList(props) {
 			<button onClick={this.handlePrevClick}>Previous</button>
 			<button onClick={this.handleNextClick}>Next</button>
 			<button onClick={this.updateItems}>Refresh</button>
-			<div>{items
-				.filter((item) => JSON.stringify(item).toLowerCase().includes(this.state.searchStr.toLowerCase()))
-				.filter((item, idx) => (idx >= this.state.startAt && idx < this.state.startAt + this.state.itemPerPage))
-				.map((item, idx) => (
+			<div>
+                <RowCompany onClick={(e) => {}} idx={undefined} selected={false} 
+                    item={{name:"Name", location: "Location", licenses:"Licenses", description:"Description"}}
+                    isHeader={true} />
+                <div>
+                {
+                    items.filter((item) => {
+                        let str = JSON.stringify(item).toLowerCase();
+                        console.log(str);
+                        return str.includes(this.state.searchStr.toLowerCase());
+                    })
+                    .filter((item, idx) => (idx >= this.state.startAt && idx < this.state.startAt + this.state.itemPerPage))
+                    .map((item, idx) => (
 
-					<RowCompany onClick={(e) => this.handleRowClick(item)}
-						key={idx + this.state.startAt}
-						idx={idx + this.state.startAt} item={item}
-						selected={this.state.selectedItem === item}/>
-				))}
+                        <RowCompany onClick={(e) => this.handleRowClick(item)}
+                            key={idx + this.state.startAt}
+                            idx={idx + this.state.startAt} item={item}
+                            selected={this.state.selectedItem === item}/>
+                    ))
+                }
+                </div>
 			</div>
 		</div>
 	}

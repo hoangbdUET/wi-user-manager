@@ -7,7 +7,20 @@ function MyRow(props) {
 		color: props.selected ? "blue" : "black"
 	};
 	const selectedClass = props.selected? "row-selected" : "";
-	return (<div className={"MyRow " + selectedClass} onClick={props.onClick} style={selectStyle}>
-		{props.cells.map((cell, idx) => (<div key={idx}>{cell}</div>))}
-	</div>)
+    const headerClass = props.isHeader? "row-header" : "";
+	return (
+        <div className={"MyRow " + selectedClass + headerClass} 
+            onClick={props.onClick} style={selectStyle}>
+		    {
+                props.cells.map((cell, idx) => (
+                    props.isHeader?(<div key={idx}>
+                        {cell}
+                        <div className="resizer"></div>
+                    </div>):(<div key={idx}>
+                        {cell}
+                    </div>)
+                ))
+            }
+	    </div>
+    )
 }
