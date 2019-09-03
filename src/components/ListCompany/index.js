@@ -3,29 +3,12 @@ require('./style.less');
 const React = require('react');
 const MyList = require('../MyList');
 const RowCompany = require("../RowCompany");
-const apiClient = require("../../services/apiClient");
 function ListCompany(props) {
 	MyList.call(this, props);
-	// this.updateItems = updateItems.bind(this);
-	// function updateItems() {
-	// 	apiClient.getCompaniesPromise().then((content) => {
-	// 		console.log(content);
-	// 		this.setState({
-	// 			items: content
-	// 		});
-	// 	}).catch(e => {
-	// 		console.error(e);
-	// 	});
-	// }
 	this.state = Object.assign(this.state, {
-		orderByText: ""
-	})
-	this.onHeaderClicked = onHeaderClicked.bind(this);
-	function onHeaderClicked(headerIdx, headerText) {
-		this.setState({
-			orderByText: headerText
-		});
-	}
+		orderByText: "",
+        colWidths: [100, 150, 150, 150, 150]
+	});
 	let supperRender = this.render;
 	this.render = function() {
 		let items = this.props.items;
@@ -37,29 +20,19 @@ function ListCompany(props) {
 				flex: 1
 			}}>
 				<RowCompany onClick={(e) => {}} idx={undefined} selected={false}
-				            item={headerObj}
-				            isHeader={true} onCellClicked={this.onHeaderClicked}/>
-				<div>
-					{
-						items.filter((item) => {
-							let str = JSON.stringify(item).toLowerCase();
-							console.log(str);
-							return str.includes(this.state.searchStr.toLowerCase());
-						})
-							.sort((a, b) => {
-								let key = this.state.orderByText.toLowerCase();
-								return ("" + a[key]).localeCompare("" + b[key]);
-							})
-							.filter((item, idx) => (idx >= this.state.startAt && idx < this.state.startAt + this.state.itemPerPage))
-							.map((item, idx) => (
-
-								<RowCompany onClick={(e) => this.handleRowClick(item)}
-								            key={idx + this.state.startAt}
-								            idx={idx + this.state.startAt} item={item}
-								            selected={this.state.selectedItem === item}/>
-							))
-					}
-				</div>
+                    item={headerObj}
+                    colWidths={this.state.colWidths}
+                    onColWidthChanged={this.changeColWidth}
+                    isHeader={true} onCellClicked={this.onHeaderClicked}/>
+				<div> {
+                    this.filterAndSort(items).map((item, idx) => (
+                        <RowCompany onClick={(e) => this.handleRowClick(item)}
+                                    key={idx + this.state.startAt}
+                                    idx={idx + this.state.startAt} item={item}
+                                    colWidths={this.state.colWidths}
+                                    selected={this.state.selectedItem === item}/>
+                    ))
+                }</div>
 			</div>
 		</div>)
 	}

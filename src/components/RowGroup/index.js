@@ -1,17 +1,16 @@
-module.exports = RowCompany;
+module.exports = RowGroup;
 require('./style.less');
 const React = require('react');
 const MyRow = require('../MyRow');
-function RowCompany(props) {
+function RowGroup(props) {
 	let idx = props.idx + 1;
 	return (
-		<MyRow className="RowCompany" onClick={props.onClick}
+		<MyRow className="RowGroup" onClick={props.onClick}
 	        cells={[
                 isNaN(idx)?"":idx, 
                 props.item.name, 
-                props.item.location, 
-                props.item.licenses, 
-                props.item.description
+                props.item.description,
+                props.item.company 
             ]}
             colWidths={props.colWidths}
             onColWidthChanged={props.onColWidthChanged}

@@ -2,18 +2,24 @@ module.exports = MyList;
 const React = require('react');
 require('./style.less');
 const RowCompany = require('../RowCompany');
+const PropTypes = require('prop-types');
 const apiClient = require('../../services/apiClient');
 
+MyList.propTypes = {
+    itemPerPage: PropTypes.number,
+    startAt: PropTypes.number,
+    searchStr: PropTypes.string,
+    actions: PropTypes.array
+}
 function MyList(props) {
 	React.Component.call(this, props);
+    const MIN_WIDTH = 60;
 	let searchStr = props.searchStr || "";
 	this.state = {
 		startAt: props.startAt || 0,
 		selectedItem: null,
 		itemPerPage: props.itemPerPage || 5,
 		searchStr: searchStr,
-		// items: props.items || [],
-		refresh: props.refresh || 0
 	};
 
     //
@@ -24,7 +30,7 @@ function MyList(props) {
 		this.setState((state) => {
 			let newStartAt = state.startAt + this.state.itemPerPage;
 			return {
-				startAt: newStartAt > this.state.items.length ? this.state.startAt : newStartAt
+				startAt: newStartAt > this.props.items.length ? this.state.startAt : newStartAt
 			}
 		});
 	}
@@ -65,10 +71,45 @@ function MyList(props) {
 		});
 	}
 
+    this.filterAndSort = filterAndSort.bind(this);
+    function filterAndSort(items) {
+        return items.filter((item) => {
+            let str = JSON.stringify(item).toLowerCase();
+            return str.includes(this.state.searchStr.toLowerCase());
+        }).sort((a, b) => {
+            let key = this.state.orderByText.toLowerCase();
+            return ("" + a[key]).localeCompare("" + b[key]);
+        }).filter((item, idx) => (
+            idx >= this.state.startAt && idx < this.state.startAt + this.state.itemPerPage
+        ));
+    }
 	// this.updateItems = updateItems.bind(this);
 	// function updateItems() {
 	// 	console.error("This is abstract");
 	// }
+
+    this.changeColWidth = changeColWidth.bind(this);
+    function changeColWidth(idx, width) {
+        this.setState(state => {
+            let colWidths = state.colWidths;
+            let offset = width - colWidths[idx];
+            let nextColWidth = colWidths[idx+1] - offset;
+            if (width > MIN_WIDTH && nextColWidth > MIN_WIDTH) {
+                colWidths[idx] = width;
+                colWidths[idx+1] = nextColWidth;
+            }
+            return {
+                colWidths: colWidths
+            }
+        });
+    }
+
+	this.onHeaderClicked = onHeaderClicked.bind(this);
+	function onHeaderClicked(headerIdx, headerText) {
+		this.setState({
+			orderByText: headerText
+		});
+	}
 
 	this.render = function () {
 		return (<div>
@@ -84,7 +125,11 @@ function MyList(props) {
 			<div className={"custom-actions"}>
 				{
 					this.props.actions && this.props.actions.map(
-						(action, idx) => (<button key={idx} onClick={(e) => action.handler(this.state.selectedItem)}>{action.label || action.title || action.name}</button>)
+						(action, idx) => (
+                            <button key={idx} onClick={(e) => action.handler(this.state.selectedItem)}>
+                                {action.label || action.title || action.name}
+                            </button>
+                        )
 					)
 				}
 			</div>

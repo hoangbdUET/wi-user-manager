@@ -2,9 +2,10 @@
     display: flex;
 
     & > div {
-        flex: 1;
+        //flex: 1;
         border-right: 1px solid #ccc;
         padding: 6px;
+        box-sizing: border-box;
     }
     //padding: 6px;
     user-select: none;
@@ -21,10 +22,15 @@
         & > div {
             padding-right: 0px;
         }
+        .cell-content{
+            float:left;
+            min-width: 50px;
+            min-height: 1em;
+        }
         .resizer {
             width: 2px;
             height: 100%;
-            background-color: #ccc;
+            background-color: red;
             cursor: ew-resize;
             float:right;
         }

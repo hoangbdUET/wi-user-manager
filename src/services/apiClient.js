@@ -1,9 +1,14 @@
 module.exports = {
-	getCompaniesPromise: getCompaniesPromise,
-	deleteCompanyPromise: deleteCompanyPromise
+	getCompaniesPromise,
+	deleteCompanyPromise,
+    addCompanyPromise,
+    editCompanyPromise,
+    getGroupsPromise,
+    deleteGroupPromise
 }
 
-const WI_AUTH_URL = "http://127.0.0.1:2999";
+//const WI_AUTH_URL = "https://users.i2g.cloud";
+const WI_AUTH_URL = "http://admin.dev.i2g.cloud";
 function doPost(url, params, token) {
 	return new Promise((resolve, reject) => {
 		fetch(WI_AUTH_URL + url, {
@@ -29,4 +34,16 @@ function getCompaniesPromise() {
 }
 function deleteCompanyPromise(idCompany) {
 	return doPost('/company/delete', {idCompany});
+}
+function addCompanyPromise(company) {
+    return doPost('/company/new', company);
+}
+function editCompanyPromise(company) {
+    return doPost('/company/edit', company);
+}
+function getGroupsPromise() {
+    return doPost('/group/list', {});
+}
+function deleteGroupPromise(idGroup) {
+    return doPost('/group/delete', {idGroup});
 }
