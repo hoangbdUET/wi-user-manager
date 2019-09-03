@@ -4,7 +4,10 @@ module.exports = {
     addCompanyPromise,
     editCompanyPromise,
     getGroupsPromise,
-    deleteGroupPromise
+	addGroupPromise,
+    deleteGroupPromise,
+	editGroupPromise,
+	getUsersPromise,
 }
 
 //const WI_AUTH_URL = "https://users.i2g.cloud";
@@ -44,6 +47,15 @@ function editCompanyPromise(company) {
 function getGroupsPromise() {
     return doPost('/group/list', {});
 }
+function addGroupPromise(group) {
+	return doPost('/group/new', group);
+}
 function deleteGroupPromise(idGroup) {
     return doPost('/group/delete', {idGroup});
+}
+function editGroupPromise(group) {
+	return doPost('/group/edit', group);
+}
+function getUsersPromise() {
+	return doPost('/user/list', {});
 }

@@ -1,12 +1,13 @@
 module.exports = DropDown;
 const React = require('react');
 require('./style.less');
-const VList = require('../vlist');
+const VList = require('../VList');
 function DropDown(props) {
     React.Component.call(this, props);
     this.state = {
         selectedItem: props.selectedItem || null,
         items: props.items || [],
+	    disabled: props.disabled,
         searchStr: "",
         showList: false
     }
@@ -43,15 +44,19 @@ function DropDown(props) {
             selectedItem: clickedItem,
             showList: false
         });
+        this.props.onItemClicked && this.props.onItemClicked(clickedItem);
     }
     this.render = function() {
         return (<div className="DropDown">
             <div className={this.state.showList?"hidden-block":""}
-                onClick={() => this.setState({showList:true}) }>{formatter(this.state.selectedItem)}</div>
+                onClick={() => {
+                	if (this.state.disabled) return;
+                	this.setState({showList:true});
+                } }>{formatter(this.state.selectedItem)}</div>
             <input className={this.state.showList?"":"hidden-block"} 
                 type="text" value={this.state.searchStr} onChange={this.handleSearchStrChanged} />
-            <div style={{display:'block',height: '200px'}} className={this.state.showList?"":"hidden-block"}>
-                <VList getItem={this.props.getItem} 
+            <div style={{display:'block',height: '200px', position:'absolute'}} className={this.state.showList?"":"hidden-block"}>
+                <VList getItem={this.props.getItem}
                     getRawItem={this.getRawItem} 
                     onItemClicked={this.onItemClicked} 
                     totalItems={() => this.state.items.length} itemHeight={this.props.itemHeight}/>

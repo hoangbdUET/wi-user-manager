@@ -6,7 +6,8 @@ Editable.propTypes = {
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     formatValue: PropTypes.func,
     setValue: PropTypes.func,
-    onValueChanged: PropTypes.func
+    onValueChanged: PropTypes.func,
+	disabled: PropTypes.bool
 }
 function Editable(props) {
     React.Component.call(this, props);
@@ -20,6 +21,7 @@ function Editable(props) {
     this.textInput = React.createRef();
     this.handleChange = handleChange.bind(this);
     function handleChange(e) {
+    	if (this.props.disabled) return;
         this.setState({
             value:e.target.value
         });
@@ -27,12 +29,14 @@ function Editable(props) {
 
     this.handleSubmit = handleSubmit.bind(this);
     function handleSubmit(event) {
+	    if (this.props.disabled) return;
         event.preventDefault();
         this.textInput.current.blur();
     }
     
     this.handleBlur = handleBlur.bind(this);
     function handleBlur(event) {
+	    if (this.props.disabled) return;
         event.preventDefault();
         this.setState((state) => {
             let setter = this.props.setValue || function(v) { return v; }
@@ -49,6 +53,7 @@ function Editable(props) {
 
     this.handleClick = handleClick.bind(this);
     function handleClick() {
+	    if (this.props.disabled) return;
         this.setState({editing:true});
         setTimeout(() => {
             this.textInput.current.focus();

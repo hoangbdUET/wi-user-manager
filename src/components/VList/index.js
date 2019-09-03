@@ -29,7 +29,7 @@ function VListItem(props) {
         return <div onClick={this.handleClick} style={{
             cursor: 'pointer',
             transform: `translateY(${this.props.offset}px)`
-        }} className={this.props.item.selected?"selectedRow":""}>{this.props.children}</div>;
+        }} className={(this.props.item || {}).selected?"selectedRow":""}>{this.props.children}</div>;
     }
 }
 VListItem.prototype = Object.create(React.Component.prototype);
@@ -42,10 +42,8 @@ function VList(props) {
         totalItems: props.totalItems || 1000,
         itemHeight: props.itemHeight || 18
     }
-    this.startIdx = 0;
-    this.viewLength = 10;
     this.scrollContainer = React.createRef();
-    function defaultGetItem(item){
+    function defaultGetItem(item) {
         return item.index;
     }
 
@@ -110,7 +108,7 @@ function VList(props) {
                     width: '100%',
                     height: this.state.itemHeight * evaluate(this.state.totalItems)
                 }}>
-                    {this.getItems(this.state.startAt, this.state.viewLength)}
+                    {this.getItems(this.state.startAt, Math.min(this.state.viewLength, evaluate(this.state.totalItems)))}
                 </div>
             </div>
         )
