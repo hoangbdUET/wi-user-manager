@@ -109,29 +109,29 @@ function MyList(props) {
         });
     }
 
-    this.onHeaderClicked = onHeaderClicked.bind(this);
+	this.onHeaderClicked = onHeaderClicked.bind(this);
+	function onHeaderClicked(headerIdx, headerText) {
+		this.setState({
+			orderByText: headerText
+		});
+	}
 
-    function onHeaderClicked(headerIdx, headerText) {
-        this.setState({
-            orderByText: headerText
-        });
-    }
-
-    this.render = function () {
-        return (<div>
-            <select onChange={this.handleItemPerPageChanged}>
-                <option value={5}>5</option>
-                <option value={10}>10</option>
-                <option value={20}>20</option>
-                <option value={30}>30</option>
-            </select>
-            <input type={"text"} value={this.state.searchStr} onChange={this.handleSearchStrChanged}/>
-            <button onClick={this.handlePrevClick}>Previous</button>
-            <button onClick={this.handleNextClick}>Next</button>
-            <div className={"custom-actions"}>
-                {
-                    this.props.actions && this.props.actions.map(
-                        (action, idx) => (
+	this.render = function () {
+		return (
+		<div className={"setting"}>
+			<select onChange={this.handleItemPerPageChanged}>
+				<option value={5}>5</option>
+				<option value={10}>10</option>
+				<option value={20}>20</option>
+				<option value={30}>30</option>
+			</select>
+			<input type={"text"} value={this.state.searchStr} onChange={this.handleSearchStrChanged} />
+			<button onClick={this.handlePrevClick}>Previous</button>
+			<button onClick={this.handleNextClick}>Next</button>
+			<div className={"custom-actions"}>
+				{
+					this.props.actions && this.props.actions.map(
+						(action, idx) => (
                             <button key={idx} onClick={(e) => action.handler(this.state.selectedItem)}>
                                 {action.label || action.title || action.name}
                             </button>

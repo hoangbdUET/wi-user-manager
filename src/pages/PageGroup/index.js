@@ -108,6 +108,7 @@ function PageGroup(props) {
 
     this.render = function () {
         return (<div className="PageGroup">
+
             <ListGroup itemPerPage={50} actions={[{
                 name: "Add",
                 handler: (selectedGroup) => {
