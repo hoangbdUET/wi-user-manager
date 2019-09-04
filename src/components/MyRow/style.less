@@ -7,6 +7,7 @@
         padding: 6px;
         box-sizing: border-box;
     }
+
     //padding: 6px;
     user-select: none;
     color: black;
@@ -16,23 +17,27 @@
         color: blue;
         background-color: #eee;
     }
+
     &.row-header {
         font-weight: 700;
         border-bottom: 1px solid #ccc;
+
         & > div {
             padding-right: 0px;
         }
-        .cell-content{
-            float:left;
+
+        .cell-content {
+            float: left;
             min-width: 50px;
             min-height: 1em;
         }
+
         .resizer {
             width: 2px;
             height: 100%;
             background-color: red;
             cursor: ew-resize;
-            float:right;
+            float: right;
         }
     }
 }

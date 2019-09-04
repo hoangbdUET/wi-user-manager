@@ -7,12 +7,15 @@ Editable.propTypes = {
     formatValue: PropTypes.func,
     setValue: PropTypes.func,
     onValueChanged: PropTypes.func,
-	disabled: PropTypes.bool
+    disabled: PropTypes.bool
 }
+
 function Editable(props) {
     React.Component.call(this, props);
     let value = props.value;
-    let formatter = this.props.formatValue || function(v) { return v; };
+    let formatter = this.props.formatValue || function (v) {
+        return v;
+    };
     this.state = {
         editing: false,
         value: value,
@@ -20,31 +23,36 @@ function Editable(props) {
     }
     this.textInput = React.createRef();
     this.handleChange = handleChange.bind(this);
+
     function handleChange(e) {
-    	if (this.props.disabled) return;
+        if (this.props.disabled) return;
         this.setState({
-            value:e.target.value
+            value: e.target.value
         });
     }
 
     this.handleSubmit = handleSubmit.bind(this);
+
     function handleSubmit(event) {
-	    if (this.props.disabled) return;
+        if (this.props.disabled) return;
         event.preventDefault();
         this.textInput.current.blur();
     }
-    
+
     this.handleBlur = handleBlur.bind(this);
+
     function handleBlur(event) {
-	    if (this.props.disabled) return;
+        if (this.props.disabled) return;
         event.preventDefault();
         this.setState((state) => {
-            let setter = this.props.setValue || function(v) { return v; }
+            let setter = this.props.setValue || function (v) {
+                return v;
+            }
             let newVal = setter(state.value);
             if (newVal != state.originValue)
                 this.props.onValueChanged && this.props.onValueChanged(newVal);
             return {
-                editing:false,
+                editing: false,
                 originValue: newVal,
                 value: newVal
             }
@@ -52,15 +60,16 @@ function Editable(props) {
     }
 
     this.handleClick = handleClick.bind(this);
+
     function handleClick() {
-	    if (this.props.disabled) return;
-        this.setState({editing:true});
+        if (this.props.disabled) return;
+        this.setState({editing: true});
         setTimeout(() => {
             this.textInput.current.focus();
-        },500);
+        }, 500);
     }
 
-    this.render = function() {
+    this.render = function () {
         const commonStyle = {
             width: '100%',
             height: '100%'
@@ -74,17 +83,17 @@ function Editable(props) {
         }, commonStyle);
         const jsxElem = (
             <div className="Editable">
-                <div style={this.state.editing?hiddenStyle:visibleStyle} tabIndex={0} onFocus={this.handleClick}
-                    onClick={this.handleClick}>
-                    {this.state.value || formatter("" + (this.state.value=== null || this.state.value === undefined)?"":this.state.value)}
+                <div style={this.state.editing ? hiddenStyle : visibleStyle} tabIndex={0} onFocus={this.handleClick}
+                     onClick={this.handleClick}>
+                    {this.state.value || formatter("" + (this.state.value === null || this.state.value === undefined) ? "" : this.state.value)}
                 </div>
-                    
-                <form style={this.state.editing?visibleStyle:hiddenStyle} 
-                    onSubmit={this.handleSubmit}>
-                    <input type="text" value={this.state.value} 
-                        ref={this.textInput}
-                        onChange={this.handleChange} 
-                        onBlur={this.handleBlur}/>
+
+                <form style={this.state.editing ? visibleStyle : hiddenStyle}
+                      onSubmit={this.handleSubmit}>
+                    <input type="text" value={this.state.value}
+                           ref={this.textInput}
+                           onChange={this.handleChange}
+                           onBlur={this.handleBlur}/>
                 </form>
             </div>
         )

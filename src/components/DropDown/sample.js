@@ -6,44 +6,49 @@ const elem = document.querySelector('.react-holder');
 
 function App() {
     React.Component.call(this);
-    this.state={
-        students:[]
+    this.state = {
+        students: []
     }
     for (let i = 0; i < 10000; i++)
         this.state.students.push({name: 'Student ' + i, age: 22});
+
     function getStudent(student) {
         return (
             <div style={{
-                    height: 18, 
-                    display:'flex'
-                }}>
+                height: 18,
+                display: 'flex'
+            }}>
                 {
-                    student?(<Fragment>
+                    student ? (<Fragment>
                         <div style={{flex: 1}}>{student.name}</div>
                         <div style={{flex: 1}}>{student.age}</div>
-                    </Fragment>):"[Select item]"
+                    </Fragment>) : "[Select item]"
                 }
             </div>
         )
     }
+
     function formatStudent(student) {
         return (
             <div style={{
-                    height: 18, 
-                    display:'flex'
-                }}>
+                height: 18,
+                display: 'flex'
+            }}>
                 {
-                    student?(<Fragment>
+                    student ? (<Fragment>
                         <div style={{flex: 1}}>{student.name}</div>
-                    </Fragment>):"[Select item]"
+                    </Fragment>) : "[Select item]"
                 }
             </div>
         )
     }
-    this.render = function(){
-        return (<DropDown formatItem={formatStudent} getItem={getStudent.bind(this)} items={this.state.students} itemHeight={18} />)
+
+    this.render = function () {
+        return (<DropDown formatItem={formatStudent} getItem={getStudent.bind(this)} items={this.state.students}
+                          itemHeight={18}/>)
     }
 }
+
 App.prototype = Object.create(React.Component.prototype);
-ReactDOM.render( <App />, elem );
+ReactDOM.render(<App/>, elem);
 

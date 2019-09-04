@@ -15,6 +15,7 @@ function PageCompany() {
     };
     listCompany.call(this);
     this.startAddCompany = startAddCompany.bind(this);
+
     function startAddCompany(selectedCompany) {
         this.setState({
             isAddingCompany: true
@@ -22,20 +23,22 @@ function PageCompany() {
     }
 
     this.addCompany = addCompany.bind(this);
+
     function addCompany(company) {
         api.addCompanyPromise(company).then(company => {
-            toast(`Company ${company.name} is created`, {type:'info'});
+            toast(`Company ${company.name} is created`, {type: 'info'});
             this.setState(state => {
                 state.items.push(company);
                 return {
                     items: state.items,
                     isAddingCompany: false
                 }
-            }); 
+            });
         }).catch(error => console.error(error));
     }
 
     this.startDeleteCompany = startDeleteCompany.bind(this);
+
     function startDeleteCompany(selectedCompany) {
         this.setState({
             isDeletingCompany: true,
@@ -44,10 +47,11 @@ function PageCompany() {
     }
 
     this.deleteCompany = deleteCompany.bind(this);
+
     function deleteCompany(selectedCompany) {
         console.log("delete company", selectedCompany);
         api.deleteCompanyPromise(selectedCompany.idCompany).then((deletedCompany) => {
-            toast(`Company ${deletedCompany.name} is deleted`, {type:'info'});
+            toast(`Company ${deletedCompany.name} is deleted`, {type: 'info'});
             this.setState(state => {
                 let companies = state.items;
                 let idx = companies.findIndex(c => c.idCompany === deletedCompany.idCompany);
@@ -59,13 +63,15 @@ function PageCompany() {
             });
         }).catch(e => console.error(e));
     }
+
     function listCompany(selectedCompany) {
         api.getCompaniesPromise().then((companies) => {
             this.setState({items: companies})
         }).catch();
     }
-    
+
     this.startEditCompany = startEditCompany.bind(this);
+
     function startEditCompany(selectedCompany) {
         this.setState({
             isEditingCompany: true,
@@ -74,9 +80,11 @@ function PageCompany() {
     }
 
     this.editCompany = editCompany.bind(this);
+
     function editCompany(company) {
         api.editCompanyPromise(company).then(company => {
-            toast(<span>Company <strong style={{color: 'yellow'}}>{company.name}</strong> is updated</span>, {type:'info'});
+            toast(<span>Company <strong
+                style={{color: 'yellow'}}>{company.name}</strong> is updated</span>, {type: 'info'});
             this.setState(state => {
                 let idx = state.items.findIndex(c => c.idCompany === company.idCompany);
                 state.items.splice(idx, 1, company);
@@ -88,26 +96,27 @@ function PageCompany() {
         }).catch(e => console.error(e))
     }
 
-    this.render = function() {
+    this.render = function () {
         return <div className={"PageCompany"}>
             <ListCompany itemPerPage={5} actions={[{
                 name: "Add", handler: startAddCompany.bind(this)
-            },{
+            }, {
                 name: "Delete", handler: this.startDeleteCompany
-            },{
+            }, {
                 name: "Edit", handler: this.startEditCompany
             }, {
                 name: "Refresh", handler: listCompany.bind(this)
-            }]} items={this.state.items} />
+            }]} items={this.state.items}/>
             <CompanyInfoModal isOpen={this.state.isAddingCompany}
-                onOk={this.addCompany} onCancel={(e) => this.setState({isAddingCompany:false})} />
+                              onOk={this.addCompany} onCancel={(e) => this.setState({isAddingCompany: false})}/>
             <CompanyInfoModal isOpen={this.state.isEditingCompany} company={this.state.selectedCompany}
-                onOk={this.editCompany} onCancel={(e) => this.setState({isEditingCompany:false})} />
+                              onOk={this.editCompany} onCancel={(e) => this.setState({isEditingCompany: false})}/>
             <ConfirmationModal isOpen={this.state.isDeletingCompany} title="Confirmation"
-                message="Are you sure to delete selected company?"
-                onCancel={() => this.setState({isDeletingCompany:false})}
-                onOk={() => this.deleteCompany(this.state.selectedCompany)} />
+                               message="Are you sure to delete selected company?"
+                               onCancel={() => this.setState({isDeletingCompany: false})}
+                               onOk={() => this.deleteCompany(this.state.selectedCompany)}/>
         </div>
     }
 }
+
 PageCompany.prototype = Object.create(React.Component.prototype);

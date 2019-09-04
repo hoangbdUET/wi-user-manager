@@ -13,20 +13,23 @@ MyRow.propTypes = {
     colWidths: PropTypes.array,
     onColWidthChanged: PropTypes.func
 }
+
 function MyRow(props) {
     const selectStyle = {
         color: props.selected ? "blue" : "black"
     };
-    const selectedClass = props.selected? "row-selected" : "";
-    const headerClass = props.isHeader? "row-header" : "";
+    const selectedClass = props.selected ? "row-selected" : "";
+    const headerClass = props.isHeader ? "row-header" : "";
 
     let colWidths = props.colWidths || [];
     let starts = [];
     let ends = [];
+
     function dragStart(e, data, idx) {
         console.log('Start', idx, data);
         starts[idx] = data.lastX;
     }
+
     function dragEnd(e, data, idx) {
         console.log('end', idx, data);
         ends[idx] = data.lastX;
@@ -35,33 +38,34 @@ function MyRow(props) {
         width += offset;
         props.onColWidthChanged && props.onColWidthChanged(idx, width);
     }
+
     let headerCell = (cell, idx, len) => (
-        idx < len - 1?(
-            <div key={idx} style={colWidths[idx]?{width: colWidths[idx]}:{flex:1}}>
+        idx < len - 1 ? (
+            <div key={idx} style={colWidths[idx] ? {width: colWidths[idx]} : {flex: 1}}>
                 <div className="cell-content" onClick={(e) => props.onCellClicked(idx, cell)}>{cell}</div>
                 <DraggableCore handle=".resizer" axis="x"
-                    onStart={(e, data) => (dragStart(e, data, idx))}
-                    onStop={(e, data) => (dragEnd(e, data, idx))}>
+                               onStart={(e, data) => (dragStart(e, data, idx))}
+                               onStop={(e, data) => (dragEnd(e, data, idx))}>
                     <div className="resizer"></div>
                 </DraggableCore>
             </div>
-        ): (
-            <div key={idx} style={{flex:1}}>
+        ) : (
+            <div key={idx} style={{flex: 1}}>
                 <div className="cell-content" onClick={(e) => props.onCellClicked(idx, cell)}>{cell}</div>
             </div>
         )
     )
     let typicalCell = (cell, idx, len) => (
-        <div key={idx} style={colWidths[idx] && idx < len - 1?{width: colWidths[idx]}:{flex:1}}>
+        <div key={idx} style={colWidths[idx] && idx < len - 1 ? {width: colWidths[idx]} : {flex: 1}}>
             {cell}
         </div>
     )
     let len = props.cells.length;
-	return (
-        <div className={`MyRow ${props.className} ${selectedClass} ${headerClass}`} 
-            onClick={props.onClick}>
-		    {
-                props.cells.map((cell, idx) => props.isHeader? headerCell(cell,idx, len) : typicalCell(cell,idx, len))
+    return (
+        <div className={`MyRow ${props.className} ${selectedClass} ${headerClass}`}
+             onClick={props.onClick}>
+            {
+                props.cells.map((cell, idx) => props.isHeader ? headerCell(cell, idx, len) : typicalCell(cell, idx, len))
             }
         </div>
     )

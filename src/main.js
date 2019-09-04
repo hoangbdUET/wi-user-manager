@@ -17,23 +17,23 @@ ReactDOM.render((
             <LeftNavigation routes={
                 [
 
-                    {path:"/user", label: "User"},
-                    {path:"/group", label: "Group"},
-                    {path:"/company", label: "Company"},
-                    {path:"/project", label: "Project"}
+                    {path: "/user", label: "User"},
+                    {path: "/group", label: "Group"},
+                    {path: "/company", label: "Company"},
+                    {path: "/project", label: "Project"}
                 ]
             }/>
             <MainContent default="/company" routes={
                 [
                     // {path:"/", component: "PageCompany"},
-                    {path:"/user", component: "PageUser"},
-                    {path:"/group", component: "PageGroup"},
-                    {path:"/company", component: "PageCompany"},
-                    {path:"/project", component: "PageProject"}
+                    {path: "/user", component: "PageUser"},
+                    {path: "/group", component: "PageGroup"},
+                    {path: "/company", component: "PageCompany"},
+                    {path: "/project", component: "PageProject"}
                 ]
-            } />
+            }/>
 
         </Router>
-        <ToastContainer />
+        <ToastContainer/>
     </Fragment>
 ), containerElem);

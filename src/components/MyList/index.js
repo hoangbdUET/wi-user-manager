@@ -11,67 +11,70 @@ MyList.propTypes = {
     searchStr: PropTypes.string,
     actions: PropTypes.array
 }
+
 function MyList(props) {
-	React.Component.call(this, props);
+    React.Component.call(this, props);
     const MIN_WIDTH = 60;
-	let searchStr = props.searchStr || "";
-	this.state = {
-		startAt: props.startAt || 0,
-		selectedItem: null,
-		itemPerPage: props.itemPerPage || 5,
-		searchStr: searchStr,
-	};
+    let searchStr = props.searchStr || "";
+    this.state = {
+        startAt: props.startAt || 0,
+        selectedItem: null,
+        itemPerPage: props.itemPerPage || 5,
+        searchStr: searchStr,
+    };
 
     //
 
-	this.handleNextClick = handleNextClick.bind(this);
+    this.handleNextClick = handleNextClick.bind(this);
 
-	function handleNextClick(e) {
-		this.setState((state) => {
-			let newStartAt = state.startAt + this.state.itemPerPage;
-			return {
-				startAt: newStartAt > this.props.items.length ? this.state.startAt : newStartAt
-			}
-		});
-	}
+    function handleNextClick(e) {
+        this.setState((state) => {
+            let newStartAt = state.startAt + this.state.itemPerPage;
+            return {
+                startAt: newStartAt > this.props.items.length ? this.state.startAt : newStartAt
+            }
+        });
+    }
 
-	this.handleRowClick = handleRowClick.bind(this);
+    this.handleRowClick = handleRowClick.bind(this);
 
-	function handleRowClick(item) {
-		this.setState({
-			selectedItem: item
-		});
-	}
+    function handleRowClick(item) {
+        this.setState({
+            selectedItem: item
+        });
+    }
 
-	this.handlePrevClick = handlePrevClick.bind(this);
+    this.handlePrevClick = handlePrevClick.bind(this);
 
-	function handlePrevClick(e) {
-		this.setState((state) => {
-			let newStartAt = state.startAt - this.state.itemPerPage;
-			return {
-				startAt: newStartAt < 0 ? 0 : newStartAt
-			}
-		});
-	}
+    function handlePrevClick(e) {
+        this.setState((state) => {
+            let newStartAt = state.startAt - this.state.itemPerPage;
+            return {
+                startAt: newStartAt < 0 ? 0 : newStartAt
+            }
+        });
+    }
 
-	this.handleItemPerPageChanged = handleItemPerPageChanged.bind(this);
+    this.handleItemPerPageChanged = handleItemPerPageChanged.bind(this);
 
-	function handleItemPerPageChanged(event) {
-		let selectedIdx = event.currentTarget.selectedIndex;
-		let itemPerPage = parseInt(event.currentTarget.options[selectedIdx].value);
-		this.setState({
-			itemPerPage: itemPerPage
-		});
-	}
+    function handleItemPerPageChanged(event) {
+        let selectedIdx = event.currentTarget.selectedIndex;
+        let itemPerPage = parseInt(event.currentTarget.options[selectedIdx].value);
+        this.setState({
+            itemPerPage: itemPerPage
+        });
+    }
 
-	this.handleSearchStrChanged = handleSearchStrChanged.bind(this);
-	function handleSearchStrChanged(e) {
-		this.setState({
-			searchStr: e.target.value
-		});
-	}
+    this.handleSearchStrChanged = handleSearchStrChanged.bind(this);
+
+    function handleSearchStrChanged(e) {
+        this.setState({
+            searchStr: e.target.value
+        });
+    }
 
     this.filterAndSort = filterAndSort.bind(this);
+
     function filterAndSort(items) {
         return items.filter((item) => {
             let str = JSON.stringify(item).toLowerCase();
@@ -83,20 +86,22 @@ function MyList(props) {
             idx >= this.state.startAt && idx < this.state.startAt + this.state.itemPerPage
         ));
     }
-	// this.updateItems = updateItems.bind(this);
-	// function updateItems() {
-	// 	console.error("This is abstract");
-	// }
+
+    // this.updateItems = updateItems.bind(this);
+    // function updateItems() {
+    // 	console.error("This is abstract");
+    // }
 
     this.changeColWidth = changeColWidth.bind(this);
+
     function changeColWidth(idx, width) {
         this.setState(state => {
             let colWidths = state.colWidths;
             let offset = width - colWidths[idx];
-            let nextColWidth = colWidths[idx+1] - offset;
+            let nextColWidth = colWidths[idx + 1] - offset;
             if (width > MIN_WIDTH && nextColWidth > MIN_WIDTH) {
                 colWidths[idx] = width;
-                colWidths[idx+1] = nextColWidth;
+                colWidths[idx + 1] = nextColWidth;
             }
             return {
                 colWidths: colWidths
@@ -104,38 +109,40 @@ function MyList(props) {
         });
     }
 
-	this.onHeaderClicked = onHeaderClicked.bind(this);
-	function onHeaderClicked(headerIdx, headerText) {
-		this.setState({
-			orderByText: headerText
-		});
-	}
+    this.onHeaderClicked = onHeaderClicked.bind(this);
 
-	this.render = function () {
-		return (<div>
-			<select onChange={this.handleItemPerPageChanged}>
-				<option value={5}>5</option>
-				<option value={10}>10</option>
-				<option value={20}>20</option>
-				<option value={30}>30</option>
-			</select>
-			<input type={"text"} value={this.state.searchStr} onChange={this.handleSearchStrChanged} />
-			<button onClick={this.handlePrevClick}>Previous</button>
-			<button onClick={this.handleNextClick}>Next</button>
-			<div className={"custom-actions"}>
-				{
-					this.props.actions && this.props.actions.map(
-						(action, idx) => (
+    function onHeaderClicked(headerIdx, headerText) {
+        this.setState({
+            orderByText: headerText
+        });
+    }
+
+    this.render = function () {
+        return (<div>
+            <select onChange={this.handleItemPerPageChanged}>
+                <option value={5}>5</option>
+                <option value={10}>10</option>
+                <option value={20}>20</option>
+                <option value={30}>30</option>
+            </select>
+            <input type={"text"} value={this.state.searchStr} onChange={this.handleSearchStrChanged}/>
+            <button onClick={this.handlePrevClick}>Previous</button>
+            <button onClick={this.handleNextClick}>Next</button>
+            <div className={"custom-actions"}>
+                {
+                    this.props.actions && this.props.actions.map(
+                        (action, idx) => (
                             <button key={idx} onClick={(e) => action.handler(this.state.selectedItem)}>
                                 {action.label || action.title || action.name}
                             </button>
                         )
-					)
-				}
-			</div>
-		</div>)
-	}
+                    )
+                }
+            </div>
+        </div>)
+    }
 }
+
 /*
 <MyRow onClick={(e) => this.handleRowClick(item)} key={idx + this.state.startAt}
 					       cells={[idx + this.state.startAt + 1, item.name, item.age]}

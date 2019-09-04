@@ -3,28 +3,30 @@ require('./style.less');
 const React = require('react');
 const MyList = require('../MyList');
 const RowCompany = require("../RowCompany");
+
 function ListCompany(props) {
-	MyList.call(this, props);
-	this.state = Object.assign(this.state, {
-		orderByText: "",
+    MyList.call(this, props);
+    this.state = Object.assign(this.state, {
+        orderByText: "",
         colWidths: [100, 150, 150, 150, 150]
-	});
-	let supperRender = this.render;
-	this.render = function() {
-		let items = this.props.items;
-		let headerObj = {name:"Name", location: "Location", licenses:"Licenses", description:"Description"};
-		let controlBar = supperRender.call(this);
-		return (<div className={"MyList"}>
-			{controlBar}
-			<div style={{
-				flex: 1
-			}}>
-				<RowCompany onClick={(e) => {}} idx={undefined} selected={false}
-                    item={headerObj}
-                    colWidths={this.state.colWidths}
-                    onColWidthChanged={this.changeColWidth}
-                    isHeader={true} onCellClicked={this.onHeaderClicked}/>
-				<div> {
+    });
+    let supperRender = this.render;
+    this.render = function () {
+        let items = this.props.items;
+        let headerObj = {name: "Name", location: "Location", licenses: "Licenses", description: "Description"};
+        let controlBar = supperRender.call(this);
+        return (<div className={"MyList"}>
+            {controlBar}
+            <div style={{
+                flex: 1
+            }}>
+                <RowCompany onClick={(e) => {
+                }} idx={undefined} selected={false}
+                            item={headerObj}
+                            colWidths={this.state.colWidths}
+                            onColWidthChanged={this.changeColWidth}
+                            isHeader={true} onCellClicked={this.onHeaderClicked}/>
+                <div> {
                     this.filterAndSort(items).map((item, idx) => (
                         <RowCompany onClick={(e) => this.handleRowClick(item)}
                                     key={idx + this.state.startAt}
@@ -33,8 +35,9 @@ function ListCompany(props) {
                                     selected={this.state.selectedItem === item}/>
                     ))
                 }</div>
-			</div>
-		</div>)
-	}
+            </div>
+        </div>)
+    }
 }
+
 ListCompany.prototype = Object.create(MyList.prototype);
