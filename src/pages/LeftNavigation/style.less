@@ -6,6 +6,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  &>div {
+    padding: 30px 20px;
+  }
   .tab-icon {
     color: #8793A1;
     font-size: 20px;
@@ -16,6 +19,11 @@
   }
   a {
     text-decoration: unset;
+    &:hover {
+      background: rgb(235, 242, 246);
+      transition: all ease-in 0.3s;
+      color: #4B7DEF;
+    }
   }
   .logo {
     height: 30px;
@@ -24,8 +32,5 @@
     border-radius: 5px;
     margin-bottom: 20px;
   }
-  .active-tab {
-    background: #4B7DEF;
-    color: #fff;
-  }
+ 
 }

@@ -12,13 +12,13 @@ function LeftNavigation(props) {
         'Project': 'tab-icon ti ti-basketball'
     };
     return (<div className={"LeftNavigation"}>
-        <div className="logo">
+        <span className="logo">
 
-        </div>
+        </span>
         {routes.map((aRoute, idx) =>
             <div key={idx}>
                 <NavLink className={classMap[aRoute.label]} to={aRoute.path}
-                         activeStyle={{background: '#4B7DEF', color: '#fff'}}>{aRoute.label}</NavLink>
+                         activeStyle={{background: '#4B7DEF', color: '#fff'}}></NavLink>
             </div>
         )}
     </div>)
