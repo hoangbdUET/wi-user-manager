@@ -2,7 +2,10 @@ module.exports = PageUser;
 require('./style.less');
 const React = require('react');
 const api = require('../../services/apiClient');
+const UserInfoModal = require('../../dialogs/UserInfoModal');
+const ConfirmationModal = require('../../dialogs/ConfirmationModal');
 const ListUser = require('../../components/ListUser');
+const {toast} = require('react-toastify');
 
 function PageUser(props) {
     React.Component.call(this, props);
@@ -24,16 +27,36 @@ function PageUser(props) {
         })
     }
 
-    this.deleteUser = deleteUser.bind(this);
+    this.callApiAddUser = callApiAddUser.bind(this);
 
-    function deleteUser(selectedUser) {
+    function callApiAddUser(user) {
+        console.log("Call api adduser ", user);
+    }
+
+    this.callApiUpdateUser = callApiUpdateUser.bind(this);
+
+    function callApiUpdateUser(user) {
+        console.log("call api edit user", user);
+    }
+
+    this.callApiDeleteUser = callApiDeleteUser.bind(this);
+
+    function callApiDeleteUser(user) {
+        console.log("call api delete user", user);
+        this.setState({isDeletingUser: false})
+    }
+
+    this.startDeleteUser = startDeleteUser.bind(this);
+
+    function startDeleteUser(selectedUser) {
+        this.setState({isDeletingUser: true, selectedUser: selectedUser});
         console.log("Delete ", selectedUser);
     }
 
     this.startAddUser = startAddUser.bind(this);
 
     function startAddUser() {
-
+        this.setState({isAddingUser: true});
     }
 
     function addUser(user) {
@@ -44,22 +67,32 @@ function PageUser(props) {
 
     function startEditUser(user) {
         console.log("edit user", user)
+        this.setState({isEditingUser: true})
     }
 
 
     this.render = function () {
         return (
             <div className={"PageUser"}>
-                <ListUser itemPerPage={1000} items={this.state.items}
+                <ListUser itemPerPage={20} items={this.state.items}
                           actions={[{
                               name: "Add", handler: this.startAddUser
                           }, {
-                              name: "Delete", handler: this.deleteUser
+                              name: "Delete", handler: this.startDeleteUser
                           }, {
                               name: "Edit", handler: this.startEditUser
                           }, {
                               name: "Refresh", handler: this.listUser
                           }]}
+                />
+                <UserInfoModal isOpen={this.state.isEditingUser} onOk={this.callApiAddUser}
+                               onCancel={(e) => this.setState({isEditingUser: false})}/>
+                <UserInfoModal isOpen={this.state.isAddingUser} onOk={this.callApiUpdateUser}
+                               onCancel={(e) => this.setState({isAddingUser: false})}/>
+                <ConfirmationModal isOpen={this.state.isDeletingUser} title={"Confirmation"}
+                                   message={"Are you sure to delete selected user?"}
+                                   onCancel={() => this.setState({isDeletingUser: false})}
+                                   onOk={() => this.callApiDeleteUser(this.state.selectedUser)}
                 />
             </div>
         )

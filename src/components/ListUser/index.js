@@ -32,6 +32,7 @@ function ListUser(props) {
                         idx={undefined}
                         selected={false}
                         colWidths={this.state.colWidths}
+                        onColWidthChanged={this.changeColWidth}
                         item={headerObj}
                         isHeader={true}
                         onCellClicked={this.onHeaderClicked}
