@@ -10,7 +10,7 @@ MyList.propTypes = {
     startAt: PropTypes.number,
     searchStr: PropTypes.string,
     actions: PropTypes.array
-}
+};
 
 function MyList(props) {
     React.Component.call(this, props);
@@ -121,24 +121,24 @@ function MyList(props) {
 		<div className={"setting"}>
             <div className={"setting-title"}>
                 USER MANAGEMENT
-                <div className={"ti ti-angle-right"} style={{margin:'0 10px'}}></div>
+                <div className={"ti ti-angle-right"} style={{margin: '0 10px'}}/>
                 User
             </div>
             <div className={"setting-btn"}>
                 <div className={"btn-next"} style={{color:"rgb(22, 187, 29)", fontWeight:"bold", border:"1px solid rgb(22, 187, 29)"}} >
-                    <div className={"ti ti-plus"} style={{marginRight:'10px'}}></div>Add
+                    <div className={"ti ti-plus"} style={{marginRight: '10px'}}/>Add
                 </div>
                 <div className={"btn-next"} style={{color:"#F44336", fontWeight:"bold", border:"1px solid #F44336"}} >
-                    <div className={"ti ti-close"} style={{marginRight:'10px'}}></div>Delete
+                    <div className={"ti ti-close"} style={{marginRight: '10px'}}/>Delete
                 </div>
                 <div className={"btn-next"} style={{color:"#4B7DEF", fontWeight:"bold"}} >
-                    <div className={"ti ti-pencil"} style={{marginRight:'10px'}}></div>Edit
+                    <div className={"ti ti-pencil"} style={{marginRight: '10px'}}/>Edit
                 </div>
                 <div className={"btn-next"} style={{color:"#4B7DEF", fontWeight:"bold"}} >
-                    <div className={"ti ti-reload"} style={{marginRight:'10px'}}></div>Refresh
+                    <div className={"ti ti-reload"} style={{marginRight: '10px'}}/>Refresh
                 </div>
                 <div className={"btn-next"} style={{color:"#4B7DEF", fontWeight:"bold"}} >
-                    <div className={"ti ti-settings"} style={{marginRight:'10px'}}></div>Manager
+                    <div className={"ti ti-settings"} style={{marginRight: '10px'}}/>Manager
                 </div>
                 <div className={"btn-next"} style={{color:"#4B7DEF", fontWeight:"bold", padding:'5px 10px'}} >
                     Item of page: 
@@ -151,10 +151,10 @@ function MyList(props) {
                 </div>
                
                 <div className={"btn-next"} onClick={this.handlePrevClick}>
-                    <div className={"ti ti-angle-left"} style={{marginRight:'10px'}}></div>Previous
+                    <div className={"ti ti-angle-left"} style={{marginRight: '10px'}}/>Previous
                 </div>
                 <div className={"btn-next"} onClick={this.handleNextClick}>Next
-                    <div className={"ti ti-angle-right"} style={{marginLeft:'10px'}}></div>
+                    <div className={"ti ti-angle-right"} style={{marginLeft: '10px'}}/>
                 </div>
             </div>
 			{/* <select onChange={this.handleItemPerPageChanged}>

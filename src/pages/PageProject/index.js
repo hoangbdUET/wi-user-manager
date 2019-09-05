@@ -3,5 +3,5 @@ require('./style.less');
 const React = require('react');
 
 function PageProject() {
-    return <h3>Project</h3>
+    return (<div className={"PageProject"}>Project</div>)
 }

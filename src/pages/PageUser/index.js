@@ -67,7 +67,7 @@ function PageUser(props) {
 
     function startEditUser(user) {
         console.log("edit user", user)
-        this.setState({isEditingUser: true})
+        this.setState({isEditingUser: true}, {selectedUser: user})
     }
 
 
@@ -85,9 +85,9 @@ function PageUser(props) {
                               name: "Refresh", handler: this.listUser
                           }]}
                 />
-                <UserInfoModal isOpen={this.state.isEditingUser} onOk={this.callApiAddUser}
+                <UserInfoModal isOpen={this.state.isEditingUser} onOk={this.callApiUpdateUser} action={"edit"}
                                onCancel={(e) => this.setState({isEditingUser: false})}/>
-                <UserInfoModal isOpen={this.state.isAddingUser} onOk={this.callApiUpdateUser}
+                <UserInfoModal isOpen={this.state.isAddingUser} onOk={this.callApiAddUser} action={"add"}
                                onCancel={(e) => this.setState({isAddingUser: false})}/>
                 <ConfirmationModal isOpen={this.state.isDeletingUser} title={"Confirmation"}
                                    message={"Are you sure to delete selected user?"}
