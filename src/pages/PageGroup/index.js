@@ -136,7 +136,8 @@ function PageGroup(props) {
                 name: "Refresh",
                 handler: this.listGroups
             }, {
-                name: 'Manage Users'
+                name: 'Manage Users',
+                handler: this.listGroups
             }]} items={this.state.items}/>
             <GroupInfoModal isOpen={this.state.isAddingGroup}
                             onOk={this.addGroup}

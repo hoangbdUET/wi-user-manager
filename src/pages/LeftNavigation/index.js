@@ -6,9 +6,9 @@ const React = require('react');
 function LeftNavigation(props) {
     let routes = props.routes;
     let classMap = {
-        'Group': 'tab-icon user-user-manager',
-        'Company': 'tab-icon group-user-manager',
-        'User': 'tab-icon company-user-manager',
+        'Group': 'tab-icon group-user-manager',
+        'Company': 'tab-icon company-user-manager',
+        'User': 'tab-icon user-user-manager',
         'Project': 'tab-icon project-user-manager'
     };
     return (<div className={"LeftNavigation"}>

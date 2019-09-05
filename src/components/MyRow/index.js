@@ -42,7 +42,7 @@ function MyRow(props) {
     let headerCell = (cell, idx, len) => (
         idx < len - 1 ? (
             <div key={idx} style={colWidths[idx] ? {width: colWidths[idx]} : {flex: 1}}>
-                <div className="cell-content" onClick={(e) => props.onCellClicked(idx, cell)}>{cell}</div>
+                <div className="cell-content" onClick={(e) => props.onCellClicked(idx, cell)}>{cell || '#'}</div>
                 <DraggableCore handle=".resizer" axis="x"
                                onStart={(e, data) => (dragStart(e, data, idx))}
                                onStop={(e, data) => (dragEnd(e, data, idx))}>

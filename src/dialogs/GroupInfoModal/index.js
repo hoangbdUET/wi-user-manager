@@ -40,43 +40,49 @@ function GroupInfoModal(props) {
 
     this.render = function () {
         return (<Modal isOpen={this.props.isOpen} className="ModalStyle CompanyInfoModal">
-            <h4>New Group</h4>
-            <div className="fieldset">
-                <label>Name:</label>
-                <Editable value={group.name || ""} disabled={disabled}
-                          formatValue={(v) => (((v !== null || true) && v.length) ? v : '[empty]')}
-                          onValueChanged={(name) => group.name = name}/>
-            </div>
-            <div className="fieldset">
-                <label>Description:</label>
-                <Editable value={group.description || ""} disabled={disabled}
-                          formatValue={(v) => (((v !== null || true) && v.length) ? v : '[empty]')}
-                          onValueChanged={(description) => group.description = description}/>
-            </div>
-            <div className="fieldset">
-                <label>Company:</label>
-                <DropDown disabled={disabled} getItem={(company) => (
-                    <div style={{height: '18px'}}>{company ? company.name : "[select company]"}</div>)}
-                          items={this.props.companies}
-                          itemHeight={18}
-                          selectedItem={this.props.selectedCompany} onItemClicked={(clickedCompany) => {
-                    group.idCompany = clickedCompany.idCompany;
-                    group.company = clickedCompany;
-                }}/>
-                {/*<Editable value={group.company || ""}*/}
-                {/*    formatValue={(v) => (((v!==null||v!=undefined) && v.length)?v:'[empty]')} */}
-                {/*    onValueChanged={(company) => {}} />*/}
-            </div>
-            <div className="fieldset" style={{height: '400px', boder: '1px solid black'}}>
-                <label>Members:</label>
-                <div style={{width: '50%'}}>
-                    <VList disabled={!disabled} getItem={this.getUser}
-                           getRawItem={this.getRawUser}
-                           itemHeight={18} totalItems={() => this.props.users.length}/>
+            <div className="title-dialog">New Group</div>
+            <div className="content-dialog">
+                <div style={{flex:2}}>
+                    <div className="fieldset">
+                        <div>Name:</div>
+                        <Editable value={group.name || ""} disabled={disabled}
+                                formatValue={(v) => (((v !== null || true) && v.length) ? v : '[empty]')}
+                                onValueChanged={(name) => group.name = name}/>
+                    </div>
+                    <div className="fieldset">
+                        <div>Description:</div>
+                        <Editable value={group.description || ""} disabled={disabled}
+                                formatValue={(v) => (((v !== null || true) && v.length) ? v : '[empty]')}
+                                onValueChanged={(description) => group.description = description}/>
+                    </div>
+                    <div className="fieldset">
+                        <div>Company:</div>
+                        <DropDown disabled={disabled} getItem={(company) => (
+                            <div style={{height: '18px'}}>{company ? company.name : "[select company]"}</div>)}
+                                items={this.props.companies}
+                                itemHeight={18}
+                                selectedItem={this.props.selectedCompany} onItemClicked={(clickedCompany) => {
+                            group.idCompany = clickedCompany.idCompany;
+                            group.company = clickedCompany;
+                        }}/>
+                        {/*<Editable value={group.company || ""}*/}
+                        {/*    formatValue={(v) => (((v!==null||v!=undefined) && v.length)?v:'[empty]')} */}
+                        {/*    onValueChanged={(company) => {}} />*/}
+                    </div>
+                </div>
+                <div className="members">
+                    <div>Members:</div>
+                    <div>
+                        <VList disabled={!disabled} getItem={this.getUser}
+                            getRawItem={this.getRawUser}
+                            itemHeight={18} totalItems={() => this.props.users.length}/>
+                    </div>
                 </div>
             </div>
-            <button onClick={(e) => this.props.onOk(group)}>Ok</button>
-            <button onClick={this.props.onCancel}>Close</button>
+            <div className="footer-dialog">
+                <div className="btn-next" onClick={(e) => this.props.onOk(group)}>OK</div>
+                <div className="btn-next" onClick={this.props.onCancel}>Cancel</div>
+            </div>
         </Modal>);
     }
 
