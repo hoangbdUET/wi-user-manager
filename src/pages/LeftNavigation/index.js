@@ -6,10 +6,10 @@ const React = require('react');
 function LeftNavigation(props) {
     let routes = props.routes;
     let classMap = {
-        'Group': 'tab-icon ti ti-basketball',
-        'Company': 'tab-icon ti ti-basketball',
-        'User': 'tab-icon ti ti-basketball',
-        'Project': 'tab-icon ti ti-basketball'
+        'Group': 'tab-icon user-user-manager',
+        'Company': 'tab-icon group-user-manager',
+        'User': 'tab-icon company-user-manager',
+        'Project': 'tab-icon project-user-manager'
     };
     return (<div className={"LeftNavigation"}>
         <span className="logo">
@@ -18,7 +18,7 @@ function LeftNavigation(props) {
         {routes.map((aRoute, idx) =>
             <div key={idx}>
                 <NavLink className={classMap[aRoute.label]} to={aRoute.path}
-                         activeStyle={{background: '#4B7DEF', color: '#fff'}}></NavLink>
+                         activeStyle={{backgroundColor: '#4B7DEF',  filter: 'grayscale(0) opacity(1)', backgroundBlendMode:'screen'}}></NavLink>
             </div>
         )}
     </div>)
