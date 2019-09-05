@@ -140,6 +140,16 @@ function MyList(props) {
                 <div className={"btn-next"} style={{color:"#4B7DEF", fontWeight:"bold"}} >
                     <div className={"ti ti-settings"} style={{marginRight:'10px'}}></div>Manager
                 </div>
+                <div className={"btn-next"} style={{color:"#4B7DEF", fontWeight:"bold", padding:'5px 10px'}} >
+                    Item of page: 
+                    <select onChange={this.handleItemPerPageChanged} style={{border: 'none', background:'none'}}>
+                        <option value={5}>5</option>
+                        <option value={10}>10</option>
+                        <option value={20}>20</option>
+                        <option value={30}>30</option>
+                    </select>
+                </div>
+               
                 <div className={"btn-next"} onClick={this.handlePrevClick}>
                     <div className={"ti ti-angle-left"} style={{marginRight:'10px'}}></div>Previous
                 </div>
