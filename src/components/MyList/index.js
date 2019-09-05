@@ -109,55 +109,87 @@ function MyList(props) {
         });
     }
 
-	this.onHeaderClicked = onHeaderClicked.bind(this);
-	function onHeaderClicked(headerIdx, headerText) {
-		this.setState({
-			orderByText: headerText
-		});
-	}
+    this.onHeaderClicked = onHeaderClicked.bind(this);
 
-	this.render = function () {
-		return (
-		<div className={"setting"}>
-            <div className={"setting-title"}>
-                USER MANAGEMENT
-                <div className={"ti ti-angle-right"} style={{margin: '0 10px'}}/>
-                User
-            </div>
-            <div className={"setting-btn"}>
-                <div className={"btn-next"} style={{color:"rgb(22, 187, 29)", fontWeight:"bold", border:"1px solid rgb(22, 187, 29)"}} >
-                    <div className={"ti ti-plus"} style={{marginRight: '10px'}}/>Add
+    function onHeaderClicked(headerIdx, headerText) {
+        this.setState({
+            orderByText: headerText
+        });
+    }
+
+    let buttonStyle = {
+        "Add": {
+            style: {color: "rgb(22, 187, 29)", fontWeight: "bold", border: "1px solid rgb(22, 187, 29)"},
+            icon: "ti ti-plus"
+        },
+        "Edit": {style: {color: "#4B7DEF", fontWeight: "bold"}, icon: "ti ti-pencil"},
+        "Delete": {style: {color: "#F44336", fontWeight: "bold", border: "1px solid #F44336"}, icon: "ti ti-close"},
+        "Refresh": {style: {color: "#4B7DEF", fontWeight: "bold"}, icon: "ti ti-reload"}
+    };
+    this.render = function () {
+        return (
+            <div className={"setting"}>
+                <div className={"setting-title"}>
+                    USER MANAGEMENT
+                    <div className={"ti ti-angle-right"} style={{margin: '0 10px'}}/>
+                    User
                 </div>
-                <div className={"btn-next"} style={{color:"#F44336", fontWeight:"bold", border:"1px solid #F44336"}} >
-                    <div className={"ti ti-close"} style={{marginRight: '10px'}}/>Delete
+                <div className={"setting-btn"}>
+                    {
+                        this.props.actions && this.props.actions.map(
+                            (action, idx) => (
+                                <div className={"btn-next"}
+                                     style={buttonStyle[action.name] ? buttonStyle[action.name].style : {}}
+                                     key={idx} onClick={(e) => action.handler(this.state.selectedItem)}>
+                                    {action.label || action.title || action.name}
+                                    <div className={buttonStyle[action.name] ? buttonStyle[action.name].icon : ""}
+                                         style={{marginRight: '10px'}}/>
+                                </div>
+                            )
+                        )
+                    }
+
+                    {/*<div className={"btn-next"}*/}
+                    {/*     style={{color: "rgb(22, 187, 29)", fontWeight: "bold", border: "1px solid rgb(22, 187, 29)"}}>*/}
+                    {/*    <div className={"ti ti-plus"} style={{marginRight: '10px'}}/>*/}
+                    {/*    Add*/}
+                    {/*</div>*/}
+                    {/*<div className={"btn-next"}*/}
+                    {/*     style={{color: "#F44336", fontWeight: "bold", border: "1px solid #F44336"}}>*/}
+                    {/*    <div className={"ti ti-close"} style={{marginRight: '10px'}}/>*/}
+                    {/*    Delete*/}
+                    {/*</div>*/}
+                    {/*<div className={"btn-next"} style={{color: "#4B7DEF", fontWeight: "bold"}}>*/}
+                    {/*    <div className={"ti ti-pencil"} style={{marginRight: '10px'}}/>*/}
+                    {/*    Edit*/}
+                    {/*</div>*/}
+                    {/*<div className={"btn-next"} style={{color: "#4B7DEF", fontWeight: "bold"}}>*/}
+                    {/*    <div className={"ti ti-reload"} style={{marginRight: '10px'}}/>*/}
+                    {/*    Refresh*/}
+                    {/*</div>*/}
+                    {/*<div className={"btn-next"} style={{color: "#4B7DEF", fontWeight: "bold"}}>*/}
+                    {/*    <div className={"ti ti-settings"} style={{marginRight: '10px'}}/>*/}
+                    {/*    Manager*/}
+                    {/*</div>*/}
+                    <div className={"btn-next"} style={{color: "#4B7DEF", fontWeight: "bold", padding: '5px 10px'}}>
+                        Item of page:
+                        <select onChange={this.handleItemPerPageChanged} style={{border: 'none', background: 'none'}}>
+                            <option value={5}>5</option>
+                            <option value={10}>10</option>
+                            <option value={20}>20</option>
+                            <option value={30}>30</option>
+                        </select>
+                    </div>
+
+                    <div className={"btn-next"} onClick={this.handlePrevClick}>
+                        <div className={"ti ti-angle-left"} style={{marginRight: '10px'}}/>
+                        Previous
+                    </div>
+                    <div className={"btn-next"} onClick={this.handleNextClick}>Next
+                        <div className={"ti ti-angle-right"} style={{marginLeft: '10px'}}/>
+                    </div>
                 </div>
-                <div className={"btn-next"} style={{color:"#4B7DEF", fontWeight:"bold"}} >
-                    <div className={"ti ti-pencil"} style={{marginRight: '10px'}}/>Edit
-                </div>
-                <div className={"btn-next"} style={{color:"#4B7DEF", fontWeight:"bold"}} >
-                    <div className={"ti ti-reload"} style={{marginRight: '10px'}}/>Refresh
-                </div>
-                <div className={"btn-next"} style={{color:"#4B7DEF", fontWeight:"bold"}} >
-                    <div className={"ti ti-settings"} style={{marginRight: '10px'}}/>Manager
-                </div>
-                <div className={"btn-next"} style={{color:"#4B7DEF", fontWeight:"bold", padding:'5px 10px'}} >
-                    Item of page: 
-                    <select onChange={this.handleItemPerPageChanged} style={{border: 'none', background:'none'}}>
-                        <option value={5}>5</option>
-                        <option value={10}>10</option>
-                        <option value={20}>20</option>
-                        <option value={30}>30</option>
-                    </select>
-                </div>
-               
-                <div className={"btn-next"} onClick={this.handlePrevClick}>
-                    <div className={"ti ti-angle-left"} style={{marginRight: '10px'}}/>Previous
-                </div>
-                <div className={"btn-next"} onClick={this.handleNextClick}>Next
-                    <div className={"ti ti-angle-right"} style={{marginLeft: '10px'}}/>
-                </div>
-            </div>
-			{/* <select onChange={this.handleItemPerPageChanged}>
+                {/* <select onChange={this.handleItemPerPageChanged}>
 				<option value={5}>5</option>
 				<option value={10}>10</option>
 				<option value={20}>20</option>
@@ -177,7 +209,7 @@ function MyList(props) {
                     )
                 }
             </div> */}
-        </div>)
+            </div>)
     }
 }
 
