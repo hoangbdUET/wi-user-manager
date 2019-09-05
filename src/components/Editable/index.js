@@ -85,7 +85,7 @@ function Editable(props) {
             <div className="Editable">
                 <div style={this.state.editing ? hiddenStyle : visibleStyle} tabIndex={0} onFocus={this.handleClick}
                      onClick={this.handleClick}>
-                    {this.state.value || formatter("" + (this.state.value === null || this.state.value === undefined) ? "" : this.state.value)}
+                    {formatter("" + ((this.state.value === null || this.state.value === undefined) ? "" : this.state.value))}
                 </div>
 
                 <form style={this.state.editing ? visibleStyle : hiddenStyle}
