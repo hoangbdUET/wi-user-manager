@@ -12,7 +12,7 @@ function DropDown(props) {
         searchStr: "",
         showList: false
     }
-
+    let searchStrInput = React.createRef();
     function onInit() {
         this.props.onInit && this.props.onInit(this);
     }
@@ -54,17 +54,29 @@ function DropDown(props) {
         this.props.onItemClicked && this.props.onItemClicked(clickedItem);
     }
 
-    this.render = function () {
-        return (<div className="DropDown">
-            <div className={this.state.showList ? "hidden-block" : ""}
-                 onClick={() => {
-                     if (this.state.disabled) return;
-                     this.setState({showList: true});
-                 }}>{formatter(this.state.selectedItem)}</div>
-            <input className={this.state.showList ? "" : "hidden-block"}
-                   type="text" value={this.state.searchStr} onChange={this.handleSearchStrChanged}/>
-            <div style={{display: 'block', height: '200px', position: 'absolute'}}
-                 className={this.state.showList ? "" : "hidden-block"}>
+    this.render = function() {
+        return (<div tabIndex={0} className="DropDown" 
+            onKeyDown={(e) => {
+                if (e.keyCode == 27) e.target.blur();
+            }} 
+            onBlur={() => {if (document.activeElement !== searchStrInput.current) this.setState({showList:false})}}>
+            <div className={this.state.showList?"hidden-block":""}
+                onClick={() => {
+                	if (this.state.disabled) return;
+                	this.setState({showList:true});
+                } }>{formatter(this.state.selectedItem)}</div>
+            <input className={this.state.showList?"":"hidden-block"} ref={searchStrInput}
+                type="text" value={this.state.searchStr} onChange={this.handleSearchStrChanged} />
+            <div style={{
+                display:'block',
+                width: '100%',
+                height: '200px', 
+                position:'absolute', 
+                backgroundColor:'white',
+                border: '1px solid #ccc',
+                boxShadow: '0px 0px 10px 5px #ddd',
+                zIndex: 10
+            }} className={this.state.showList?"":"hidden-block"}>
                 <VList getItem={this.props.getItem}
                        getRawItem={this.getRawItem}
                        onItemClicked={this.onItemClicked}
