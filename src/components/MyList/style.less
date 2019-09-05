@@ -3,4 +3,41 @@
     flex-direction: column;
     flex: 1;
     overflow: hidden;
+    .setting {
+        display: flex;
+        padding: 20px;
+        align-items: center;
+        justify-content: space-between;
+        .setting-title {
+            display: flex;
+            align-items: center;
+            color: #8793A1;
+            font-weight: bold;
+            font-size: 125%;
+        }
+        .setting-btn {
+            display: flex;
+            align-items: center;
+            .btn-next {
+                display: flex;
+                align-items: center;
+                padding: 8px 12px;
+                background: #fff;
+                color: #8793A1;
+                border-radius: 2px;
+                margin-left: 20px;
+                border: 1px solid #4B7DEF;
+                cursor: pointer;
+                transform: scale(1);
+                &:active {
+                    transition: all ease-in 0.2s;
+                    transform: scale(0.9);
+                }
+                &:hover {
+                    transition: all ease-in 0.2s;
+                    background: #f1f9ff;
+                }
+            }
+        }
+    }
 }

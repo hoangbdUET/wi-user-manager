@@ -119,7 +119,35 @@ function MyList(props) {
 	this.render = function () {
 		return (
 		<div className={"setting"}>
-			<select onChange={this.handleItemPerPageChanged}>
+            <div className={"setting-title"}>
+                USER MANAGEMENT
+                <div className={"ti ti-angle-right"} style={{margin:'0 10px'}}></div>
+                User
+            </div>
+            <div className={"setting-btn"}>
+                <div className={"btn-next"} style={{color:"rgb(22, 187, 29)", fontWeight:"bold", border:"1px solid rgb(22, 187, 29)"}} >
+                    <div className={"ti ti-plus"} style={{marginRight:'10px'}}></div>Add
+                </div>
+                <div className={"btn-next"} style={{color:"#F44336", fontWeight:"bold", border:"1px solid #F44336"}} >
+                    <div className={"ti ti-close"} style={{marginRight:'10px'}}></div>Delete
+                </div>
+                <div className={"btn-next"} style={{color:"#4B7DEF", fontWeight:"bold"}} >
+                    <div className={"ti ti-pencil"} style={{marginRight:'10px'}}></div>Edit
+                </div>
+                <div className={"btn-next"} style={{color:"#4B7DEF", fontWeight:"bold"}} >
+                    <div className={"ti ti-reload"} style={{marginRight:'10px'}}></div>Refresh
+                </div>
+                <div className={"btn-next"} style={{color:"#4B7DEF", fontWeight:"bold"}} >
+                    <div className={"ti ti-settings"} style={{marginRight:'10px'}}></div>Manager
+                </div>
+                <div className={"btn-next"} onClick={this.handlePrevClick}>
+                    <div className={"ti ti-angle-left"} style={{marginRight:'10px'}}></div>Previous
+                </div>
+                <div className={"btn-next"} onClick={this.handleNextClick}>Next
+                    <div className={"ti ti-angle-right"} style={{marginLeft:'10px'}}></div>
+                </div>
+            </div>
+			{/* <select onChange={this.handleItemPerPageChanged}>
 				<option value={5}>5</option>
 				<option value={10}>10</option>
 				<option value={20}>20</option>
@@ -138,7 +166,7 @@ function MyList(props) {
                         )
                     )
                 }
-            </div>
+            </div> */}
         </div>)
     }
 }

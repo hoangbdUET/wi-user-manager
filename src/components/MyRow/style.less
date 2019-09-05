@@ -1,10 +1,10 @@
 .MyRow {
     display: flex;
-
+    border-bottom: 2px solid #F5F8FA;
     & > div {
         //flex: 1;
-        border-right: 1px solid #ccc;
-        padding: 6px;
+        border-right: 2px solid #F5F8FA;
+        padding: 20px;
         box-sizing: border-box;
     }
 
@@ -14,13 +14,16 @@
     background-color: transparent;
 
     &.row-selected, .row-selected {
-        color: blue;
-        background-color: #eee;
+        color: #4B7DEF;
+        background-color: #F5F8FA;
     }
 
     &.row-header {
         font-weight: 700;
-        border-bottom: 1px solid #ccc;
+        border-bottom: 2px solid #F5F8FA;
+        position: sticky;
+        top: 0;
+        background: #fff;
 
         & > div {
             padding-right: 0px;
@@ -28,7 +31,7 @@
 
         .cell-content {
             float: left;
-            min-width: 50px;
+            // min-width: 50px;
             min-height: 1em;
         }
 

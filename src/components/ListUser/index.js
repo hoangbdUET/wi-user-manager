@@ -26,7 +26,7 @@ function ListUser(props) {
             <div className={"MyList ListUser"}>
                 {controlBar}
                 <div style={{
-                    flex: 1
+                    flex: 1, margin: '0 20px 20px 20px', background: '#fff', borderRadius: '2px', overflow: 'auto'
                 }}>
                     <RowUser
                         idx={undefined}
