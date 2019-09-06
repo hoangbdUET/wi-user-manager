@@ -100,7 +100,7 @@ function PageCompany() {
 
     this.render = function () {
         return <div className={"PageCompany"}>
-            <ListCompany itemPerPage={5} actions={[{
+            <ListCompany itemPerPage={10} actions={[{
                 name: "Add", handler: startAddCompany.bind(this)
             }, {
                 name: "Delete", handler: this.startDeleteCompany

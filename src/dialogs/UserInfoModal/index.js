@@ -21,23 +21,23 @@ function UserInfoModal(props) {
                 <div style={{flex: 1, overflow: 'auto'}}>
                     <div className="fieldset">
                         <div>Username</div>
-                        <Editable value={user.username} disabled={true}></Editable>
+                        <Editable value={user.username} formatValue={(v) => ((v !== null && v !== undefined && v.length === 0 )? v : "[empty]")}/>
                     </div>
                     <div className="fieldset">
                         <div>Email</div>
-                        <Editable value={user.email} disabled={true}></Editable>
+                        <Editable value={user.email} formatValue={(v) => ((v !== null && v !== undefined && v.length === 0 )? v : "[empty]")}/>
                     </div>
                     <div className="fieldset">
                         <div>Full Name</div>
-                        <Editable value={user.fullname} disabled={true}></Editable>
+                        <Editable value={user.fullname} formatValue={(v) => ((v !== null && v !== undefined && v.length === 0 )? v : "[empty]")}/>
                     </div>
                     <div className="fieldset">
                         <div>Status</div>
-                        <Editable value={user.status} disabled={true}></Editable>
+                        <Editable value={user.status} formatValue={(v) => ((v !== null && v !== undefined && v.length === 0 )? v : "[empty]")}/>
                     </div>
                     <div className="fieldset">
                         <div>Role</div>
-                        <Editable value={user.role} disabled={true}></Editable>
+                        <Editable value={user.role} formatValue={(v) => ((v !== null && v !== undefined && v.length === 0 )? v : "[empty]")}/>
                     </div>
                 </div>
             </div>

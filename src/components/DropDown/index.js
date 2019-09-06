@@ -56,14 +56,15 @@ function DropDown(props) {
 
     this.render = function() {
         return (<div tabIndex={0} className="DropDown" 
-            onKeyDown={(e) => {
-                if (e.keyCode == 27) e.target.blur();
-            }} 
-            onBlur={() => {if (document.activeElement !== searchStrInput.current) this.setState({showList:false})}}>
+            onKeyDown={(e) => {if (e.keyCode == 27) {
+                this.setState({showList: false});
+            }}}>
             <div className={this.state.showList?"hidden-block":""}
                 onClick={() => {
                 	if (this.state.disabled) return;
                 	this.setState({showList:true});
+                	setTimeout(() => {searchStrInput.current.focus()}, 500);
+
                 } }>{formatter(this.state.selectedItem)}</div>
             <input className={this.state.showList?"":"hidden-block"} ref={searchStrInput}
                 type="text" value={this.state.searchStr} onChange={this.handleSearchStrChanged} />
