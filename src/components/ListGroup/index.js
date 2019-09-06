@@ -5,6 +5,7 @@ const RowGroup = require('../RowGroup');
 
 function ListGroup(props) {
     MyList.call(this, props);
+    this.listName = "Group";
     this.state = Object.assign(this.state, {
         orderByText: "",
         colWidths: [100, 200, 200, 200]

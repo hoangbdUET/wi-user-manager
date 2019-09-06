@@ -15,9 +15,12 @@ function PageGroup(props) {
         isDeletingGroup: false
     }
     let _groups;
-    listGroups.call(this);
-    listCompanies.call(this);
-    listUsers.call(this);
+    this.componentDidMount = function() {
+        listGroups.call(this);
+        listCompanies.call(this);
+        listUsers.call(this);
+    }
+    
 
     let transform = group => ({
         idGroup: group.idGroup,

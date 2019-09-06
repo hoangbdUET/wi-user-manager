@@ -15,7 +15,9 @@ function PageUser(props) {
         isEditingUser: false,
         isDeletingUser: false
     };
-    listUser.call(this);
+    this.componentDidMount = function() {
+        listUser.call(this);
+    }
 
     this.listUser = listUser.bind(this);
 
@@ -67,7 +69,7 @@ function PageUser(props) {
 
     function startEditUser(user) {
         console.log("edit user", user)
-        this.setState({isEditingUser: true}, {selectedUser: user})
+        this.setState({isEditingUser: true, selectedUser: user});
     }
 
 
@@ -86,7 +88,7 @@ function PageUser(props) {
                           }]}
                 />
                 <UserInfoModal isOpen={this.state.isEditingUser} onOk={this.callApiUpdateUser} action={"edit"}
-                               onCancel={(e) => this.setState({isEditingUser: false})}/>
+                               onCancel={(e) => this.setState({isEditingUser: false})} user={this.state.selectedUser}/>
                 <UserInfoModal isOpen={this.state.isAddingUser} onOk={this.callApiAddUser} action={"add"}
                                onCancel={(e) => this.setState({isAddingUser: false})}/>
                 <ConfirmationModal isOpen={this.state.isDeletingUser} title={"Confirmation"}

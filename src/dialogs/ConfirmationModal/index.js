@@ -3,10 +3,15 @@ const React = require('react');
 const Modal = require('react-modal');
 
 function ConfirmationModal(props) {
-    return (<Modal isOpen={props.isOpen} className="ModalStyle ConfirmationModal">
-        <h3>{props.title}</h3>
-        <div><span>{props.message}</span></div>
-        <button onClick={() => props.onOk(props.params)}>Yes</button>
-        <button onClick={props.onCancel}>No</button>
+    return (<Modal isOpen={props.isOpen} portalClassName="ModalStyle" className="ConfirmationModal" overlayClassName="modal-backdrop">
+        <h4>{props.title}</h4>
+        <div className="content-dialog">
+            <div className="fieldset"><label>{props.message}</label></div>
+        </div>
+        <div className={"footer-dialog"}>
+            <div className="btn-next" onClick={() => props.onOk(props.params)}>Yes</div>
+            <div className="btn-next" onClick={props.onCancel}>No</div>
+
+        </div>
     </Modal>)
 }

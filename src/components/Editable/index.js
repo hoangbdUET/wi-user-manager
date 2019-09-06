@@ -10,16 +10,22 @@ Editable.propTypes = {
     disabled: PropTypes.bool
 }
 
+function evaluate(v) {
+    if (typeof v === 'function') {
+        return v();
+    }
+    return v;
+}
+
 function Editable(props) {
     React.Component.call(this, props);
-    let value = props.value;
     let formatter = this.props.formatValue || function (v) {
         return v;
     };
     this.state = {
         editing: false,
-        value: value,
-        originValue: value
+        value: evaluate(props.value)
+        // originValue: value
     }
     this.textInput = React.createRef();
     this.handleChange = handleChange.bind(this);
@@ -49,7 +55,7 @@ function Editable(props) {
                 return v;
             }
             let newVal = setter(state.value);
-            if (newVal != state.originValue)
+            if (newVal != evaluate(props.value))
                 this.props.onValueChanged && this.props.onValueChanged(newVal);
             return {
                 editing: false,
@@ -82,15 +88,15 @@ function Editable(props) {
             display: 'none'
         }, commonStyle);
         const jsxElem = (
-            <div className="Editable">
-                <div style={this.state.editing ? hiddenStyle : visibleStyle} tabIndex={0} onFocus={this.handleClick}
+            <div className="Editable" onFocus={this.handleClick} tabIndex={0}>
+                <div className="editable-value" style={this.state.editing ? hiddenStyle : visibleStyle} tabIndex={0}
                      onClick={this.handleClick}>
-                    {formatter("" + ((this.state.value === null || this.state.value === undefined) ? "" : this.state.value))}
+                    {formatter(this.state.value)}
                 </div>
 
                 <form style={this.state.editing ? visibleStyle : hiddenStyle}
                       onSubmit={this.handleSubmit}>
-                    <input type="text" value={this.state.value}
+                    <input type="text" value={this.state.value} 
                            ref={this.textInput}
                            onChange={this.handleChange}
                            onBlur={this.handleBlur}/>

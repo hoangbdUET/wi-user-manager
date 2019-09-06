@@ -16,34 +16,40 @@ CompanyInfoModal.propTypes = {
 function CompanyInfoModal(props) {
     let company = props.company || {};
 
-    return (<Modal isOpen={props.isOpen} className="ModalStyle CompanyInfoModal">
+    return (<Modal isOpen={props.isOpen} portalClassName="ModalStyle" className="CompanyInfoModal" overlayClassName="modal-backdrop" >
         <h4>New Company</h4>
-        <div className="fieldset">
-            <label>Name:</label>
-            <Editable value={company.name || ""}
-                      formatValue={(v) => (((v !== null || v != undefined) && v.length) ? v : '[empty]')}
-                      onValueChanged={(name) => company.name = name}/>
+        <div className="content-dialog">
+            <div style={{flex:2}}>
+                <div className="fieldset">
+                    <div>Name:</div>
+                    <Editable value={company.name || ""}
+                            formatValue={(v) => (((v !== null || v != undefined) && v.length) ? v : '[empty]')}
+                            onValueChanged={(name) => company.name = name}/>
+                </div>
+                <div className="fieldset">
+                    <div>Location:</div>
+                    <Editable value={company.location || ""}
+                            formatValue={(v) => (((v !== null || v != undefined) && v.length) ? v : '[empty]')}
+                            onValueChanged={(location) => company.location = location}/>
+                </div>
+                <div className="fieldset">
+                    <div>Description:</div>
+                    <Editable value={company.description || ""}
+                            formatValue={(v) => (((v !== null || v != undefined) && v.length) ? v : '[empty]')}
+                            onValueChanged={(description) => company.description = description}/>
+                </div>
+                <div className="fieldset">
+                    <div>Licenses:</div>
+                    <Editable value={company.licenses || 10}
+                            formatValue={(v) => (((v !== null || v != undefined) && !isNaN(v)) ? v : '[empty]')}
+                            setValue={input => isNaN(parseInt(input)) ? 0 : parseInt(input)}
+                            onValueChanged={(licenses) => company.licenses = licenses}/>
+                </div>
+            </div>
         </div>
-        <div className="fieldset">
-            <label>Location:</label>
-            <Editable value={company.location || ""}
-                      formatValue={(v) => (((v !== null || v != undefined) && v.length) ? v : '[empty]')}
-                      onValueChanged={(location) => company.location = location}/>
+        <div className="footer-dialog">
+            <div className="btn-next" onClick={(e) => props.onOk(company)}>OK</div>
+            <div className="btn-next" onClick={props.onCancel}>Cancel</div>
         </div>
-        <div className="fieldset">
-            <label>Description:</label>
-            <Editable value={company.description || ""}
-                      formatValue={(v) => (((v !== null || v != undefined) && v.length) ? v : '[empty]')}
-                      onValueChanged={(description) => company.description = description}/>
-        </div>
-        <div className="fieldset">
-            <label>Licenses:</label>
-            <Editable value={company.licenses || 10}
-                      formatValue={(v) => (((v !== null || v != undefined) && v.length) ? v : '[empty]')}
-                      setValue={input => isNaN(parseInt(input)) ? 0 : parseInt(input)}
-                      onValueChanged={(licenses) => company.licenses = licenses}/>
-        </div>
-        <button onClick={(e) => props.onOk(company)}>Ok</button>
-        <button onClick={props.onCancel}>Close</button>
     </Modal>);
 }

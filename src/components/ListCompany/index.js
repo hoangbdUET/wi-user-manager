@@ -6,6 +6,7 @@ const RowCompany = require("../RowCompany");
 
 function ListCompany(props) {
     MyList.call(this, props);
+    this.listName = "Company";
     this.state = Object.assign(this.state, {
         orderByText: "",
         colWidths: [100, 150, 150, 150, 150]

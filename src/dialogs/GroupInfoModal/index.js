@@ -20,11 +20,11 @@ function GroupInfoModal(props) {
     React.Component.call(this, props);
 
     this.state = {
-        users: props.users || []
+        users: props.users || [],
+        group: props.group || []
     }
 
-    let group = props.group || {};
-    let disabled = !!Object.keys(group).length;
+    let disabled = !!Object.keys(this.state.group).length;
 
     this.getUser = getUser.bind(this);
 
@@ -39,21 +39,21 @@ function GroupInfoModal(props) {
     }
 
     this.render = function () {
-        return (<Modal isOpen={this.props.isOpen} className="ModalStyle CompanyInfoModal">
-            <div className="title-dialog">New Group</div>
+        return (<Modal isOpen={this.props.isOpen} portalClassName="ModalStyle" className="GroupInfoModal" overlayClassName="modal-backdrop">
+            <h4>New Group</h4>
             <div className="content-dialog">
                 <div style={{flex:2}}>
                     <div className="fieldset">
                         <div>Name:</div>
-                        <Editable value={group.name || ""} disabled={disabled}
-                                formatValue={(v) => (((v !== null || true) && v.length) ? v : '[empty]')}
-                                onValueChanged={(name) => group.name = name}/>
+                        <Editable value={this.state.group.name || ""} disabled={disabled}
+                                formatValue={(v) => (((v !== null ) && v.length) ? v : '[empty]')}
+                                onValueChanged={(name) => this.state.group.name = name}/>
                     </div>
                     <div className="fieldset">
                         <div>Description:</div>
-                        <Editable value={group.description || ""} disabled={disabled}
+                        <Editable value={this.state.group.description || ""} disabled={disabled}
                                 formatValue={(v) => (((v !== null || true) && v.length) ? v : '[empty]')}
-                                onValueChanged={(description) => group.description = description}/>
+                                onValueChanged={(description) => this.state.group.description = description}/>
                     </div>
                     <div className="fieldset">
                         <div>Company:</div>
@@ -62,8 +62,8 @@ function GroupInfoModal(props) {
                                 items={this.props.companies}
                                 itemHeight={18}
                                 selectedItem={this.props.selectedCompany} onItemClicked={(clickedCompany) => {
-                            group.idCompany = clickedCompany.idCompany;
-                            group.company = clickedCompany;
+                            this.state.group.idCompany = clickedCompany.idCompany;
+                            this.state.group.company = clickedCompany;
                         }}/>
                         {/*<Editable value={group.company || ""}*/}
                         {/*    formatValue={(v) => (((v!==null||v!=undefined) && v.length)?v:'[empty]')} */}
@@ -80,7 +80,7 @@ function GroupInfoModal(props) {
                 </div>
             </div>
             <div className="footer-dialog">
-                <div className="btn-next" onClick={(e) => this.props.onOk(group)}>OK</div>
+                <div className="btn-next" onClick={(e) => this.props.onOk(this.state.group)}>OK</div>
                 <div className="btn-next" onClick={this.props.onCancel}>Cancel</div>
             </div>
         </Modal>);

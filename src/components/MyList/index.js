@@ -15,6 +15,7 @@ MyList.propTypes = {
 function MyList(props) {
     React.Component.call(this, props);
     const MIN_WIDTH = 60;
+    this.listName = "abstractTab";
     let searchStr = props.searchStr || "";
     this.state = {
         startAt: props.startAt || 0,
@@ -134,7 +135,7 @@ function MyList(props) {
                 <div className={"setting-title"}>
                     USER MANAGEMENT
                     <div className={"ti ti-angle-right"} style={{margin: '0 10px'}}/>
-                    User
+                    {this.listName}
                 </div>
                 <div className={"setting-btn"}>
                     {

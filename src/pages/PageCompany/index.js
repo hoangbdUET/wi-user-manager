@@ -13,7 +13,9 @@ function PageCompany() {
         isAddingCompany: false,
         isEditingCompany: false,
     };
-    listCompany.call(this);
+    this.componentDidMount = function() {
+        listCompany.call(this);
+    }
     this.startAddCompany = startAddCompany.bind(this);
 
     function startAddCompany(selectedCompany) {

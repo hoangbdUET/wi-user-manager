@@ -24,26 +24,16 @@ ReactDOM.render((
                     {path: "/project", label: "Project"}
                 ]
             }/>
-            <div style={{display:'flex',flexDirection:'column', width:'100%'}}>
-                <div className={"top-bar"}>
-                    <div className={"search-box"}>
-                        <div style={{marginRight:'10px',color:'#000'}} className={"ti ti-search"}></div>
-                        <div>Filter</div>
-                    </div>
-                    <div className={"name"}>hungnk/I2G</div>
-                    {/* <div className={"logout-btn"}>Logout</div> */}
-                    <div className={"user-picture"}></div>
-                </div>
-                <MainContent default="/company" routes={
-                    [
-                        // {path:"/", component: "PageCompany"},
-                        {path: "/user", component: "PageUser"},
-                        {path: "/group", component: "PageGroup"},
-                        {path: "/company", component: "PageCompany"},
-                        {path: "/project", component: "PageProject"}
-                    ]
-                }/>
-            </div>
+           
+            <MainContent default="/company" routes={
+                [
+                    // {path:"/", component: "PageCompany"},
+                    {path: "/user", component: "PageUser"},
+                    {path: "/group", component: "PageGroup"},
+                    {path: "/company", component: "PageCompany"},
+                    {path: "/project", component: "PageProject"}
+                ]
+            }/>
 
         </Router>
         <ToastContainer/>

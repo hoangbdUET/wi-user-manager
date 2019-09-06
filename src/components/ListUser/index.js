@@ -5,6 +5,7 @@ const RowUser = require('../RowUser');
 
 function ListUser(props) {
     MyList.call(this, props);
+    this.listName = "User";
     this.state = Object.assign(this.state, {
         orderByText: "",
         colWidths: [50, 150, 250, 100, 100, 250, 150]
