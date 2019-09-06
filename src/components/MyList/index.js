@@ -126,8 +126,9 @@ function MyList(props) {
         "Edit": {style: {color: "#4B7DEF", fontWeight: "bold"}, icon: "ti ti-pencil"},
         "Delete": {style: {color: "#F44336", fontWeight: "bold", border: "1px solid #F44336"}, icon: "ti ti-close"},
         "Refresh": {style: {color: "#4B7DEF", fontWeight: "bold"}, icon: "ti ti-reload"},
-        "Manage Users": {style: {color: "#4B7DEF", fontWeight: "bold"}, icon: "ti ti-settings"}
-
+        "Manage Users": {style: {color: "#4B7DEF", fontWeight: "bold"}, icon: "ti ti-settings"},
+        "Stop Sharing": {style: {color: "#4B7DEF", fontWeight: "bold"}, icon: "ti ti-sharethis-alt"},
+        "Start Sharing": {style: {color: "#4B7DEF", fontWeight: "bold"}, icon: "ti ti-sharethis"},
     };
     this.render = function () {
         return (
@@ -140,16 +141,18 @@ function MyList(props) {
                 <div className={"setting-btn"}>
                     {
                         this.props.actions && this.props.actions.map(
-                            (action, idx) => (
-                                <div className={"btn-next"}
-                                     style={buttonStyle[action.name] ? buttonStyle[action.name].style : {}}
-                                     key={idx} onClick={(e) => action.handler(this.state.selectedItem)}>
-                                    <div className={buttonStyle[action.name] ? buttonStyle[action.name].icon : ""}
-                                         style={{marginRight: '10px'}}/>
-                                         {action.label || action.title || action.name}
-                                </div>
-                            )
-                        )
+                            (action, idx) => {
+                                if (action.show) {
+                                    return (<div className={"btn-next"}
+                                                 style={buttonStyle[action.name] ? buttonStyle[action.name].style : {}}
+                                                 key={idx} onClick={(e) => action.handler(this.state.selectedItem)}>
+                                        <div className={buttonStyle[action.name] ? buttonStyle[action.name].icon : ""}
+                                             style={{marginRight: '10px'}}/>
+                                        {action.label || action.title || action.name}
+                                    </div>)
+                                }
+                            }
+                    )
                     }
 
                     {/*<div className={"btn-next"}*/}

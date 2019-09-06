@@ -7,18 +7,41 @@ const api = require("../../services/apiClient");
 function PageProject() {
     this.state = {
         items: [],
-        selectedUser: {}
+        sharedStatus: 'none'
     };
     this.componentDidMount = function () {
-        listProjects.call(this);
+        self.listProjects.call(this);
     };
-    this.listProjects = listProjects.bind(this);
-
-    function listProjects() {
-        api.getProjectsPromise().then(projects => {
-            this.setState({
-                items: projects
+    // this.listProjects = listProjects.bind(this);
+    let self = this;
+    this.listProjects = function () {
+        api.getUsersPromise().then(users => {
+            users = users.map(u => (u.username));
+            api.getProjectsPromise(users).then(projects => {
+                this.setState({
+                    items: projects
+                })
             })
+        })
+    }
+
+    this.startSharingProject = startSharingProjectClicked.bind(this);
+
+    function startSharingProjectClicked(selectedProject) {
+        if (!selectedProject) return;
+        console.log("Start sharing ", selectedProject);
+        api.startSharingProject(selectedProject).then(() => {
+            self.listProjects()
+        })
+    }
+
+    this.stopSharingProjectClicked = stopSharingProjectClicked.bind(this);
+
+    function stopSharingProjectClicked(selectedProject) {
+        if (!selectedProject) return;
+        console.log("Stop sharing ", selectedProject);
+        api.stopSharingProject(selectedProject).then(() => {
+            self.listProjects()
         })
     }
 
@@ -26,15 +49,19 @@ function PageProject() {
         return (<div className={"PageProject"}>
             <ListProject
                 itemPerPage={10} actions={[
-                {name: "Refresh", handler: this.listProjects},
                 {
-                    name: "Stop Sharing", handler: () => {
-                    }
+                    name: "Stop Sharing", handler: (selectedProject) => {
+                        return stopSharingProjectClicked(selectedProject);
+                    },
+                    show: true
                 },
                 {
-                    name: "Start Sharing", handler: () => {
-                    }
-                }
+                    name: "Start Sharing", handler: (selectedProject) => {
+                        return startSharingProjectClicked(selectedProject);
+                    },
+                    show: true
+                },
+                {name: "Refresh", handler: self.listProjects, show: true}
 
             ]} items={this.state.items}
             />

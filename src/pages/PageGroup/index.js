@@ -15,12 +15,12 @@ function PageGroup(props) {
         isDeletingGroup: false
     }
     let _groups;
-    this.componentDidMount = function() {
+    this.componentDidMount = function () {
         listGroups.call(this);
         listCompanies.call(this);
         listUsers.call(this);
     }
-    
+
 
     let transform = group => ({
         idGroup: group.idGroup,
@@ -118,7 +118,7 @@ function PageGroup(props) {
                     this.setState({
                         isAddingGroup: true
                     });
-                }
+                }, show: true
             }, {
                 name: "Delete",
                 handler: (selectedGroup) => {
@@ -126,7 +126,7 @@ function PageGroup(props) {
                         isDeletingGroup: true,
                         selectedGroup
                     })
-                }
+                }, show: true
             }, {
                 name: "Edit",
                 handler: (selectedGroup) => {
@@ -134,13 +134,15 @@ function PageGroup(props) {
                         isEditingGroup: true,
                         selectedGroup
                     })
-                }
-            }, {
-                name: "Refresh",
-                handler: this.listGroups
+                }, show: true
             }, {
                 name: 'Manage Users',
-                handler: this.listGroups
+                handler: this.listGroups,
+                show: true
+            }, {
+                name: "Refresh",
+                handler: this.listGroups,
+                show: true
             }]} items={this.state.items}/>
             <GroupInfoModal isOpen={this.state.isAddingGroup}
                             onOk={this.addGroup}

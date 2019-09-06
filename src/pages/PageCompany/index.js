@@ -101,13 +101,13 @@ function PageCompany() {
     this.render = function () {
         return <div className={"PageCompany"}>
             <ListCompany itemPerPage={10} actions={[{
-                name: "Add", handler: startAddCompany.bind(this)
+                name: "Add", handler: startAddCompany.bind(this), show: true
             }, {
-                name: "Delete", handler: this.startDeleteCompany
+                name: "Delete", handler: this.startDeleteCompany, show: true
             }, {
-                name: "Edit", handler: this.startEditCompany
+                name: "Edit", handler: this.startEditCompany, show: true
             }, {
-                name: "Refresh", handler: listCompany.bind(this)
+                name: "Refresh", handler: listCompany.bind(this), show: true
             }]} items={this.state.items}/>
             <CompanyInfoModal isOpen={this.state.isAddingCompany}
                               onOk={this.addCompany} onCancel={(e) => this.setState({isAddingCompany: false})}/>

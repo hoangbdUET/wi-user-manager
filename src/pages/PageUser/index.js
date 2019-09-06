@@ -78,13 +78,13 @@ function PageUser(props) {
             <div className={"PageUser"}>
                 <ListUser itemPerPage={20} items={this.state.items}
                           actions={[{
-                              name: "Add", handler: this.startAddUser
+                              name: "Add", handler: this.startAddUser, show: true
                           }, {
-                              name: "Delete", handler: this.startDeleteUser
+                              name: "Delete", handler: this.startDeleteUser, show: true
                           }, {
-                              name: "Edit", handler: this.startEditUser
+                              name: "Edit", handler: this.startEditUser, show: true
                           }, {
-                              name: "Refresh", handler: this.listUser
+                              name: "Refresh", handler: this.listUser, show: true
                           }]}
                 />
                 <UserInfoModal isOpen={this.state.isEditingUser} onOk={this.callApiUpdateUser} action={"edit"}
