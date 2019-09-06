@@ -6,15 +6,17 @@
         right: 0px;
         bottom: 0px;
         background-color: rgba(0, 0, 0, 0.29);
-
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     .ReactModal__Content {
         position: absolute;
-        top: 70px;
-        left: 50%;
-        transform: translate(-50%, 0);
+        // top: 70px;
+        // left: 50%;
+        // transform: translate(-50%, 0);
         width: 500px;
-        max-height: 400px;
+        max-height: 80vh;
         min-height: 25vh;
         background: rgb(255, 255, 255);
         overflow: hidden;
@@ -22,6 +24,7 @@
         flex-direction: column;
         border-radius: 4px;
         outline: none;
+        animation     : show-dialog 0.3s ease;
         h4 {
             font-size: 120%;
             font-weight: bold;
@@ -87,7 +90,15 @@
             }
         }
     }
-
+    @keyframes show-dialog {
+        0% {
+            transform: scale(0);
+        }
+    
+        100% {
+            transform: scale(1);
+        }
+    }
     
 
 }

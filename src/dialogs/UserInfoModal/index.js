@@ -16,7 +16,7 @@ function UserInfoModal(props) {
     let user = props.user || {};
     return (
         <Modal isOpen={props.isOpen} portalClassName="ModalStyle" className="UserInfoModal" overlayClassName="modal-backdrop">
-            <h4>New Company</h4>
+            <h4>New User</h4>
             <div className="content-dialog">
                 <div style={{flex: 1, overflow: 'auto'}}>
                     <div className="fieldset">
