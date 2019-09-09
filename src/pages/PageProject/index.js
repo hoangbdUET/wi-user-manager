@@ -53,13 +53,13 @@ function PageProject() {
                     name: "Stop Sharing", handler: (selectedProject) => {
                         return stopSharingProjectClicked(selectedProject);
                     },
-                    show: true
+                    show: ([selectedProject]) => (selectedProject? !!selectedProject.shareKey : false)
                 },
                 {
                     name: "Start Sharing", handler: (selectedProject) => {
                         return startSharingProjectClicked(selectedProject);
                     },
-                    show: true
+                    show: ([selectedProject]) => (selectedProject ? (!selectedProject.shareKey): false)
                 },
                 {name: "Refresh", handler: self.listProjects, show: true}
 

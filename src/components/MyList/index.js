@@ -5,6 +5,8 @@ const RowCompany = require('../RowCompany');
 const PropTypes = require('prop-types');
 const apiClient = require('../../services/apiClient');
 
+const evaluate = require('../../common').evaluate;
+
 MyList.propTypes = {
     itemPerPage: PropTypes.number,
     startAt: PropTypes.number,
@@ -142,7 +144,7 @@ function MyList(props) {
                     {
                         this.props.actions && this.props.actions.map(
                             (action, idx) => {
-                                if (action.show) {
+                                if (evaluate(action.show, [this.state.selectedItem])) {
                                     return (<div className={"btn-next"}
                                                  style={buttonStyle[action.name] ? buttonStyle[action.name].style : {}}
                                                  key={idx} onClick={(e) => action.handler(this.state.selectedItem)}>

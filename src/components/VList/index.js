@@ -32,6 +32,7 @@ function VListItem(props) {
         }} className={(this.props.item || {}).selected?"selectedRow":""}>{this.props.children}</div>;
     }
 }
+
 VListItem.prototype = Object.create(React.Component.prototype);
 
 function VList(props) {
@@ -105,7 +106,7 @@ function VList(props) {
                 overflow:'auto'
             }} onScroll={(e) => this.handleScroll(e)}>
                 <div style={{
-                    width: '100%',
+                    // width: '100%',
                     height: this.state.itemHeight * evaluate(this.state.totalItems)
                 }}>
                     {this.getItems(this.state.startAt, Math.min(this.state.viewLength, evaluate(this.state.totalItems)))}

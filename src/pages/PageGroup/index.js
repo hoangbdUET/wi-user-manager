@@ -149,7 +149,7 @@ function PageGroup(props) {
                             onCancel={() => this.setState({isAddingGroup: false})} companies={this.state.companies}
                             users={this.state.users}
                             selectedCompany={getCompany(this.state.selectedGroup)}/>
-            <GroupInfoModal isOpen={this.state.isEditingGroup} group={this.state.selectedGroup}
+            <GroupInfoModal isOpen={this.state.isEditingGroup} group={this.state.selectedGroup} groupUsers={getGroupUsers(this.state.selectedGroup)}
                             onOk={this.editGroup}
                             onCancel={() => this.setState({isEditingGroup: false})} companies={this.state.companies}
                             users={this.state.users}
@@ -165,6 +165,11 @@ function PageGroup(props) {
         if (!group) return;
         let oriGroup = _groups.find(g => g.idGroup === group.idGroup);
         return oriGroup.company;
+    }
+    function getGroupUsers(group) {
+        if (!group) return;
+        let oriGroup = _groups.find(g => g.idGroup === group.idGroup);
+        return oriGroup.users;
     }
 }
 
