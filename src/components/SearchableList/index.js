@@ -13,12 +13,22 @@ function SearchableList(props) {
         totalItems: props.totalItems,
         items: props.items
     }
+
     this.render = function() {
         return (<div className="SearchableList">
             <div>
-                <input value={this.state.searchStr} onChange={(e) => {this.setState({
+                <input value={this.state.searchStr} onChange={(e) => {
+                    if (e.target.value == "") {
+                        this.setState({
+                            searchStr: e.target.value,
+                            items: this.props.items
+                        });
+                    }
+                    this.setState({
                     searchStr: e.target.value,
-                    items: this.props.items.filter(item => JSON.stringify(item).toLowerCase().includes(e.target.value))
+                    items: this.props.items.filter(item => {
+                        return JSON.stringify(item).toLowerCase().includes(e.target.value);
+                    })
                 })}} placeholder="Search ..."/>
             </div>
             <div style={{flex:1, overflow:'hidden'}}>

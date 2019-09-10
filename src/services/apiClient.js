@@ -10,7 +10,9 @@ module.exports = {
     getUsersPromise,
     getProjectsPromise,
     stopSharingProject,
-    startSharingProject
+    startSharingProject,
+    removeUserFromGroup,
+    addUsersToGroup
 };
 
 //const WI_AUTH_URL = "https://users.i2g.cloud";
@@ -87,4 +89,12 @@ function stopSharingProject(project) {
 
 function startSharingProject(project) {
     return doPost('/shared-project/new', {project_name: project.name, username: project.createdBy})
+}
+
+function removeUserFromGroup(idGroup, idUser) {
+    return doPost('/group/remove-user', {idGroup: idGroup, idUser: idUser});
+}
+
+function addUsersToGroup(idGroup, users) {
+    return doPost('/group/add-users-to-group', {idGroup: idGroup, idUsers: users});
 }

@@ -15,7 +15,21 @@ function PageGroup(props) {
         isDeletingGroup: false
     }
     let _groups;
-    this.componentDidMount = function () {
+    
+    this.componentWillMount = function () {
+        this.initListFromServer();
+    }
+
+    this.submitAndCloseModel = function() {
+        this.initListFromServer();
+        console.log('run');
+        this.setState({
+            isEditingGroup: false
+        });
+    }
+
+    this.initListFromServer  = function () {
+        console.log('init');
         listGroups.call(this);
         listCompanies.call(this);
         listUsers.call(this);
@@ -92,23 +106,6 @@ function PageGroup(props) {
         }).catch(e => console.log(e))
     }
 
-    this.editGroup = editGroup.bind(this);
-
-    function editGroup(aGroup) {
-        let {company, ...group} = aGroup;
-        console.log(aGroup, group);
-        // api.editGroupPromise(group).then(updatedGroup => {
-        //     let idx = _groups.findIndex(g => g.idGroup === updatedGroup.idGroup);
-        //     this.setState(state => {
-        //         let idx = state.items.findIndex(g => g.idGroup === updatedGroup.idGroup);
-        //         state.items[idx] = transform(updatedGroup);
-        //         return {
-        //             items: state.items
-        //         }
-        //     });
-        // }).catch(e => console.error(e));
-    }
-
     this.render = function () {
         return (<div className="PageGroup">
 
@@ -144,16 +141,17 @@ function PageGroup(props) {
                 handler: this.listGroups,
                 show: true
             }]} items={this.state.items}/>
-            <GroupInfoModal isOpen={this.state.isAddingGroup}
+            {/* <GroupInfoModal isOpen={this.state.isAddingGroup}
                             onOk={this.addGroup}
                             onCancel={() => this.setState({isAddingGroup: false})} companies={this.state.companies}
                             users={this.state.users}
-                            selectedCompany={getCompany(this.state.selectedGroup)}/>
+                            selectedCompany={getCompany(this.state.selectedGroup)}/> */}
             <GroupInfoModal isOpen={this.state.isEditingGroup} group={this.state.selectedGroup} groupUsers={getGroupUsers(this.state.selectedGroup)}
-                            onOk={this.editGroup}
+                            onOk={() => this.submitAndCloseModel()}
                             onCancel={() => this.setState({isEditingGroup: false})} companies={this.state.companies}
-                            users={this.state.users}
-                            selectedCompany={getCompany(this.state.selectedGroup)}/>
+                            users={getUserNotInGroup(this.state.users, this.state.selectedGroup)}
+                            selectedCompany={getCompany(this.state.selectedGroup)}
+                            selectedGroupId = {(this.state.selectedGroup||{}).idGroup} />
             <ConfirmationModal isOpen={this.state.isDeletingGroup}
                                title="Confirmation" message="Are you sure to delete this group?"
                                onOk={() => this.deleteGroup(this.state.selectedGroup)}
@@ -170,6 +168,22 @@ function PageGroup(props) {
         if (!group) return;
         let oriGroup = _groups.find(g => g.idGroup === group.idGroup);
         return oriGroup.users;
+    }
+    function isExistUserInList(users, userId) {
+        for (let i = 0; i < users.length; i++) {
+            if (users[i].idUser === userId) return true;
+        }
+        return false;
+    }
+    function getUserNotInGroup(users, selectedGr) {
+        let originGr = (_groups || []).find(g => g.idGroup === (selectedGr||{}).idGroup);
+        if (!originGr)
+            return users;
+        let usersInGr = originGr.users;
+        let usersNotInGr = users.filter((u) => {
+            return !isExistUserInList(usersInGr, u.idUser);
+        });
+        return usersNotInGr;
     }
 }
 
