@@ -24,7 +24,7 @@ function GroupInfoModal(props) {
 
     this.state = {
         users: props.users || [],
-        group: props.group || [],
+        group: props.group || {},
         groupUsers: props.groupUsers || [],
         tabIdx: 0,
         removeUsers: [],
@@ -36,25 +36,47 @@ function GroupInfoModal(props) {
         this.setState({
             tabIdx: 0,
             removeUsers: [],
-            addUsers: []
+            addUsers: [],
+            group: {}
+        });
+    }
+
+    this.runPropsUpdate = function() {
+        console.log('run');
+        console.log(this.props);
+        this.setState({
+            users: this.props.users || [],
+            group: this.props.group || {},
+            groupUsers: this.props.groupUsers || []
         });
     }
 
     this.updateToServer = function() {
-        return new Promise(async (resolve, reject)=>{
-            for (let i = 0; i < this.state.removeUsers.length; i++)
-                try {
-                    await api.removeUserFromGroup(this.props.selectedGroupId, this.state.removeUsers[i].idUser);
-                } catch (e) {
-                    reject(e);
-                }
-            try {
-                await api.addUsersToGroup(this.props.selectedGroupId, this.state.addUsers.map((u)=>u.idUser));
-            } catch (e) {
-                reject(e);
-            }
-            resolve(null);
-        });
+        // return new Promise(async (resolve, reject)=>{
+        //     for (let i = 0; i < this.state.removeUsers.length; i++)
+        //         try {
+        //             await api.removeUserFromGroup(this.props.selectedGroupId, this.state.removeUsers[i].idUser);
+        //         } catch (e) {
+        //             reject(e);
+        //         }
+        //     try {
+        //         await api.addUsersToGroup(this.props.selectedGroupId, this.state.addUsers.map((u)=>u.idUser));
+        //     } catch (e) {
+        //         reject(e);
+        //     }
+        //     resolve(null);
+        // });
+        let listPromise = [];
+        for (let i = 0; i < this.state.removeUsers.length; i++) {
+            listPromise.push(api.removeUserFromGroup(this.props.selectedGroupId, this.state.removeUsers[i].idUser));
+        }
+        if (this.state.addUsers.length > 0) {
+            listPromise.push(api.addUsersToGroup(this.props.selectedGroupId, this.state.addUsers.map((u)=>u.idUser)));
+        }
+        if (this.state.group.name) {
+            listPromise.push(api.editGroupInfo(this.state.group.idGroup, this.state.group.name, this.state.group.description));
+        }
+        return Promise.all(listPromise);
     };
 
     this.submitAndClose = function(e) {
@@ -66,7 +88,6 @@ function GroupInfoModal(props) {
         });
     }
 
-
     let disabled = !!Object.keys(this.props.group || {}).length;
 
     this.getUser = getUser.bind(this);
@@ -77,7 +98,6 @@ function GroupInfoModal(props) {
                 {user ? (<Fragment>
                     <div className="item-content">{user.username}</div>
                     <i className="action-icon ti-arrow-right" onClick={(e) => {1
-                        console.log('add btn clicked');
                         this.setState(state => {
                             let idx = state.removeUsers.findIndex(u => u.idUser === user.idUser);
                             if (idx >= 0) {
@@ -108,7 +128,6 @@ function GroupInfoModal(props) {
                 {user ? (<Fragment>
                     <div className="item-content">{user.username}</div>
                     <i className="action-icon ti-close" onClick={() => {
-                        console.log('remove btn clicked');
                         this.setState(state => {
                             let idx = state.addUsers.findIndex(u => u.idUser === user.idUser);
                             if (idx >= 0) {
@@ -137,10 +156,16 @@ function GroupInfoModal(props) {
     function getRawUser(idx) {
         return this.state.users[idx];
     }
+
     function doRender(info) {
-        let group = this.props.group || {};
+        console.log(info);
         return (
-        <Modal isOpen={this.props.isOpen} portalClassName="ModalStyle" className="GroupInfoModal" overlayClassName="modal-backdrop">
+        <Modal isOpen={this.props.isOpen} 
+                portalClassName="ModalStyle" 
+                className="GroupInfoModal" 
+                overlayClassName="modal-backdrop"
+                onAfterOpen={()=>this.runPropsUpdate()}
+        >
             <h4>New Group</h4>
             <div className="content-dialog">
                 <div className="tab-controls">
@@ -156,15 +181,26 @@ function GroupInfoModal(props) {
                     <div className={"tab-content"} style={{visibility:this.state.tabIdx===0?'visible':'hidden'}}>
                         <div className="fieldset">
                             <div>Name:</div>
-                            <Editable value={group.name || ""} disabled={disabled}
+                            <Editable value={this.state.group.name || ""} disabled={disabled}
                                     formatValue={(v) => (((v !== null ) && v.length) ? v : '[empty]')}
-                                    onValueChanged={(name) => group.name = name}/>
+                                    onValueChanged={(name) => this.setState((state)=>{
+                                        console.log(this.state.group);
+                                        state.group.name = name;
+                                        return {
+                                            group: state.group
+                                        };
+                                    })}/>
                         </div>
                         <div className="fieldset">
                             <div>Description:</div>
-                            <Editable value={group.description || ""} disabled={disabled}
+                            <Editable value={this.state.group.description || ""} disabled={disabled}
                                     formatValue={(v) => (((v !== null || true) && v.length) ? v : '[empty]')}
-                                    onValueChanged={(description) => group.description = description}/>
+                                    onValueChanged={(description) => this.setState((state)=>{
+                                        state.group.description = description;
+                                        return {
+                                            group: state.group
+                                        };
+                                    })}/>
                         </div>
                         <div className="fieldset">
                             <div>Company:</div>
@@ -208,16 +244,16 @@ function GroupInfoModal(props) {
             </div>
         </Modal>);
     }
-    this.render = function () {
-        
-        if (((this.state.groupUsers || []).length !== (this.props.groupUsers || []).length) || 
-            ((this.state.users || []).length !== (this.props.users || []).length)) {
-            this.setState({
-                users:this.props.users,
-                groupUsers: this.props.groupUsers
-            })
-            return doRender.call(this, {users: this.props.users, groupUsers: this.props.groupUsers});
-        }
+
+    this.render = function () {    
+        // if (((this.state.groupUsers || []).length !== (this.props.groupUsers || []).length) || 
+        //     ((this.state.users || []).length !== (this.props.users || []).length)) {
+        //     this.setState({
+        //         users:this.props.users,
+        //         groupUsers: this.props.groupUsers
+        //     })
+        //     return doRender.call(this, {users: this.props.users, groupUsers: this.props.groupUsers});
+        // }
         return doRender.call(this, this.state);
         // return (<Modal isOpen={this.props.isOpen} portalClassName="ModalStyle" className="GroupInfoModal" overlayClassName="modal-backdrop">
         //     <h4>New Group</h4>

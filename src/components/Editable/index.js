@@ -76,6 +76,7 @@ function Editable(props) {
     }
 
     this.render = function () {
+        console.log(this.props);
         const commonStyle = {
             width: '100%',
             height: '100%'
@@ -91,7 +92,7 @@ function Editable(props) {
             <div className="Editable" onFocus={this.handleClick} tabIndex={0}>
                 <div className="editable-value" style={this.state.editing ? hiddenStyle : visibleStyle} tabIndex={0}
                      onClick={this.handleClick}>
-                    {formatter(this.state.value)}
+                    {formatter(this.props.value)}
                 </div>
 
                 <form style={this.state.editing ? visibleStyle : hiddenStyle}

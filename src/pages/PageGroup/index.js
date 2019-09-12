@@ -2,7 +2,7 @@ module.exports = PageGroup;
 require('./style.less');
 const React = require('react');
 const ListGroup = require('../../components/ListGroup');
-const {GroupInfoModal, ConfirmationModal} = require('../../dialogs');
+const {GroupInfoModal, ConfirmationModal, NewGroupModal} = require('../../dialogs');
 const api = require('../../services/apiClient');
 
 function PageGroup(props) {
@@ -29,7 +29,6 @@ function PageGroup(props) {
     }
 
     this.initListFromServer  = function () {
-        console.log('init');
         listGroups.call(this);
         listCompanies.call(this);
         listUsers.call(this);
@@ -156,6 +155,10 @@ function PageGroup(props) {
                                title="Confirmation" message="Are you sure to delete this group?"
                                onOk={() => this.deleteGroup(this.state.selectedGroup)}
                                onCancel={() => this.setState({isDeletingGroup: false})}/>
+            <NewGroupModal 
+                            isOpen={this.state.isAddingGroup} 
+                            onCancel={() => this.setState({isAddingGroup: false})}
+                            onOk = {()=>{this.setState({isAddingGroup: false})}}/>
         </div>)
     }
 
