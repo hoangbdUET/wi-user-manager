@@ -30,7 +30,7 @@ function DropDown(props) {
             this.setState({
                 showList: false
             });
-        }, 100);
+        }, 250);
         // this.setState({
         //     showList: false
         // });
