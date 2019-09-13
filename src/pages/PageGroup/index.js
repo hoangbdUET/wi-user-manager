@@ -138,7 +138,7 @@ function PageGroup(props) {
                 show: true
             }, {
                 name: "Refresh",
-                handler: this.listGroups,
+                handler: () => {this.initListFromServer();},
                 show: true
             }]} items={this.getItemList()}/>
             {/* <GroupInfoModal isOpen={this.state.isAddingGroup}

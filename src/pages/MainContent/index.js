@@ -37,7 +37,7 @@ function MainContent(props) {
                     {routes.map((aRoute, idx) => <CustomRoute key={idx} path={aRoute.path} name={aRoute.path} exact
                                                         component={aRoute.component} filter = {this.state.filter} resetFilter = {()=>{
                                                             this.resetFilter();
-                                                        }}/>)}
+                                                        }} auth = {true}/>)}
                     <Redirect exact from="/" to={props.default}/>
                 </Switch>
             </div>
