@@ -8,6 +8,7 @@ const Modal = require('react-modal');
 Modal.setAppElement('#react-app');
 const PropTypes = require('prop-types');
 const api = require('../../services/apiClient');
+const {toast} = require('react-toastify');
 
 const Editable = require('../../components/Editable');
 
@@ -42,8 +43,6 @@ function GroupInfoModal(props) {
     }
 
     this.runPropsUpdate = function() {
-        console.log('run');
-        console.log(this.props);
         this.setState({
             users: this.props.users || [],
             group: this.props.group || {},
@@ -81,10 +80,11 @@ function GroupInfoModal(props) {
 
     this.submitAndClose = function(e) {
         this.updateToServer().then((rs)=>{
+            toast.success("Update group successfully");
             this.clearModelSession();
             this.props.onOk();
         }).catch(e=>{
-            console.log(e);
+            toast.error(e.message);
         });
     }
 
@@ -158,7 +158,6 @@ function GroupInfoModal(props) {
     }
 
     function doRender(info) {
-        console.log(info);
         return (
         <Modal isOpen={this.props.isOpen} 
                 portalClassName="ModalStyle" 
@@ -202,7 +201,7 @@ function GroupInfoModal(props) {
                                         };
                                     })}/>
                         </div>
-                        <div className="fieldset">
+                        {/* <div className="fieldset">
                             <div>Company:</div>
                             <DropDown disabled={disabled} getItem={(company) => (
                                 <div style={{height: '18px'}}>{company ? company.name : "[select company]"}</div>)}
@@ -212,7 +211,7 @@ function GroupInfoModal(props) {
                                 group.idCompany = clickedCompany.idCompany;
                                 group.company = clickedCompany;
                             }}/>
-                        </div>
+                        </div> */}
                     </div>
                     <div className="members tab-content" style={{visibility:this.state.tabIdx===1?'visible':'hidden'}}>
                         <div>Members:</div>

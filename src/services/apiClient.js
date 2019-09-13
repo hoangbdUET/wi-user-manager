@@ -13,7 +13,8 @@ module.exports = {
     startSharingProject,
     removeUserFromGroup,
     addUsersToGroup,
-    editGroupInfo
+    editGroupInfo,
+    newGroup
 };
 
 //const WI_AUTH_URL = "https://users.i2g.cloud";
@@ -102,4 +103,8 @@ function addUsersToGroup(idGroup, users) {
 
 function editGroupInfo(idGroup, name, description) {
     return doPost('/group/edit', {idGroup: idGroup, name: name, description: description});
+}
+
+function newGroup(group) {
+    return doPost('/group/new', group);
 }

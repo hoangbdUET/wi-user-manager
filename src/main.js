@@ -5,7 +5,7 @@ const ReactRouter = require('react-router-dom');
 const Router = ReactRouter.BrowserRouter;
 const LeftNavigation = require('./pages/LeftNavigation');
 const MainContent = require('./pages/MainContent');
-const {ToastContainer} = require('react-toastify');
+const {ToastContainer, toast} = require('react-toastify');
 const Fragment = React.Fragment;
 
 require('react-toastify/dist/ReactToastify.min.css');
@@ -13,6 +13,13 @@ require("./reset.css");
 require("./main.less");
 const containerElem = document.getElementById('react-app');
 // ReactDOM.render(<Fragment><HelloWorld name="Hoang"/><GoodbyeWorld name="HoangBD"/></Fragment>, containerElem);
+
+toast.configure({
+    autoClose: 5000,
+    draggable: false,
+    position: toast.POSITION.BOTTOM_RIGHT
+});
+
 ReactDOM.render((
     <Fragment>
         <Router>
@@ -37,6 +44,6 @@ ReactDOM.render((
             }/>
 
         </Router>
-        <ToastContainer/>
+        <ToastContainer />
     </Fragment>
 ), containerElem);

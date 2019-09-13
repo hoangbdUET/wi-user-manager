@@ -76,7 +76,6 @@ function Editable(props) {
     }
 
     this.render = function () {
-        console.log(this.props);
         const commonStyle = {
             width: '100%',
             height: '100%'

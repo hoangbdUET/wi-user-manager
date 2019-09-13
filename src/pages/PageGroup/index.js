@@ -7,6 +7,7 @@ const api = require('../../services/apiClient');
 
 function PageGroup(props) {
     React.Component.call(this, props);
+    // console.log(this.props);
     this.state = {
         items: [],
         companies: [],
@@ -20,13 +21,6 @@ function PageGroup(props) {
         this.initListFromServer();
     }
 
-    this.submitAndCloseModel = function() {
-        this.initListFromServer();
-        console.log('run');
-        this.setState({
-            isEditingGroup: false
-        });
-    }
 
     this.initListFromServer  = function () {
         listGroups.call(this);
@@ -146,19 +140,31 @@ function PageGroup(props) {
                             users={this.state.users}
                             selectedCompany={getCompany(this.state.selectedGroup)}/> */}
             <GroupInfoModal isOpen={this.state.isEditingGroup} group={this.state.selectedGroup} groupUsers={getGroupUsers(this.state.selectedGroup)}
-                            onOk={() => this.submitAndCloseModel()}
+                            onOk={() => {
+                                this.initListFromServer();
+                                this.setState({
+                                    isEditingGroup: false
+                                });
+                            }}
                             onCancel={() => this.setState({isEditingGroup: false})} companies={this.state.companies}
                             users={getUserNotInGroup(this.state.users, this.state.selectedGroup)}
                             selectedCompany={getCompany(this.state.selectedGroup)}
                             selectedGroupId = {(this.state.selectedGroup||{}).idGroup} />
             <ConfirmationModal isOpen={this.state.isDeletingGroup}
                                title="Confirmation" message="Are you sure to delete this group?"
-                               onOk={() => this.deleteGroup(this.state.selectedGroup)}
+                               onOk={() => {
+                                    this.initListFromServer();
+                                    this.deleteGroup(this.state.selectedGroup);
+                                }}
                                onCancel={() => this.setState({isDeletingGroup: false})}/>
             <NewGroupModal 
                             isOpen={this.state.isAddingGroup} 
                             onCancel={() => this.setState({isAddingGroup: false})}
-                            onOk = {()=>{this.setState({isAddingGroup: false})}}/>
+                            onOk = {()=>{
+                                this.initListFromServer();
+                                this.setState({isAddingGroup: false});
+                            }}
+                            companies = {this.state.companies}/>
         </div>)
     }
 

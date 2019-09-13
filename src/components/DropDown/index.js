@@ -24,6 +24,17 @@ function DropDown(props) {
     let formatter = this.props.formatItem || this.props.getItem || defaultFormatItem;
 
     this.handleSearchStrChanged = handleSearchStrChanged.bind(this);
+    
+    this.handleBlur = function() {
+        setTimeout(()=>{
+            this.setState({
+                showList: false
+            });
+        }, 100);
+        // this.setState({
+        //     showList: false
+        // });
+    }
 
     function handleSearchStrChanged(e) {
         let searchStr = e.target.value.toLowerCase();
@@ -47,6 +58,7 @@ function DropDown(props) {
     this.onItemClicked = onItemClicked.bind(this);
 
     function onItemClicked(clickedItem) {
+        console.log(clickedItem);
         this.setState({
             selectedItem: clickedItem,
             showList: false
@@ -67,7 +79,7 @@ function DropDown(props) {
 
                 } }>{formatter(this.state.selectedItem)}</div>
             <input className={this.state.showList?"":"hidden-block"} ref={searchStrInput}
-                type="text" value={this.state.searchStr} onChange={this.handleSearchStrChanged} />
+                type="text" value={this.state.searchStr} onChange={this.handleSearchStrChanged} onBlur={()=>this.handleBlur()}/>
             <div style={{
                 display:'block',
                 width: '100%',
@@ -81,7 +93,8 @@ function DropDown(props) {
                 <VList getItem={this.props.getItem}
                        getRawItem={this.getRawItem}
                        onItemClicked={this.onItemClicked}
-                       totalItems={() => this.state.items.length} itemHeight={this.props.itemHeight}/>
+                       totalItems={() => this.state.items.length} itemHeight={this.props.itemHeight}
+                />
             </div>
         </div>)
     }
