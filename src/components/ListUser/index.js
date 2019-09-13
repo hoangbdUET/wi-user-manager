@@ -20,7 +20,8 @@ function ListUser(props) {
             status: "Status",
             role: "Role",
             fullname: "FullName",
-            idCompany: "IdCompany"
+            company: "Company",
+            license_package: "License Package"
         };
 
         return (

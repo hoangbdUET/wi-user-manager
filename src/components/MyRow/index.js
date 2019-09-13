@@ -46,7 +46,7 @@ function MyRow(props) {
                 <DraggableCore handle=".resizer" axis="x"
                                onStart={(e, data) => (dragStart(e, data, idx))}
                                onStop={(e, data) => (dragEnd(e, data, idx))}>
-                    <div className="resizer"></div>
+                    <div className="resizer"/>
                 </DraggableCore>
             </div>
         ) : (

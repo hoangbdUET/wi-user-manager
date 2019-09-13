@@ -15,7 +15,8 @@ function RowUser(props) {
                        props.item.status,
                        props.item.role,
                        props.item.fullname,
-                       props.item.idCompany
+                       props.isHeader ? props.item.company : props.item.company ? props.item.company.name : "",
+                       props.isHeader ? props.item.license_package : props.item.license_package ? props.item.license_package.name : ""
                    ]
                }
                colWidths={props.colWidths}

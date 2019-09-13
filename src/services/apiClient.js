@@ -14,11 +14,13 @@ module.exports = {
     removeUserFromGroup,
     addUsersToGroup,
     editGroupInfo,
-    newGroup
+    newGroup,
+    getLicensePackages
 };
 
 //const WI_AUTH_URL = "https://users.i2g.cloud";
-const WI_AUTH_URL = "http://admin.dev.i2g.cloud";
+const WI_AUTH_URL = "http://127.0.0.1:2999";
+// const WI_AUTH_URL = "http://admin.dev.i2g.cloud";
 const WI_BACKEND_URL = "http://dev.i2g.cloud";
 
 function doPost(url, params, token, service) {
@@ -107,4 +109,8 @@ function editGroupInfo(idGroup, name, description) {
 
 function newGroup(group) {
     return doPost('/group/new', group);
+}
+
+function getLicensePackages() {
+    return doPost('/license-package/list', {})
 }

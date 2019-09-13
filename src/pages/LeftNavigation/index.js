@@ -9,7 +9,8 @@ function LeftNavigation(props) {
         'Group': 'tab-icon group-user-manager',
         'Company': 'tab-icon company-user-manager',
         'User': 'tab-icon user-user-manager',
-        'Project': 'tab-icon project-user-manager'
+        'Project': 'tab-icon project-user-manager',
+        'License Package': 'tab-icon license-package-manager'
     };
     return (<div className={"LeftNavigation"}>
         <span className="logo">
@@ -18,7 +19,7 @@ function LeftNavigation(props) {
         {routes.map((aRoute, idx) =>
             <div key={idx}>
                 <NavLink className={classMap[aRoute.label]} to={aRoute.path}
-                         activeStyle={{backgroundColor: '#4B7DEF',  filter: 'grayscale(0) opacity(1)', backgroundBlendMode:'screen'}}></NavLink>
+                         activeStyle={{backgroundColor: '#4B7DEF',  filter: 'grayscale(0) opacity(1)', backgroundBlendMode:'screen'}}/>
             </div>
         )}
     </div>)

@@ -29,17 +29,18 @@ ReactDOM.render((
                     {path: "/user", label: "User"},
                     {path: "/group", label: "Group"},
                     {path: "/company", label: "Company"},
-                    {path: "/project", label: "Project"}
+                    {path: "/project", label: "Project"},
+                    {path: '/license-package', label: "License Package"}
                 ]
             }/>
            
             <MainContent default="/company" routes={
                 [
-                    // {path:"/", component: "PageCompany"},
                     {path: "/user", component: "PageUser"},
                     {path: "/group", component: "PageGroup"},
                     {path: "/company", component: "PageCompany"},
-                    {path: "/project", component: "PageProject"}
+                    {path: "/project", component: "PageProject"},
+                    {path: '/license-package', component: "PageLicensePackage"}
                 ]
             }/>
 
