@@ -12,6 +12,11 @@ function MainContent(props) {
     this.state = {
         filter: ""
     }
+    this.resetFilter = function() {
+        this.setState({
+            filter: ""
+        });
+    }
     let routes = props.routes;
     this.render = function() { 
         return (
@@ -30,7 +35,9 @@ function MainContent(props) {
             <div className={"main-content"}>
                 <Switch>
                     {routes.map((aRoute, idx) => <CustomRoute key={idx} path={aRoute.path} name={aRoute.path} exact
-                                                        component={aRoute.component} filter = {this.state.filter}/>)}
+                                                        component={aRoute.component} filter = {this.state.filter} resetFilter = {()=>{
+                                                            this.resetFilter();
+                                                        }}/>)}
                     <Redirect exact from="/" to={props.default}/>
                 </Switch>
             </div>

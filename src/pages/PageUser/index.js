@@ -17,6 +17,14 @@ function PageUser(props) {
     };
     this.componentDidMount = function() {
         listUser.call(this);
+        this.props.resetFilter();
+    }
+
+    this.getItemList = function() {
+        if (this.props.filter == "") return this.state.items;
+        return this.state.items.filter((item)=>{
+            return JSON.stringify(item).toLowerCase().includes(this.props.filter.toLowerCase());
+        });
     }
 
     this.listUser = listUser.bind(this);
@@ -76,7 +84,7 @@ function PageUser(props) {
     this.render = function () {
         return (
             <div className={"PageUser"}>
-                <ListUser itemPerPage={20} items={this.state.items}
+                <ListUser itemPerPage={20} items={this.getItemList()}
                           actions={[{
                               name: "Add", handler: this.startAddUser, show: true
                           }, {

@@ -11,6 +11,7 @@ function PageProject() {
     };
     this.componentDidMount = function () {
         self.listProjects.call(this);
+        this.props.resetFilter();
     };
     // this.listProjects = listProjects.bind(this);
     let self = this;
@@ -23,6 +24,13 @@ function PageProject() {
                 })
             })
         })
+    }
+
+    this.getItemList = function() {
+        if (this.props.filter == "") return this.state.items;
+        return this.state.items.filter((item)=>{
+            return JSON.stringify(item).toLowerCase().includes(this.props.filter.toLowerCase());
+        });
     }
 
     this.startSharingProject = startSharingProjectClicked.bind(this);
@@ -63,7 +71,7 @@ function PageProject() {
                 },
                 {name: "Refresh", handler: self.listProjects, show: true}
 
-            ]} items={this.state.items}
+            ]} items={this.getItemList()}
             />
         </div>)
     }

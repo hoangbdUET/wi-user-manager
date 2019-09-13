@@ -16,8 +16,9 @@ function PageGroup(props) {
     }
     let _groups;
     
-    this.componentWillMount = function () {
+    this.componentDidMount = function () {
         this.initListFromServer();
+        this.props.resetFilter();
     }
 
 
@@ -65,7 +66,6 @@ function PageGroup(props) {
             });
         })
     }
-
 
     this.getItemList = function() {
         if (this.props.filter == "") return this.state.items;

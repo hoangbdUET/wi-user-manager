@@ -15,7 +15,7 @@ function PageCompany() {
     };
     this.componentDidMount = function() {
         listCompany.call(this);
-        console.log('mounted');
+        this.props.resetFilter();
     }
     this.startAddCompany = startAddCompany.bind(this);
 
