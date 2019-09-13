@@ -16,7 +16,7 @@ function PageGroup(props) {
     }
     let _groups;
     
-    this.componnetWillMount = function () {
+    this.componentWillMount = function () {
         this.initListFromServer();
     }
 
@@ -41,7 +41,7 @@ function PageGroup(props) {
         api.getCompaniesPromise().then(companies => {
             this.setState({
                 companies: companies
-            })
+            });
         })
     }
 
