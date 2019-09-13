@@ -15,12 +15,21 @@ function PageCompany() {
     };
     this.componentDidMount = function() {
         listCompany.call(this);
+        console.log('mounted');
     }
     this.startAddCompany = startAddCompany.bind(this);
 
     function startAddCompany(selectedCompany) {
         this.setState({
             isAddingCompany: true
+        });
+    }
+
+
+    this.getItemList = function() {
+        if (this.props.filter == "") return this.state.items;
+        return this.state.items.filter((item)=>{
+            return JSON.stringify(item).toLowerCase().includes(this.props.filter.toLowerCase());
         });
     }
 
@@ -108,7 +117,7 @@ function PageCompany() {
                 name: "Edit", handler: this.startEditCompany, show: true
             }, {
                 name: "Refresh", handler: listCompany.bind(this), show: true
-            }]} items={this.state.items}/>
+            }]} items={this.getItemList()}/>
             <CompanyInfoModal isOpen={this.state.isAddingCompany}
                               onOk={this.addCompany} onCancel={(e) => this.setState({isAddingCompany: false})}/>
             <CompanyInfoModal isOpen={this.state.isEditingCompany} company={this.state.selectedCompany}

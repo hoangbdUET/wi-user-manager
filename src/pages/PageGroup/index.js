@@ -7,7 +7,6 @@ const api = require('../../services/apiClient');
 
 function PageGroup(props) {
     React.Component.call(this, props);
-    console.log(this.props);
     this.state = {
         items: [],
         companies: [],
@@ -17,7 +16,7 @@ function PageGroup(props) {
     }
     let _groups;
     
-    this.componentWillMount = function () {
+    this.componnetWillMount = function () {
         this.initListFromServer();
     }
 
@@ -65,6 +64,14 @@ function PageGroup(props) {
                 users
             });
         })
+    }
+
+
+    this.getItemList = function() {
+        if (this.props.filter == "") return this.state.items;
+        return this.state.items.filter((item)=>{
+            return JSON.stringify(item).toLowerCase().includes(this.props.filter.toLowerCase());
+        });
     }
 
     this.deleteGroup = deleteGroup.bind(this);
@@ -133,7 +140,7 @@ function PageGroup(props) {
                 name: "Refresh",
                 handler: this.listGroups,
                 show: true
-            }]} items={this.state.items}/>
+            }]} items={this.getItemList()}/>
             {/* <GroupInfoModal isOpen={this.state.isAddingGroup}
                             onOk={this.addGroup}
                             onCancel={() => this.setState({isAddingGroup: false})} companies={this.state.companies}
