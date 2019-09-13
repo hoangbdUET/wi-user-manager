@@ -22,7 +22,7 @@ function MainContent(props) {
         <div className={"main-content"}>
             <Switch>
                 {routes.map((aRoute, idx) => <CustomRoute key={idx} path={aRoute.path} name={aRoute.path} exact
-                                                    component={aRoute.component}/>)}
+                                                    component={aRoute.component} filter = {""}/>)}
                 <Redirect exact from="/" to={props.default}/>
             </Switch>
         </div>

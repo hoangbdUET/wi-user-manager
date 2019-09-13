@@ -7,7 +7,7 @@ const api = require('../../services/apiClient');
 
 function PageGroup(props) {
     React.Component.call(this, props);
-    // console.log(this.props);
+    console.log(this.props);
     this.state = {
         items: [],
         companies: [],
