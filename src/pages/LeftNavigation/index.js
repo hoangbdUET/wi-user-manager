@@ -22,5 +22,5 @@ function LeftNavigation(props) {
                          activeStyle={{backgroundColor: '#4B7DEF',  filter: 'grayscale(0) opacity(1)', backgroundBlendMode:'screen'}}/>
             </div>
         )}
-    </div>)
+    </div>);
 }

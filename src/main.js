@@ -21,9 +21,9 @@ toast.configure({
 });
 
 ReactDOM.render((
-    <Fragment>
+    <div style={{width: '100%'}}>
         <Router>
-            <LeftNavigation routes={
+            {/* <LeftNavigation routes={
                 [
 
                     {path: "/user", label: "User"},
@@ -32,19 +32,20 @@ ReactDOM.render((
                     {path: "/project", label: "Project"},
                     {path: '/license-package', label: "License Package"}
                 ]
-            }/>
+            }/> */}
            
             <MainContent default="/company" routes={
                 [
-                    {path: "/user", component: "PageUser"},
-                    {path: "/group", component: "PageGroup"},
-                    {path: "/company", component: "PageCompany"},
-                    {path: "/project", component: "PageProject"},
-                    {path: '/license-package', component: "PageLicensePackage"}
+                    {path: "/user", component: "PageUser", auth: "true"},
+                    {path: "/group", component: "PageGroup", auth: "true"},
+                    {path: "/company", component: "PageCompany", auth: "true"},
+                    {path: "/project", component: "PageProject", auth: "true"},
+                    {path: '/license-package', component: "PageLicensePackage", auth: "true"},
+                    {path: "/login", component: "Login", auth: "false"}
                 ]
             }/>
 
         </Router>
         <ToastContainer />
-    </Fragment>
+    </div>
 ), containerElem);

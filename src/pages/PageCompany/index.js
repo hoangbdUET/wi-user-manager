@@ -2,9 +2,13 @@ module.exports = PageCompany;
 require('./style.less');
 const api = require("../../services/apiClient");
 const React = require('react');
-const {CompanyInfoModal, ConfirmationModal} = require('../../dialogs');
+const { CompanyInfoModal, ConfirmationModal } = require('../../dialogs');
 const ListCompany = require('../../components/ListCompany');
-const {toast} = require('react-toastify');
+const { toast } = require('react-toastify');
+const LeftNavigation = require('./../LeftNavigation');
+const Redirect = require('react-router-dom').Redirect;
+const apiUser = require('../../services/apiUser');
+const UserStatus = require('../../components/UserStatus');
 
 function PageCompany() {
     React.Component.call(this);
@@ -12,8 +16,9 @@ function PageCompany() {
         items: [],
         isAddingCompany: false,
         isEditingCompany: false,
+        filter: ""
     };
-    this.componentDidMount = function() {
+    this.componentDidMount = function () {
         listCompany.call(this);
         this.props.resetFilter();
     }
@@ -26,10 +31,10 @@ function PageCompany() {
     }
 
 
-    this.getItemList = function() {
-        if (this.props.filter == "") return this.state.items;
-        return this.state.items.filter((item)=>{
-            return JSON.stringify(item).toLowerCase().includes(this.props.filter.toLowerCase());
+    this.getItemList = function () {
+        if (this.state.filter == "") return this.state.items;
+        return this.state.items.filter((item) => {
+            return JSON.stringify(item).toLowerCase().includes(this.state.filter.toLowerCase());
         });
     }
 
@@ -37,7 +42,7 @@ function PageCompany() {
 
     function addCompany(company) {
         api.addCompanyPromise(company).then(company => {
-            toast(`Company ${company.name} is created`, {type: 'info'});
+            toast(`Company ${company.name} is created`, { type: 'info' });
             this.setState(state => {
                 state.items.push(company);
                 return {
@@ -62,7 +67,7 @@ function PageCompany() {
     function deleteCompany(selectedCompany) {
         console.log("delete company", selectedCompany);
         api.deleteCompanyPromise(selectedCompany.idCompany).then((deletedCompany) => {
-            toast(`Company ${deletedCompany.name} is deleted`, {type: 'info'});
+            toast(`Company ${deletedCompany.name} is deleted`, { type: 'info' });
             this.setState(state => {
                 let companies = state.items;
                 let idx = companies.findIndex(c => c.idCompany === deletedCompany.idCompany);
@@ -77,7 +82,7 @@ function PageCompany() {
 
     function listCompany(selectedCompany) {
         api.getCompaniesPromise().then((companies) => {
-            this.setState({items: companies})
+            this.setState({ items: companies })
         }).catch();
     }
 
@@ -95,7 +100,7 @@ function PageCompany() {
     function editCompany(company) {
         api.editCompanyPromise(company).then(company => {
             toast(<span>Company <strong
-                style={{color: 'yellow'}}>{company.name}</strong> is updated</span>, {type: 'info'});
+                style={{ color: 'yellow' }}>{company.name}</strong> is updated</span>, { type: 'info' });
             this.setState(state => {
                 let idx = state.items.findIndex(c => c.idCompany === company.idCompany);
                 state.items.splice(idx, 1, company);
@@ -108,25 +113,53 @@ function PageCompany() {
     }
 
     this.render = function () {
-        return <div className={"PageCompany"}>
-            <ListCompany itemPerPage={10} actions={[{
-                name: "Add", handler: startAddCompany.bind(this), show: true
-            }, {
-                name: "Delete", handler: this.startDeleteCompany, show: true
-            }, {
-                name: "Edit", handler: this.startEditCompany, show: true
-            }, {
-                name: "Refresh", handler: listCompany.bind(this), show: true
-            }]} items={this.getItemList()}/>
-            <CompanyInfoModal isOpen={this.state.isAddingCompany}
-                              onOk={this.addCompany} onCancel={(e) => this.setState({isAddingCompany: false})}/>
-            <CompanyInfoModal isOpen={this.state.isEditingCompany} company={this.state.selectedCompany}
-                              onOk={this.editCompany} onCancel={(e) => this.setState({isEditingCompany: false})}/>
-            <ConfirmationModal isOpen={this.state.isDeletingCompany} title="Confirmation"
-                               message="Are you sure to delete selected company?"
-                               onCancel={() => this.setState({isDeletingCompany: false})}
-                               onOk={() => this.deleteCompany(this.state.selectedCompany)}/>
-        </div>
+        if (!apiUser.isLoggedIn()) return <Redirect to={{pathname:"/login", from:"/company"}} />;
+        return (
+            <div className={"PageCompany"} style={{ width: '100%', display: 'flex', flexDirection: 'row' }}>
+                <LeftNavigation routes={
+                    [
+
+                        { path: "/user", label: "User" },
+                        { path: "/group", label: "Group" },
+                        { path: "/company", label: "Company" },
+                        { path: "/project", label: "Project" },
+                        { path: '/license-package', label: "License Package" }
+                    ]
+                } />
+                <div style={{ flex: 1 }}>
+                    <div className={"top-bar"}>
+                        <div className={"search-box"}>
+                            <div style={{ marginRight: '10px', color: '#000' }} className={"ti ti-search"} />
+                            <input placeholder="Filter" value={this.state.filter} onChange={(e) => {
+                                this.setState({ filter: e.target.value });
+                            }} />
+                        </div>
+                        {/* <div className={"name"}>{localStorage.getItem('username') || "Guest"}/{localStorage.getItem('company') || "I2G"}</div>
+                        <div className={"logout-btn"}>Logout</div>
+                        <div className={"user-picture"} /> */}
+                        <UserStatus />
+                    </div>
+
+                    <ListCompany itemPerPage={10} actions={[{
+                        name: "Add", handler: startAddCompany.bind(this), show: true
+                    }, {
+                        name: "Delete", handler: this.startDeleteCompany, show: true
+                    }, {
+                        name: "Edit", handler: this.startEditCompany, show: true
+                    }, {
+                        name: "Refresh", handler: listCompany.bind(this), show: true
+                    }]} items={this.getItemList()} />
+                    <CompanyInfoModal isOpen={this.state.isAddingCompany}
+                        onOk={this.addCompany} onCancel={(e) => this.setState({ isAddingCompany: false })} />
+                    <CompanyInfoModal isOpen={this.state.isEditingCompany} company={this.state.selectedCompany}
+                        onOk={this.editCompany} onCancel={(e) => this.setState({ isEditingCompany: false })} />
+                    <ConfirmationModal isOpen={this.state.isDeletingCompany} title="Confirmation"
+                        message="Are you sure to delete selected company?"
+                        onCancel={() => this.setState({ isDeletingCompany: false })}
+                        onOk={() => this.deleteCompany(this.state.selectedCompany)} />
+                </div>
+            </div>
+        );
     }
 }
 

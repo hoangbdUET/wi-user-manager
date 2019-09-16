@@ -15,13 +15,17 @@ module.exports = {
     addUsersToGroup,
     editGroupInfo,
     newGroup,
-    getLicensePackages
+    getLicensePackages,
+    login,
+    update
 };
 
 // const WI_AUTH_URL = "https://users.i2g.cloud";
 // const WI_AUTH_URL = "http://127.0.0.1:2999";
 const WI_AUTH_URL = "http://admin.dev.i2g.cloud";
 const WI_BACKEND_URL = "http://dev.i2g.cloud";
+
+const apiUser = require('./apiUser');
 
 function doPost(url, params, token, service) {
     return new Promise((resolve, reject) => {
@@ -37,6 +41,7 @@ function doPost(url, params, token, service) {
             response.json().then(payload => {
                 if (parseInt(payload.code) === 401) {
                     console.log('redirect and logout');
+                    apiUser.removeLoginSession();
                     window.location.pathname = '/login';
                 }
                 resolve(payload.content);
@@ -117,4 +122,22 @@ function newGroup(group) {
 
 function getLicensePackages() {
     return doPost('/license-package/list', {})
+}
+
+function login(username, password) {
+    params = {username: username, password: password};
+    return fetch(WI_AUTH_URL + '/login', {
+        method: "POST",
+        body: JSON.stringify(params),
+        headers: {
+            "Content-Type": 'application/json'
+        }
+    }).then(response => {
+        return response.json();
+    });
+    // return doPost('/login', {username: username, password: password});
+}
+
+function update() {
+    return doPost('/database/update', {}, null, 'BACKEND');
 }

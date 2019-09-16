@@ -3,11 +3,16 @@ require('./style.less');
 const React = require('react');
 const ListProject = require('../../components/ListProject');
 const api = require("../../services/apiClient");
+const LeftNavigation = require('./../LeftNavigation');
+const Redirect = require('react-router-dom').Redirect;
+const apiUser = require('../../services/apiUser');
+const UserStatus = require('../../components/UserStatus');
 
 function PageProject() {
     this.state = {
         items: [],
-        sharedStatus: 'none'
+        sharedStatus: 'none',
+        filter: ""
     };
     this.componentDidMount = function () {
         self.listProjects.call(this);
@@ -30,10 +35,10 @@ function PageProject() {
         })
     }
 
-    this.getItemList = function() {
-        if (this.props.filter == "") return this.state.items;
-        return this.state.items.filter((item)=>{
-            return JSON.stringify(item).toLowerCase().includes(this.props.filter.toLowerCase());
+    this.getItemList = function () {
+        if (this.state.filter == "") return this.state.items;
+        return this.state.items.filter((item) => {
+            return JSON.stringify(item).toLowerCase().includes(this.state.filter.toLowerCase());
         });
     }
 
@@ -58,26 +63,50 @@ function PageProject() {
     }
 
     this.render = function () {
-        return (<div className={"PageProject"}>
-            <ListProject
-                itemPerPage={10} actions={[
-                {
-                    name: "Stop Sharing", handler: (selectedProject) => {
-                        return stopSharingProjectClicked(selectedProject);
-                    },
-                    show: ([selectedProject]) => (selectedProject? !!selectedProject.shareKey : false)
-                },
-                {
-                    name: "Start Sharing", handler: (selectedProject) => {
-                        return startSharingProjectClicked(selectedProject);
-                    },
-                    show: ([selectedProject]) => (selectedProject ? (!selectedProject.shareKey): false)
-                },
-                {name: "Refresh", handler: self.listProjects, show: true}
+        if (!apiUser.isLoggedIn()) return <Redirect to={{pathname:"/login", from:"/project"}} />;
+        return (
+            <div className={"PageProject"} style={{ width: '100%', display: 'flex', flexDirection: 'row' }}>
+                <LeftNavigation routes={
+                    [
 
-            ]} items={this.getItemList()}
-            />
-        </div>)
+                        { path: "/user", label: "User" },
+                        { path: "/group", label: "Group" },
+                        { path: "/company", label: "Company" },
+                        { path: "/project", label: "Project" },
+                        { path: '/license-package', label: "License Package" }
+                    ]
+                } />
+                <div style={{ flex: 1 }}>
+                    <div className={"top-bar"}>
+                        <div className={"search-box"}>
+                            <div style={{ marginRight: '10px', color: '#000' }} className={"ti ti-search"} />
+                            <input placeholder="Filter" value={this.state.filter} onChange={(e) => {
+                                this.setState({ filter: e.target.value });
+                            }} />
+                        </div>
+                        <UserStatus />
+                    </div>
+                    <ListProject
+                        itemPerPage={10} actions={[
+                            {
+                                name: "Stop Sharing", handler: (selectedProject) => {
+                                    return stopSharingProjectClicked(selectedProject);
+                                },
+                                show: ([selectedProject]) => (selectedProject ? !!selectedProject.shareKey : false)
+                            },
+                            {
+                                name: "Start Sharing", handler: (selectedProject) => {
+                                    return startSharingProjectClicked(selectedProject);
+                                },
+                                show: ([selectedProject]) => (selectedProject ? (!selectedProject.shareKey) : false)
+                            },
+                            { name: "Refresh", handler: self.listProjects, show: true }
+
+                        ]} items={this.getItemList()}
+                    />
+                </div>
+            </div>
+        )
     }
 }
 

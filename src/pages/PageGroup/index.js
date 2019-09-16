@@ -2,8 +2,12 @@ module.exports = PageGroup;
 require('./style.less');
 const React = require('react');
 const ListGroup = require('../../components/ListGroup');
-const {GroupInfoModal, ConfirmationModal, NewGroupModal} = require('../../dialogs');
+const { GroupInfoModal, ConfirmationModal, NewGroupModal } = require('../../dialogs');
 const api = require('../../services/apiClient');
+const LeftNavigation = require('./../LeftNavigation');
+const Redirect = require('react-router-dom').Redirect;
+const apiUser = require('../../services/apiUser');
+const UserStatus = require('../../components/UserStatus');
 
 function PageGroup(props) {
     React.Component.call(this, props);
@@ -12,17 +16,18 @@ function PageGroup(props) {
         companies: [],
         isAddingGroup: false,
         isEditingGroup: false,
-        isDeletingGroup: false
+        isDeletingGroup: false,
+        filter: ""
     }
     let _groups;
-    
+
     this.componentDidMount = function () {
         this.initListFromServer();
         this.props.resetFilter();
     }
 
 
-    this.initListFromServer  = function () {
+    this.initListFromServer = function () {
         listGroups.call(this);
         listCompanies.call(this);
         listUsers.call(this);
@@ -67,10 +72,10 @@ function PageGroup(props) {
         })
     }
 
-    this.getItemList = function() {
-        if (this.props.filter == "") return this.state.items;
-        return this.state.items.filter((item)=>{
-            return JSON.stringify(item).toLowerCase().includes(this.props.filter.toLowerCase());
+    this.getItemList = function () {
+        if (this.state.filter == "") return this.state.items;
+        return this.state.items.filter((item) => {
+            return JSON.stringify(item).toLowerCase().includes(this.state.filter.toLowerCase());
         });
     }
 
@@ -93,7 +98,7 @@ function PageGroup(props) {
     this.addGroup = addGroup.bind(this);
 
     function addGroup(aGroup) {
-        let {company, ...group} = aGroup;
+        let { company, ...group } = aGroup;
         api.addGroupPromise(group).then(addedGroup => {
             addedGroup.company = company;
             _groups.push(addedGroup);
@@ -108,71 +113,95 @@ function PageGroup(props) {
     }
 
     this.render = function () {
-        return (<div className="PageGroup">
+        if (!apiUser.isLoggedIn()) return <Redirect to={{pathname:"/login", from:"/group"}} />;
+        return (
+            <div className={"PageGroup"} style={{ width: '100%', display: 'flex', flexDirection: 'row' }}>
+                <LeftNavigation routes={
+                    [
 
-            <ListGroup itemPerPage={10} actions={[{
-                name: "Add",
-                handler: (selectedGroup) => {
-                    this.setState({
-                        isAddingGroup: true
-                    });
-                }, show: true
-            }, {
-                name: "Delete",
-                handler: (selectedGroup) => {
-                    this.setState({
-                        isDeletingGroup: true,
-                        selectedGroup
-                    })
-                }, show: true
-            }, {
-                name: "Edit",
-                handler: (selectedGroup) => {
-                    this.setState({
-                        isEditingGroup: true,
-                        selectedGroup
-                    })
-                }, show: true
-            }, {
-                name: 'Manage Users',
-                handler: this.listGroups,
-                show: true
-            }, {
-                name: "Refresh",
-                handler: () => {this.initListFromServer();},
-                show: true
-            }]} items={this.getItemList()}/>
-            {/* <GroupInfoModal isOpen={this.state.isAddingGroup}
+                        { path: "/user", label: "User" },
+                        { path: "/group", label: "Group" },
+                        { path: "/company", label: "Company" },
+                        { path: "/project", label: "Project" },
+                        { path: '/license-package', label: "License Package" }
+                    ]
+                } />
+                <div style={{ flex: 1 }}>
+                    <div className={"top-bar"}>
+                        <div className={"search-box"}>
+                            <div style={{ marginRight: '10px', color: '#000' }} className={"ti ti-search"} />
+                            <input placeholder="Filter" value={this.state.filter} onChange={(e) => {
+                                this.setState({ filter: e.target.value });
+                            }} />
+                        </div>
+                        <UserStatus />
+                    </div>
+
+                    <ListGroup itemPerPage={10} actions={[{
+                        name: "Add",
+                        handler: (selectedGroup) => {
+                            this.setState({
+                                isAddingGroup: true
+                            });
+                        }, show: true
+                    }, {
+                        name: "Delete",
+                        handler: (selectedGroup) => {
+                            this.setState({
+                                isDeletingGroup: true,
+                                selectedGroup
+                            })
+                        }, show: true
+                    }, {
+                        name: "Edit",
+                        handler: (selectedGroup) => {
+                            this.setState({
+                                isEditingGroup: true,
+                                selectedGroup
+                            })
+                        }, show: true
+                    }, {
+                        name: 'Manage Users',
+                        handler: this.listGroups,
+                        show: true
+                    }, {
+                        name: "Refresh",
+                        handler: () => { this.initListFromServer(); },
+                        show: true
+                    }]} items={this.getItemList()} />
+                    {/* <GroupInfoModal isOpen={this.state.isAddingGroup}
                             onOk={this.addGroup}
                             onCancel={() => this.setState({isAddingGroup: false})} companies={this.state.companies}
                             users={this.state.users}
                             selectedCompany={getCompany(this.state.selectedGroup)}/> */}
-            <GroupInfoModal isOpen={this.state.isEditingGroup} group={this.state.selectedGroup} groupUsers={getGroupUsers(this.state.selectedGroup)}
-                            onOk={() => {
-                                this.initListFromServer();
-                                this.setState({
-                                    isEditingGroup: false
-                                });
-                            }}
-                            onCancel={() => this.setState({isEditingGroup: false})} companies={this.state.companies}
-                            users={getUserNotInGroup(this.state.users, this.state.selectedGroup)}
-                            selectedCompany={getCompany(this.state.selectedGroup)}
-                            selectedGroupId = {(this.state.selectedGroup||{}).idGroup} />
-            <ConfirmationModal isOpen={this.state.isDeletingGroup}
-                               title="Confirmation" message="Are you sure to delete this group?"
-                               onOk={() => {
-                                    this.deleteGroup(this.state.selectedGroup);
-                                }}
-                               onCancel={() => this.setState({isDeletingGroup: false})}/>
-            <NewGroupModal 
-                            isOpen={this.state.isAddingGroup} 
-                            onCancel={() => this.setState({isAddingGroup: false})}
-                            onOk = {()=>{
-                                this.initListFromServer();
-                                this.setState({isAddingGroup: false});
-                            }}
-                            companies = {this.state.companies}/>
-        </div>)
+                    <GroupInfoModal isOpen={this.state.isEditingGroup} group={this.state.selectedGroup} groupUsers={getGroupUsers(this.state.selectedGroup)}
+                        onOk={() => {
+                            this.initListFromServer();
+                            this.setState({
+                                isEditingGroup: false
+                            });
+                        }}
+                        onCancel={() => this.setState({ isEditingGroup: false })} companies={this.state.companies}
+                        users={getUserNotInGroup(this.state.users, this.state.selectedGroup)}
+                        selectedCompany={getCompany(this.state.selectedGroup)}
+                        selectedGroupId={(this.state.selectedGroup || {}).idGroup} />
+                    <ConfirmationModal isOpen={this.state.isDeletingGroup}
+                        title="Confirmation" message="Are you sure to delete this group?"
+                        onOk={() => {
+                            this.deleteGroup(this.state.selectedGroup);
+                        }}
+                        onCancel={() => this.setState({ isDeletingGroup: false })} />
+                    <NewGroupModal
+                        isOpen={this.state.isAddingGroup}
+                        onCancel={() => this.setState({ isAddingGroup: false })}
+                        onOk={() => {
+                            this.initListFromServer();
+                            this.setState({ isAddingGroup: false });
+                        }}
+                        companies={this.state.companies} />
+                </div>
+            </div>
+        );
     }
 
     function getCompany(group) {
@@ -194,7 +223,7 @@ function PageGroup(props) {
         return false;
     }
     function getUserNotInGroup(users, selectedGr) {
-        let originGr = (_groups || []).find(g => g.idGroup === (selectedGr||{}).idGroup);
+        let originGr = (_groups || []).find(g => g.idGroup === (selectedGr || {}).idGroup);
         if (!originGr)
             return users;
         let usersInGr = originGr.users;
