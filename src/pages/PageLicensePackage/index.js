@@ -21,7 +21,7 @@ function LicensePackage(props) {
 
 	function listPackage() {
 		api.getLicensePackages().then(packages => {
-			this.setState({items: packages})
+			this.setState({items: packages||[]});
 		});
 	}
 
@@ -38,7 +38,7 @@ function LicensePackage(props) {
 					name: "Add", handler: () => {
 						this.setState({
 							isAddingLicensePackage: true
-						});
+                        });
 					}, show: true
 				},
 				{

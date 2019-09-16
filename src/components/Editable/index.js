@@ -72,7 +72,7 @@ function Editable(props) {
         this.setState({editing: true});
         setTimeout(() => {
             this.textInput.current.focus();
-        }, 500);
+        }, 300);
     }
 
     this.render = function () {

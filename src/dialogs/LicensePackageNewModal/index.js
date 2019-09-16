@@ -15,10 +15,10 @@ function LicensePackageNewModal(props) {
 			description: ''
 		}
 	};
-	let item = this.state.item;
 	this.render = function () {
+		let item = this.state.item;
 		return (
-			<Modal isOpen={props.isOpen} portalClassName="ModalStyle" className="LicensePackageNewModal"
+			<Modal isOpen={this.props.isOpen} portalClassName="ModalStyle" className="LicensePackageNewModal"
 			       overlayClassName="modal-backdrop">
 				<h4>Edit license package <b>{item.name}</b></h4>
 				<div className="content-dialog">
