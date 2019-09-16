@@ -37,6 +37,7 @@ function doPost(url, params, token, service) {
             response.json().then(payload => {
                 if (parseInt(payload.code) === 401) {
                     console.log('redirect and logout');
+                    window.location.pathname = '/login';
                 }
                 resolve(payload.content);
             }).catch(e => {

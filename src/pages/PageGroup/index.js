@@ -86,6 +86,7 @@ function PageGroup(props) {
                     isDeletingGroup: false
                 }
             });
+            this.initListFromServer();
         }).catch(e => console.error(e));
     }
 
@@ -160,7 +161,6 @@ function PageGroup(props) {
             <ConfirmationModal isOpen={this.state.isDeletingGroup}
                                title="Confirmation" message="Are you sure to delete this group?"
                                onOk={() => {
-                                    this.initListFromServer();
                                     this.deleteGroup(this.state.selectedGroup);
                                 }}
                                onCancel={() => this.setState({isDeletingGroup: false})}/>
@@ -178,12 +178,14 @@ function PageGroup(props) {
     function getCompany(group) {
         if (!group) return;
         let oriGroup = _groups.find(g => g.idGroup === group.idGroup);
-        return oriGroup.company;
+        if (oriGroup) return oriGroup.company;
+        else return {};
     }
     function getGroupUsers(group) {
         if (!group) return;
         let oriGroup = _groups.find(g => g.idGroup === group.idGroup);
-        return oriGroup.users;
+        if (oriGroup) return oriGroup.users;
+        else return [];
     }
     function isExistUserInList(users, userId) {
         for (let i = 0; i < users.length; i++) {
