@@ -23,8 +23,8 @@ function Login(props) {
         apiUser.login(this.state.username, this.state.password)
         .then((res)=>{
             console.log(res);
-            window.location.href = this.props.from || '/';
             toast.success('Login successfully');
+            window.location.href = this.props.from || '/';
         })
         .catch((e)=>{
             toast.error(e);
