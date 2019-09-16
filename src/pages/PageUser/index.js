@@ -21,10 +21,12 @@ function PageUser(props) {
     }
 
     this.getItemList = function() {
-        if (this.props.filter == "") return this.state.items;
-        return this.state.items.filter((item)=>{
-            return JSON.stringify(item).toLowerCase().includes(this.props.filter.toLowerCase());
-        });
+        if (this.props.filter == "") return (this.state.items||[]);
+        if (this.state.items.length)
+            return this.state.items.filter((item)=>{
+                return JSON.stringify(item).toLowerCase().includes(this.props.filter.toLowerCase());
+            }); 
+        return [];
     }
 
     this.listUser = listUser.bind(this);

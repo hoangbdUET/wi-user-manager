@@ -35,13 +35,16 @@ function doPost(url, params, token, service) {
             }
         }).then(response => {
             response.json().then(payload => {
+                if (parseInt(payload.code) === 401) {
+                    console.log('redirect and logout');
+                }
                 resolve(payload.content);
             }).catch(e => {
                 reject(e);
             });
         }).catch(e => {
             reject(e);
-        })
+        });
     });
 }
 

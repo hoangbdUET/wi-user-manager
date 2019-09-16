@@ -17,12 +17,16 @@ function PageProject() {
     let self = this;
     this.listProjects = function () {
         api.getUsersPromise().then(users => {
-            users = users.map(u => (u.username));
-            api.getProjectsPromise(users).then(projects => {
-                this.setState({
-                    items: projects
-                })
-            })
+            if (users) {
+                users = users.map(u => (u.username));
+                api.getProjectsPromise(users).then(projects => {
+                    this.setState({
+                        items: projects
+                    });
+                });
+            } else {
+                //nothing
+            }
         })
     }
 
