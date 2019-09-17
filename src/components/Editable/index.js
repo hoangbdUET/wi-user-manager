@@ -56,8 +56,8 @@ function Editable(props) {
                 return v;
             }
             let newVal = setter(state.value);
-            if (newVal != evaluate(props.value))
-                this.props.onValueChanged && this.props.onValueChanged(newVal);
+            // if (newVal != evaluate(props.value))
+            //     this.props.onValueChanged && this.props.onValueChanged(newVal);
             return {
                 editing: false,
                 originValue: newVal,
