@@ -32,9 +32,10 @@ function Editable(props) {
 
     function handleChange(e) {
         if (this.props.disabled) return;
-        this.setState({
-            value: e.target.value
-        });
+        // this.setState({
+        //     value: e.target.value
+        // });
+        this.props.onValueChanged(e.target.value);
     }
 
     this.handleSubmit = handleSubmit.bind(this);
@@ -55,8 +56,8 @@ function Editable(props) {
                 return v;
             }
             let newVal = setter(state.value);
-            if (newVal != evaluate(props.value))
-                this.props.onValueChanged && this.props.onValueChanged(newVal);
+            // if (newVal != evaluate(props.value))
+            //     this.props.onValueChanged && this.props.onValueChanged(newVal);
             return {
                 editing: false,
                 originValue: newVal,
