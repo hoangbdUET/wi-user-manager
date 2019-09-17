@@ -43,8 +43,11 @@ function doPost(url, params, token, service) {
                     console.log('redirect and logout');
                     apiUser.removeLoginSession();
                     if (!window.location.href == "/login") window.location.href = '/login';
+                } else if (parseInt(payload.code) === 200) {
+                    resolve(payload.content);
+                } else {
+                    reject(payload.reason);
                 }
-                resolve(payload.content);
             }).catch(e => {
                 reject(e);
             });

@@ -26,7 +26,8 @@ function Login(props) {
         .then((res)=>{
             console.log(res);
             toast.success('Login successfully');
-            window.location.href = this.props.from || "/";
+            this.props.location.pathname = this.props.location.from || '/';
+            // window.location.href = this.props.from || "/";
         })
         .catch((e)=>{
             toast.error(e);
@@ -39,7 +40,7 @@ function Login(props) {
 
     this.render = function() {
         if (apiUser.isLoggedIn()) {
-            return <Redirect to={this.props.from || '/'} />
+            return <Redirect to={this.props.location.from || '/'} />
         }
         return (
             <div>
