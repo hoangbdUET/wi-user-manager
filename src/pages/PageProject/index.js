@@ -76,7 +76,7 @@ function PageProject() {
                         { path: '/license-package', label: "License Package" }
                     ]
                 } />
-                <div style={{ flex: 1 }}>
+                <div style={{ width: 'calc(100vw - 102px)' }}>
                     <div className={"top-bar"}>
                         <div className={"search-box"}>
                             <div style={{ marginRight: '10px', color: '#000' }} className={"ti ti-search"} />

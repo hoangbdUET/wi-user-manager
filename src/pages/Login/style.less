@@ -1,0 +1,62 @@
+/* Change Autocomplete styles in Chrome*/
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+    border-width: 0 0 1px 0;
+    border-color: #406be8;
+  -webkit-text-fill-color: rgb(31, 31, 31);
+  -webkit-box-shadow: none;
+  transition: background-color 5000s ease-in-out 0s;
+}
+.dialog-login {
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    width: 500px;
+    transform: translate(50%, -50%);
+    display: flex;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 10px 10px #00000008;
+    
+    .right-dialog-login {
+        flex: 1;
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+    }
+    .left-dialog-login {
+        flex-basis: 35%;
+        background-color: #416be8;
+        border-top-left-radius: 2px;
+        border-bottom-left-radius: 2px;
+
+    }
+    .input-login {
+        padding-bottom: 15px;
+        margin-bottom: 25px;
+        outline: none;
+        border-width: 0 0 1px 0;
+        border-color: #406be8;
+        background: #fff;
+    }
+    .submit-login {
+        padding: 10px;
+        outline: none;
+        border: 1px solid #416be8;
+        border-radius: 2px;
+        background: #416be8;
+        color: #fff;
+        transition: all ease-in 0.3s;
+        &:hover {
+            filter: brightness(1.4);
+            transition: all ease-in 0.3s;
+        }
+    }
+}

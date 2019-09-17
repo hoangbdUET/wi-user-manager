@@ -22,17 +22,18 @@ function MainContent(props) {
     this.render = function() { 
         return (
             <div>
-            <div className="MainContent" style={{display:'flex',flexDirection:'column', width:'100%'}}>
-            <div className={"main-content"}>
-                <Switch>
-                    {routes.map((aRoute, idx) => <CustomRoute key={idx} path={aRoute.path} name={aRoute.path} exact
-                                                        component={aRoute.component} filter = {this.state.filter} resetFilter = {()=>{
-                                                            this.resetFilter();
-                                                        }} auth = {aRoute.auth}/>)}
-                    <Redirect to={props.default} />
-                </Switch>
-            </div>
-        </div> </div>);
+                <div className="MainContent" style={{display:'flex',flexDirection:'column', width:'100vw', height:'100vh'}}>
+                    <div className={"main-content"}>
+                        <Switch>
+                            {routes.map((aRoute, idx) => <CustomRoute key={idx} path={aRoute.path} name={aRoute.path} exact
+                                                                component={aRoute.component} filter = {this.state.filter} resetFilter = {()=>{
+                                                                    this.resetFilter();
+                                                                }} auth = {aRoute.auth}/>)}
+                            <Redirect to={props.default} />
+                        </Switch>
+                    </div>
+                </div> 
+            </div>);
     }
 }
 
