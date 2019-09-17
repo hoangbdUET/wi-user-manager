@@ -43,23 +43,58 @@ function UserInfoModal(props) {
                     <div style={{flex: 1, overflow: 'auto'}}>
                         <div className="fieldset">
                             <div>Username</div>
-                            <Editable value={this.state.username} formatValue={(v) => ((v === null || v === undefined || v.length === 0 )? "[empty]" : v)}/>
+                            <Editable   value={this.state.username} 
+                                        formatValue={(v) => ((v === null || v === undefined || v.length === 0 )? "[empty]" : v)}
+                                        onValueChanged={(value) => this.setState((state)=>{
+                                            return {
+                                                username: value
+                                            };
+                                        })}
+                            />
                         </div>
                         <div className="fieldset">
                             <div>Email</div>
-                            <Editable value={this.state.email} formatValue={(v) => ((v === null || v === undefined || v.length === 0 )? "[empty]" : v)}/>
+                            <Editable   value={this.state.email} 
+                                        formatValue={(v) => ((v === null || v === undefined || v.length === 0 )? "[empty]" : v)}
+                                        onValueChanged={(value) => this.setState((state)=>{
+                                            return {
+                                                email: value
+                                            };
+                                        })}
+                            />
                         </div>
                         <div className="fieldset">
                             <div>Full Name</div>
-                            <Editable value={this.state.fullname} formatValue={(v) => ((v === null || v === undefined || v.length === 0 )? "[empty]" : v)}/>
+                            <Editable   value={this.state.fullname} 
+                                        formatValue={(v) => ((v === null || v === undefined || v.length === 0 )? "[empty]" : v)}
+                                        onValueChanged={(value) => this.setState((state)=>{
+                                            return {
+                                                fullname: value
+                                            };
+                                        })}
+                            />
                         </div>
                         <div className="fieldset">
                             <div>Status</div>
-                            <Editable value={this.state.status} formatValue={(v) => ((v === null || v === undefined || v.length === 0 )? "[empty]" : v)}/>
+                            <Editable   value={this.state.status} 
+                                        formatValue={(v) => ((v === null || v === undefined || v.length === 0 )? "[empty]" : v)}
+                                        onValueChanged={(value) => this.setState((state)=>{
+                                            return {
+                                                status: value
+                                            };
+                                        })}
+                            />
                         </div>
                         <div className="fieldset">
                             <div>Role</div>
-                            <Editable value={this.state.role} formatValue={(v) => ((v === null || v === undefined || v.length === 0 )? "[empty]" : v)}/>
+                            <Editable   value={this.state.role} 
+                                        formatValue={(v) => ((v === null || v === undefined || v.length === 0 )? "[empty]" : v)}
+                                        onValueChanged={(value) => this.setState((state)=>{
+                                            return {
+                                                role: value
+                                            };
+                                        })}
+                            />
                         </div>
                     </div>
                 </div>

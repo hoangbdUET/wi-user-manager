@@ -32,9 +32,10 @@ function Editable(props) {
 
     function handleChange(e) {
         if (this.props.disabled) return;
-        this.setState({
-            value: e.target.value
-        });
+        // this.setState({
+        //     value: e.target.value
+        // });
+        this.props.onValueChanged(e.target.value);
     }
 
     this.handleSubmit = handleSubmit.bind(this);
@@ -96,7 +97,7 @@ function Editable(props) {
 
                 <form style={this.state.editing ? visibleStyle : hiddenStyle}
                       onSubmit={this.handleSubmit}>
-                    <input type="text" value={this.state.value} 
+                    <input type="text" value={this.props.value} 
                            ref={this.textInput}
                            onChange={this.handleChange}
                            onBlur={this.handleBlur}/>
