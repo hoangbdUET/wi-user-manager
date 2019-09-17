@@ -50,6 +50,7 @@ function LicensePackage(props) {
     this.editLicensePackage = editLicensePackage.bind(this);
 
     function editLicensePackage(item) {
+        console.log(item)
         api.updateLicensePackage(item).then(() => {
             listPackage.call(this);
             this.setState({isEditingLicensePackage: false});
@@ -119,7 +120,7 @@ function LicensePackage(props) {
                     />
                     <LicensePackageInfoModal isOpen={this.state.isEditingLicensePackage}
                                              onCancel={() => {
-                                                 this.setState({isEditingLicensePackage: false})
+                                                 this.setState({isEditingLicensePackage: false});
                                                  this.listPackage();
                                              }}
                                              onOk={item => this.editLicensePackage(item)}

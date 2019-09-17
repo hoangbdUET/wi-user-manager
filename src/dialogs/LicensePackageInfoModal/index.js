@@ -10,30 +10,41 @@ const Editable = require('../../components/Editable');
 
 function LicensePackageInfoModal(props) {
     React.Component.call(this, props);
-    let item = this.props.item || {name: 'default', description: 'default'};
-    item.description = item.description === null || item.description === undefined ? '' : item.description;
+    this.state = {};
 
     this.render = function () {
         return (
             <Modal isOpen={this.props.isOpen} portalClassName="ModalStyle" className="LicensePackageInfoModal"
+                   onAfterOpen={() => {
+                       this.setState({
+                           name: this.props.item.name,
+                           description: this.props.item.description,
+                           idLicensePackage: this.props.item.idLicensePackage
+                       });
+                   }}
                    overlayClassName="modal-backdrop">
-                <h4>Edit license package <b>{item.name}</b></h4>
+                <h4>Edit license package <b>{this.state.name}</b></h4>
                 <div className="content-dialog">
                     <div style={{flex: 1, overflow: 'auto'}}>
                         <div className="fieldset">
                             <div>Name</div>
-                            <Editable value={item.name}
-                                      formatValue={(v) => ((v !== null && v !== undefined && v.length !== 0) ? v : "[empty]")}/>
+                            <Editable value={this.state.name || ""}
+                                      formatValue={(v) => ((v !== null && v !== undefined && v.length !== 0) ? v : "[empty]")}
+                                      onValueChanged={(v) => this.setState({name: v})}
+                                      disabled={true}
+                            />
                         </div>
                         <div className="fieldset">
                             <div>Description</div>
-                            <Editable value={item.description}
-                                      formatValue={(v) => ((v !== null && v !== undefined && v.length !== 0) ? v : "[empty]")}/>
+                            <Editable value={this.state.description || ""}
+                                      formatValue={(v) => ((v !== null && v !== undefined && v.length !== 0) ? v : "[empty]")}
+                                      onValueChanged={(v) => this.setState({description: v})}
+                            />
                         </div>
                     </div>
                 </div>
                 <div className="footer-dialog">
-                    <div className="btn-next" onClick={(e) => props.onOk(item)}>Ok</div>
+                    <div className="btn-next" onClick={(e) => props.onOk(this.state)}>Ok</div>
                     <div className="btn-next" onClick={props.onCancel}>Close</div>
                 </div>
             </Modal>
