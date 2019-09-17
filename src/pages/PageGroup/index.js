@@ -206,13 +206,13 @@ function PageGroup(props) {
 
     function getCompany(group) {
         if (!group) return;
-        let oriGroup = _groups.find(g => g.idGroup === group.idGroup);
+        let oriGroup = (_groups|| []).find(g => g.idGroup === group.idGroup);
         if (oriGroup) return oriGroup.company;
         else return {};
     }
     function getGroupUsers(group) {
         if (!group) return;
-        let oriGroup = _groups.find(g => g.idGroup === group.idGroup);
+        let oriGroup = (_groups|| []).find(g => g.idGroup === group.idGroup);
         if (oriGroup) return oriGroup.users;
         else return [];
     }

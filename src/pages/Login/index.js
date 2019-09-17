@@ -3,13 +3,15 @@ const React = require('react');
 const apiUser = require('./../../services/apiUser');
 const Redirect = require('react-router-dom').Redirect;
 const {toast} = require('react-toastify');
+require('./style.less');
 
 function Login(props) {
     React.Component.call(this, props);
     
     this.state = {
         username: "",
-        password: ""
+        password: "",
+        changed: true
     }
 
     this.componentDidMount = function() {
@@ -24,7 +26,9 @@ function Login(props) {
         .then((res)=>{
             console.log(res);
             toast.success('Login successfully');
-            window.location.href = this.props.from || '/';
+            this.setState({
+                changed: !changed
+            })
         })
         .catch((e)=>{
             toast.error(e);
@@ -36,7 +40,7 @@ function Login(props) {
     }
 
     this.render = function() {
-        if (apiUser.isLoggedIn()) {
+        if (apiUser.isLoggedIn() && (this.state.changed == this.state.changed)) {
             return <Redirect to={this.props.from || '/'} />
         }
         return (
