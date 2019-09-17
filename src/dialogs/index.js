@@ -6,5 +6,6 @@ module.exports = {
 	NewGroupModal: require('./NewGroupModal'),
 	LicensePackageInfoModal: require('./LicensePackageInfoModal'),
 	LicensePackageNewModal: require('./LicensePackageNewModal'),
-	UserInfoModal: require('./UserInfoModal')
+	UserInfoModal: require('./UserInfoModal'),
+	UserAddModal: require('./UserAddModal')
 };
