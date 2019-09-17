@@ -24,11 +24,11 @@ function UserInfoModal(props) {
 
     this.updateProps = function() {
         this.setState({
-            username: this.props.user.username,
-            email: this.props.user.email,
-            fullname: this.props.user.fullname,
-            status: this.props.user.status,
-            role: this.props.user.role
+            username: (this.props.user||{}).username,
+            email: (this.props.user||{}).email,
+            fullname: (this.props.user||{}).fullname,
+            status: (this.props.user||{}).status,
+            role: (this.props.user||{}).role
         });
     }
 

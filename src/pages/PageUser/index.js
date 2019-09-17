@@ -94,7 +94,6 @@ function PageUser(props) {
             <div className={"PageUser"} style={{width: '100%', display: 'flex', flexDirection: 'row'}}>
                 <LeftNavigation routes={
                     [
-
                         { path: "/user", label: "User" },
                         { path: "/group", label: "Group" },
                         { path: "/company", label: "Company" },
