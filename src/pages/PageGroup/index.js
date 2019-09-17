@@ -19,7 +19,7 @@ function PageGroup(props) {
         isDeletingGroup: false,
         filter: ""
     }
-    let _groups;
+    let _groups = [];
 
     this.componentDidMount = function () {
         this.initListFromServer();
