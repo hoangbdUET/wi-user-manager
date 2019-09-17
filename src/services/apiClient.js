@@ -16,6 +16,8 @@ module.exports = {
     editGroupInfo,
     newGroup,
     getLicensePackages,
+    newLicensePacage,
+    updateLicensePackage,
     login,
     update
 };
@@ -127,8 +129,16 @@ function getLicensePackages() {
     return doPost('/license-package/list', {})
 }
 
+function newLicensePacage(item) {
+    return doPost('/license-package/new', {...item})
+}
+
+function updateLicensePackage(item) {
+    return doPost('/license-package/edit', {...item})
+}
+
 function login(username, password) {
-    params = {username: username, password: password};
+    let params = {username: username, password: password};
     return fetch(WI_AUTH_URL + '/login', {
         method: "POST",
         body: JSON.stringify(params),
