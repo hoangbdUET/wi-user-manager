@@ -190,11 +190,11 @@ function MyList(props) {
                     </div>
 
                     <div className={"btn-next"} onClick={this.handlePrevClick}>
-                        <div className={"ti ti-angle-left"} style={{marginRight: '10px'}}/>
-                        Previous
+                        <div className={"ti ti-angle-left"} style={{marginRight: '0px'}}/>
+                        
                     </div>
-                    <div className={"btn-next"} onClick={this.handleNextClick}>Next
-                        <div className={"ti ti-angle-right"} style={{marginLeft: '10px'}}/>
+                    <div className={"btn-next"} onClick={this.handleNextClick}>
+                        <div className={"ti ti-angle-right"} style={{marginLeft: '0px'}}/>
                     </div>
                 </div>
                 {/* <select onChange={this.handleItemPerPageChanged}>
