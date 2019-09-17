@@ -56,10 +56,10 @@ function PageGroup(props) {
 
     function listGroups() {
         api.getGroupsPromise().then(groups => {
-            if (!Array.isArray(groups)) groups = [];
+            //if (!Array.isArray(groups)) groups = [];
             _groups = groups;
             this.setState({
-                items: (groups.length || []).map(g => transform(g))
+                items: (groups || []).map(g => transform(g))
             });
         }).catch(e => {
             toast.error(e);

@@ -26,8 +26,9 @@ function Login(props) {
         .then((res)=>{
             console.log(res);
             toast.success('Login successfully');
-            this.props.location.pathname = this.props.location.from || '/';
+            // this.props.location.pathname = this.props.location.from || '/';
             // window.location.href = this.props.from || "/";
+            this.props.history.push(this.props.location.from || '/');
         })
         .catch((e)=>{
             toast.error(e);
