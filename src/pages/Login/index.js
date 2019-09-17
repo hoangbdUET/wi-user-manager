@@ -53,7 +53,7 @@ function Login(props) {
                     <div style={{marginBottom:'40px', fontWeight: 'bold', fontSize:'20px'}}>User Manager</div>
                     <input className="input-login" placeholder="Username" value = {this.state.username} onChange = {(e) => {this.setState({username: e.target.value})}}/>
                     <input className="input-login" placeholder="Password" type="password" value = {this.state.password} onChange = {(e) => {this.setState({password: e.target.value})}}/>
-                    <input className="submit-login" type="Submit" value="Login" onChange={(e)=>{e.preventDefault()}} onClick={(e)=>{this.login();}}/>
+                    <input className="submit-login" type="Submit" value="LOGIN" onChange={(e)=>{e.preventDefault()}} onClick={(e)=>{this.login();}}/>
                 </div>
             </div>
         );
