@@ -178,7 +178,9 @@ function PageGroup(props) {
                             onCancel={() => this.setState({isAddingGroup: false})} companies={this.state.companies}
                             users={this.state.users}
                             selectedCompany={getCompany(this.state.selectedGroup)}/> */}
-                    <GroupInfoModal isOpen={this.state.isEditingGroup} group={this.state.selectedGroup} groupUsers={getGroupUsers(this.state.selectedGroup)}
+                    <GroupInfoModal isOpen={this.state.isEditingGroup} 
+                        group={Object.assign({},this.state.selectedGroup)} 
+                        groupUsers={getGroupUsers(this.state.selectedGroup)}
                         onOk={() => {
                             this.initListFromServer();
                             this.setState({

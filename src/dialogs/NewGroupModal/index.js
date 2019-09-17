@@ -74,7 +74,7 @@ function NewGroupModal(props) {
                     </div>
                     <div className="fieldset">
                         <div>Description:</div>
-                        <Editable value={this.state.name || ""} disabled={disabled}
+                        <Editable value={this.state.description || ""} disabled={disabled}
                                 formatValue={(v) => (((v !== null ) && v.length) ? v : '[empty]')}
                                 onValueChanged={(description) => this.setState((state)=>{
                                     return {

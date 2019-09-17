@@ -20,7 +20,8 @@ module.exports = {
     updateLicensePackage,
     login,
     update,
-    newUser
+    newUser,
+    deleteUser
 };
 
 // const WI_AUTH_URL = "https://users.i2g.cloud";
@@ -158,4 +159,8 @@ function update() {
 
 function newUser(user) {
     return doPost('/user/new', user);
+}
+
+function deleteUser(idUser) {
+    return doPost('/user/delete', {idUser: idUser});
 }

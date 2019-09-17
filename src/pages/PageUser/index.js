@@ -65,7 +65,19 @@ function PageUser(props) {
     this.callApiAddUser = callApiAddUser.bind(this);
 
     function callApiAddUser(user) {
-        console.log("Call api adduser ", user);
+        if (user.password != user.repassword) {
+            toast.error('Your confirm password is not match');
+            return;
+        }
+        api.newUser(user)
+        .then((rs)=>{
+            toast.success('Create user successfully');
+            this.initFromServer();
+            this.setState({
+                isAddingUser: false
+            });
+        })
+        .catch(e=>{toast.error(e);});
     }
 
     this.callApiUpdateUser = callApiUpdateUser.bind(this);
@@ -77,8 +89,16 @@ function PageUser(props) {
     this.callApiDeleteUser = callApiDeleteUser.bind(this);
 
     function callApiDeleteUser(user) {
-        console.log("call api delete user", user);
-        this.setState({ isDeletingUser: false })
+        console.log('run');
+        api.deleteUser(user.idUser)
+        .then((rs)=>{
+            toast.success('Delete user successfully');
+            this.initFromServer();
+            this.setState({ isDeletingUser: false });
+        })
+        .catch(e=>{
+            toast.error(e);
+        });
     }
 
     this.startDeleteUser = startDeleteUser.bind(this);

@@ -21,6 +21,8 @@ function UserInfoModal(props) {
         fullname: "",
         status: "",
         role: "",
+        password: "",
+        repassword: "",
         idCompany: null
     };
 
@@ -31,6 +33,8 @@ function UserInfoModal(props) {
             fullname: "",
             status: "",
             role: "",
+            password: "",
+            repassword: "",
             idCompany: null
         });
     }
@@ -52,6 +56,40 @@ function UserInfoModal(props) {
                                                 username: value
                                             };
                                         })}
+                            />
+                        </div>
+                        <div className="fieldset">
+                            <div>Password</div>
+                            <Editable   value={this.state.password} 
+                                        formatValue={(v) => {
+                                            if (v.length === 0) {
+                                                return '[empty]';
+                                            }
+                                            return new Array(v.length).fill('*', 0, v.length);
+                                        }}
+                                        onValueChanged={(value) => this.setState((state)=>{
+                                            return {
+                                                password: value
+                                            };
+                                        })}
+                                        hideText
+                            />
+                        </div>
+                        <div className="fieldset">
+                            <div>Re-password</div>
+                            <Editable   value={this.state.repassword} 
+                                        formatValue={(v) => {
+                                            if (v.length === 0) {
+                                                return '[empty]';
+                                            }
+                                            return new Array(v.length).fill('*', 0, v.length);
+                                        }}
+                                        onValueChanged={(value) => this.setState((state)=>{
+                                            return {
+                                                repassword: value
+                                            };
+                                        })}
+                                        hideText
                             />
                         </div>
                         <div className="fieldset">
