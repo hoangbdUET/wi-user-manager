@@ -188,7 +188,8 @@ function GroupInfoModal(props) {
                                         return {
                                             group: state.group
                                         };
-                                    })}/>
+                                    })}
+                            />
                         </div>
                         <div className="fieldset">
                             <div>Description:</div>

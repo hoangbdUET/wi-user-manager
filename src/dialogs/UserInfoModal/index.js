@@ -99,7 +99,7 @@ function UserInfoModal(props) {
                     </div>
                 </div>
                 <div className="footer-dialog">
-                    <div className="btn-next" onClick={(e) => props.onOk(user)}>Ok</div>
+                    <div className="btn-next" onClick={(e) => {props.onOk(user);}}>Ok</div>
                     <div className="btn-next" onClick={props.onCancel}>Close</div>
                 </div>
                 

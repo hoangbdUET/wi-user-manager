@@ -5,6 +5,7 @@ Modal.setAppElement('#react-app');
 const PropTypes = require('prop-types');
 require('./style.less');
 const Editable = require('../../components/Editable');
+const DropDown = require('../../components/DropDown');
 
 UserInfoModal.protoTypes = {
     isOpen: PropTypes.bool,
@@ -19,7 +20,8 @@ function UserInfoModal(props) {
         email: "",
         fullname: "",
         status: "",
-        role: ""
+        role: "",
+        idCompany: null
     };
 
     this.updateProps = function() {
@@ -28,7 +30,8 @@ function UserInfoModal(props) {
             email: "",
             fullname: "",
             status: "",
-            role: ""
+            role: "",
+            idCompany: null
         });
     }
 
@@ -91,10 +94,25 @@ function UserInfoModal(props) {
                                             })}
                             />
                         </div>
+                        <div className="fieldset">
+                        <div>Company:</div>
+                            <DropDown  getItem={(company) => (
+                                <div style={{ height: '18px' }}>{company ? company.name : "[select company]"}</div>)}
+                                items={this.props.companies}
+                                itemHeight={18}
+                                onItemClicked = {(clickedCompany)=>{
+                                    this.setState((state)=>{
+                                        return {
+                                            idCompany: clickedCompany.idCompany
+                                        }
+                                    });
+                                }}
+                            />
+                        </div>
                     </div>
                 </div>
                 <div className="footer-dialog">
-                    <div className="btn-next" onClick={(e) => props.onOk(user)}>Ok</div>
+                    <div className="btn-next" onClick={(e) => props.onOk(Object.assign({},this.state))}>Ok</div>
                     <div className="btn-next" onClick={props.onCancel}>Close</div>
                 </div>
                 
