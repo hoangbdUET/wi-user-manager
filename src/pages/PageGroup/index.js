@@ -55,9 +55,10 @@ function PageGroup(props) {
 
     function listGroups() {
         api.getGroupsPromise().then(groups => {
+            if (!Array.isArray(groups)) groups = [];
             _groups = groups;
             this.setState({
-                items: groups.map(g => transform(g))
+                items: (groups.length || []).map(g => transform(g))
             });
         }).catch(e => console.error(e));
     }
@@ -212,6 +213,7 @@ function PageGroup(props) {
     }
     function getGroupUsers(group) {
         if (!group) return;
+        console.log(_groups);
         let oriGroup = (_groups|| []).find(g => g.idGroup === group.idGroup);
         if (oriGroup) return oriGroup.users;
         else return [];
