@@ -8,6 +8,7 @@ const LeftNavigation = require('./../LeftNavigation');
 const Redirect = require('react-router-dom').Redirect;
 const apiUser = require('../../services/apiUser');
 const UserStatus = require('../../components/UserStatus');
+const {toast} = require('react-toastify');
 
 function PageGroup(props) {
     React.Component.call(this, props);
@@ -55,12 +56,14 @@ function PageGroup(props) {
 
     function listGroups() {
         api.getGroupsPromise().then(groups => {
-            if (!Array.isArray(groups)) groups = [];
+            //if (!Array.isArray(groups)) groups = [];
             _groups = groups;
             this.setState({
-                items: (groups.length || []).map(g => transform(g))
+                items: (groups || []).map(g => transform(g))
             });
-        }).catch(e => console.error(e));
+        }).catch(e => {
+            toast.error(e);
+        });
     }
 
     this.listUsers = listUsers.bind(this);

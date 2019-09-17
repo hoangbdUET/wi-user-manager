@@ -11,6 +11,7 @@ const UserStatus = require('../../components/UserStatus');
 
 
 function LicensePackage(props) {
+	React.Component.call(this, props);
 	this.state = {
 		items: [],
 		isAddingLicensePackage: false,
@@ -95,15 +96,15 @@ function LicensePackage(props) {
 						}}
 						onCancel={() => this.setState({ isDeletingLicensePackage: false })}
 					/>
-					{/*<LicensePackageInfoModal isOpen={this.state.isEditingLicensePackage}*/}
-					{/*                         onCancel={() => {*/}
-					{/*	                         this.setState({isEditingLicensePackage: false})*/}
-					{/*                         }}*/}
-					{/*                         onOk={() => {*/}
+					{<LicensePackageInfoModal isOpen={this.state.isEditingLicensePackage}
+					                         onCancel={() => {
+						                         this.setState({isEditingLicensePackage: false})
+					                         }}
+					                         onOk={() => {
 
-					{/*                         }}*/}
-					{/*                         item={this.state.selectedLicensePackage}*/}
-					{/*/>*/}
+					                         }}
+					                        item={this.state.selectedLicensePackage}
+					/>}
 					<LicensePackageNewModal isOpen={this.state.isAddingLicensePackage}
 						onCancel={() => {
 							this.setState({ isAddingLicensePackage: false });
