@@ -4,6 +4,7 @@ const React = require('react');
 const api = require('../../services/apiClient');
 const UserInfoModal = require('../../dialogs').UserInfoModal;
 const ConfirmationModal = require('../../dialogs').ConfirmationModal;
+const UserAddModal = require('../../dialogs').UserAddModal;
 const ListUser = require('../../components/ListUser');
 const { toast } = require('react-toastify');
 const LeftNavigation = require('./../LeftNavigation');
@@ -124,7 +125,7 @@ function PageUser(props) {
                 />
                 <UserInfoModal isOpen={this.state.isEditingUser} onOk={this.callApiUpdateUser} action={"edit"}
                     onCancel={(e) => this.setState({ isEditingUser: false })} user={this.state.selectedUser} />
-                <UserInfoModal isOpen={this.state.isAddingUser} onOk={this.callApiAddUser} action={"add"}
+                <UserAddModal isOpen={this.state.isAddingUser} onOk={this.callApiAddUser} action={"add"}
                     onCancel={(e) => this.setState({ isAddingUser: false })} />
                 <ConfirmationModal isOpen={this.state.isDeletingUser} title={"Confirmation"}
                     message={"Are you sure to delete selected user?"}
