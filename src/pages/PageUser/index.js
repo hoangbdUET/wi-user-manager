@@ -16,13 +16,19 @@ function PageUser(props) {
     React.Component.call(this, props);
     this.state = {
         items: [],
+        companies: [],
         isAddingUser: false,
         isEditingUser: false,
         isDeletingUser: false,
         filter: ""
     };
     this.componentDidMount = function () {
+        this.initFromServer();
+    }
+
+    this.initFromServer = function() {
         listUser.call(this);
+        listCompanies.call(this);
     }
 
     this.getItemList = function () {
@@ -44,10 +50,34 @@ function PageUser(props) {
         })
     }
 
+    this.listCompanies = listCompanies.bind(this);
+
+    function listCompanies() {
+        api.getCompaniesPromise().then(companies => {
+            this.setState({
+                companies: companies
+            });
+        }).catch((e)=>{
+            toast.error(e);
+        })
+    }
+
     this.callApiAddUser = callApiAddUser.bind(this);
 
     function callApiAddUser(user) {
-        console.log("Call api adduser ", user);
+        if (user.password != user.repassword) {
+            toast.error('Your confirm password is not match');
+            return;
+        }
+        api.newUser(user)
+        .then((rs)=>{
+            toast.success('Create user successfully');
+            this.initFromServer();
+            this.setState({
+                isAddingUser: false
+            });
+        })
+        .catch(e=>{toast.error(e);});
     }
 
     this.callApiUpdateUser = callApiUpdateUser.bind(this);
@@ -59,8 +89,16 @@ function PageUser(props) {
     this.callApiDeleteUser = callApiDeleteUser.bind(this);
 
     function callApiDeleteUser(user) {
-        console.log("call api delete user", user);
-        this.setState({ isDeletingUser: false })
+        console.log('run');
+        api.deleteUser(user.idUser)
+        .then((rs)=>{
+            toast.success('Delete user successfully');
+            this.initFromServer();
+            this.setState({ isDeletingUser: false });
+        })
+        .catch(e=>{
+            toast.error(e);
+        });
     }
 
     this.startDeleteUser = startDeleteUser.bind(this);
@@ -125,7 +163,8 @@ function PageUser(props) {
                 <UserInfoModal isOpen={this.state.isEditingUser} onOk={this.callApiUpdateUser} action={"edit"}
                     onCancel={(e) => this.setState({ isEditingUser: false })} user={this.state.selectedUser} />
                 <UserAddModal isOpen={this.state.isAddingUser} onOk={this.callApiAddUser} action={"add"}
-                    onCancel={(e) => this.setState({ isAddingUser: false })} />
+                    onCancel={(e) => this.setState({ isAddingUser: false })} 
+                    companies = {this.state.companies}/>
                 <ConfirmationModal isOpen={this.state.isDeletingUser} title={"Confirmation"}
                     message={"Are you sure to delete selected user?"}
                     onCancel={() => this.setState({ isDeletingUser: false })}

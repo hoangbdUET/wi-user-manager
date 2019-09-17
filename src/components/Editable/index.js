@@ -97,7 +97,7 @@ function Editable(props) {
 
                 <form style={this.state.editing ? visibleStyle : hiddenStyle}
                       onSubmit={this.handleSubmit}>
-                    <input type="text" value={this.props.value} 
+                    <input type={this.props.hideText?'password':'text'} value={this.props.value} 
                            ref={this.textInput}
                            onChange={this.handleChange}
                            onBlur={this.handleBlur}/>

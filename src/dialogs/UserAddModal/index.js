@@ -5,6 +5,7 @@ Modal.setAppElement('#react-app');
 const PropTypes = require('prop-types');
 require('./style.less');
 const Editable = require('../../components/Editable');
+const DropDown = require('../../components/DropDown');
 
 UserInfoModal.protoTypes = {
     isOpen: PropTypes.bool,
@@ -19,7 +20,10 @@ function UserInfoModal(props) {
         email: "",
         fullname: "",
         status: "",
-        role: ""
+        role: "",
+        password: "",
+        repassword: "",
+        idCompany: null
     };
 
     this.updateProps = function() {
@@ -28,7 +32,10 @@ function UserInfoModal(props) {
             email: "",
             fullname: "",
             status: "",
-            role: ""
+            role: "",
+            password: "",
+            repassword: "",
+            idCompany: null
         });
     }
 
@@ -49,6 +56,40 @@ function UserInfoModal(props) {
                                                 username: value
                                             };
                                         })}
+                            />
+                        </div>
+                        <div className="fieldset">
+                            <div>Password</div>
+                            <Editable   value={this.state.password} 
+                                        formatValue={(v) => {
+                                            if (v.length === 0) {
+                                                return '[empty]';
+                                            }
+                                            return new Array(v.length).fill('*', 0, v.length);
+                                        }}
+                                        onValueChanged={(value) => this.setState((state)=>{
+                                            return {
+                                                password: value
+                                            };
+                                        })}
+                                        hideText
+                            />
+                        </div>
+                        <div className="fieldset">
+                            <div>Re-password</div>
+                            <Editable   value={this.state.repassword} 
+                                        formatValue={(v) => {
+                                            if (v.length === 0) {
+                                                return '[empty]';
+                                            }
+                                            return new Array(v.length).fill('*', 0, v.length);
+                                        }}
+                                        onValueChanged={(value) => this.setState((state)=>{
+                                            return {
+                                                repassword: value
+                                            };
+                                        })}
+                                        hideText
                             />
                         </div>
                         <div className="fieldset">
@@ -91,10 +132,25 @@ function UserInfoModal(props) {
                                             })}
                             />
                         </div>
+                        <div className="fieldset">
+                        <div>Company:</div>
+                            <DropDown  getItem={(company) => (
+                                <div style={{ height: '18px' }}>{company ? company.name : "[select company]"}</div>)}
+                                items={this.props.companies}
+                                itemHeight={18}
+                                onItemClicked = {(clickedCompany)=>{
+                                    this.setState((state)=>{
+                                        return {
+                                            idCompany: clickedCompany.idCompany
+                                        }
+                                    });
+                                }}
+                            />
+                        </div>
                     </div>
                 </div>
                 <div className="footer-dialog">
-                    <div className="btn-next" onClick={(e) => props.onOk(user)}>Ok</div>
+                    <div className="btn-next" onClick={(e) => props.onOk(Object.assign({},this.state))}>Ok</div>
                     <div className="btn-next" onClick={props.onCancel}>Close</div>
                 </div>
                 
