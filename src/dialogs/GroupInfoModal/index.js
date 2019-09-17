@@ -18,7 +18,7 @@ GroupInfoModal.propTypes = {
     onCancel: PropTypes.func,
     companies: PropTypes.array,
     groupUsers: PropTypes.array
-}
+};
 
 function GroupInfoModal(props) {
     React.Component.call(this, props);
@@ -30,7 +30,7 @@ function GroupInfoModal(props) {
         tabIdx: 0,
         removeUsers: [],
         addUsers: []
-    }
+    };
 
 
     this.clearModelSession = function() {
@@ -40,7 +40,7 @@ function GroupInfoModal(props) {
             addUsers: [],
             group: {}
         });
-    }
+    };
 
     this.runPropsUpdate = function() {
         this.setState({
@@ -48,23 +48,9 @@ function GroupInfoModal(props) {
             group: this.props.group || {},
             groupUsers: this.props.groupUsers || []
         });
-    }
+    };
 
     this.updateToServer = function() {
-        // return new Promise(async (resolve, reject)=>{
-        //     for (let i = 0; i < this.state.removeUsers.length; i++)
-        //         try {
-        //             await api.removeUserFromGroup(this.props.selectedGroupId, this.state.removeUsers[i].idUser);
-        //         } catch (e) {
-        //             reject(e);
-        //         }
-        //     try {
-        //         await api.addUsersToGroup(this.props.selectedGroupId, this.state.addUsers.map((u)=>u.idUser));
-        //     } catch (e) {
-        //         reject(e);
-        //     }
-        //     resolve(null);
-        // });
         let listPromise = [];
         for (let i = 0; i < this.state.removeUsers.length; i++) {
             listPromise.push(api.removeUserFromGroup(this.props.selectedGroupId, this.state.removeUsers[i].idUser));
@@ -86,7 +72,7 @@ function GroupInfoModal(props) {
         }).catch(e=>{
             toast.error(e.message);
         });
-    }
+    };
 
     let disabled = !!Object.keys(this.props.group || {}).length;
 
@@ -97,7 +83,7 @@ function GroupInfoModal(props) {
             <div style={{height: '18px'}}>
                 {user ? (<Fragment>
                     <div className="item-content">{user.username}</div>
-                    <i className="action-icon ti-arrow-right" onClick={(e) => {1
+                    <i className="action-icon ti-arrow-right" onClick={(e) => {1;
                         this.setState(state => {
                             let idx = state.removeUsers.findIndex(u => u.idUser === user.idUser);
                             if (idx >= 0) {
@@ -115,7 +101,7 @@ function GroupInfoModal(props) {
                             state.groupUsers.push(user);
                             return {users: state.users, groupUsers: state.groupUsers, removeUsers: state.removeUsers, addUsers: state.addUsers};                           
                         })
-                    }}></i>
+                    }}/>
                 </Fragment>) : "[select user]"}
             </div>
         );
@@ -146,7 +132,7 @@ function GroupInfoModal(props) {
                             }
                             return {groupUsers: state.groupUsers, users: state.users, removeUsers: state.removeUsers, addUsers: state.addUsers}                          
                         })
-                    }}></i>
+                    }}/>
                 </Fragment>) : "[select user]"}
             </div>
         );
@@ -176,7 +162,7 @@ function GroupInfoModal(props) {
                     })}>Members</div>
                 </div>
                 <div style={{flex:2, position: 'relative'}}>
-                    <div style={{height: '400px'}}></div>
+                    <div style={{height: '400px'}}/>
                     <div className={"tab-content"} style={{visibility:this.state.tabIdx===0?'visible':'hidden'}}>
                         <div className="fieldset">
                             <div>Name:</div>
@@ -202,17 +188,7 @@ function GroupInfoModal(props) {
                                         };
                                     })}/>
                         </div>
-                        {/* <div className="fieldset">
-                            <div>Company:</div>
-                            <DropDown disabled={disabled} getItem={(company) => (
-                                <div style={{height: '18px'}}>{company ? company.name : "[select company]"}</div>)}
-                                    items={this.props.companies}
-                                    itemHeight={18}
-                                    selectedItem={this.props.selectedCompany} onItemClicked={(clickedCompany) => {
-                                group.idCompany = clickedCompany.idCompany;
-                                group.company = clickedCompany;
-                            }}/>
-                        </div> */}
+                        {}
                     </div>
                     <div className="members tab-content" style={{visibility:this.state.tabIdx===1?'visible':'hidden'}}>
                         <div>Members:</div>
@@ -245,84 +221,8 @@ function GroupInfoModal(props) {
         </Modal>);
     }
 
-    this.render = function () {    
-        // if (((this.state.groupUsers || []).length !== (this.props.groupUsers || []).length) || 
-        //     ((this.state.users || []).length !== (this.props.users || []).length)) {
-        //     this.setState({
-        //         users:this.props.users,
-        //         groupUsers: this.props.groupUsers
-        //     })
-        //     return doRender.call(this, {users: this.props.users, groupUsers: this.props.groupUsers});
-        // }
+    this.render = function () {
         return doRender.call(this, this.state);
-        // return (<Modal isOpen={this.props.isOpen} portalClassName="ModalStyle" className="GroupInfoModal" overlayClassName="modal-backdrop">
-        //     <h4>New Group</h4>
-        //     <div className="content-dialog">
-        //         <div className="tab-controls">
-        //             <div onClick={() => this.setState({
-        //                 tabIdx:0
-        //             })}>General</div>
-        //             <div onClick={() => this.setState({
-        //                 tabIdx: 1
-        //             })}>Members</div>
-        //         </div>
-        //         <div style={{flex:2, position: 'relative'}}>
-        //             <div style={{height: '400px'}}></div>
-        //             <div className={"tab-content"} style={{visibility:this.state.tabIdx===0?'visible':'hidden'}}>
-        //                 <div className="fieldset">
-        //                     <div>Name:</div>
-        //                     <Editable value={group.name || ""} disabled={disabled}
-        //                             formatValue={(v) => (((v !== null ) && v.length) ? v : '[empty]')}
-        //                             onValueChanged={(name) => group.name = name}/>
-        //                 </div>
-        //                 <div className="fieldset">
-        //                     <div>Description:</div>
-        //                     <Editable value={group.description || ""} disabled={disabled}
-        //                             formatValue={(v) => (((v !== null || true) && v.length) ? v : '[empty]')}
-        //                             onValueChanged={(description) => group.description = description}/>
-        //                 </div>
-        //                 <div className="fieldset">
-        //                     <div>Company:</div>
-        //                     <DropDown disabled={disabled} getItem={(company) => (
-        //                         <div style={{height: '18px'}}>{company ? company.name : "[select company]"}</div>)}
-        //                             items={this.props.companies}
-        //                             itemHeight={18}
-        //                             selectedItem={this.props.selectedCompany} onItemClicked={(clickedCompany) => {
-        //                         group.idCompany = clickedCompany.idCompany;
-        //                         group.company = clickedCompany;
-        //                     }}/>
-        //                 </div>
-        //             </div>
-        //             <div className="members tab-content" style={{visibility:this.state.tabIdx===1?'visible':'hidden'}}>
-        //                 <div>Members:</div>
-        //                 <div style={{flex:1, overflow:'hidden', display:'flex'}}>
-        //                     <div className="column">
-        //                         <SearchableList disabled={!disabled} getItem={this.getUser}
-        //                             items={this.state.users}
-        //                             itemHeight={18} />
-        //                     </div>
-        //                     <div className="column">
-        //                         <SearchableList disabled={!disabled} getItem={this.getGroupUser}
-        //                             items={this.state.groupUsers} 
-        //                             itemHeight={18} />
-        //                     </div>
-        //                 </div>
-        //             </div>
-        //         </div>
-                
-        //     </div>
-        //     <div className="footer-dialog">
-        //         <div className="btn-next" onClick={(e) => {
-        //             this.updateToServer();
-        //             this.clearModelSession();
-        //             this.props.onOk();
-        //         }}>OK</div>
-        //         <div className="btn-next" onClick={(e) => {
-        //             this.clearModelSession();
-        //             this.props.onCancel();
-        //         }}>Cancel</div>
-        //     </div>
-        // </Modal>);
     }
 
 }
