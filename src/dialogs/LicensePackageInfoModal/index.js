@@ -11,31 +11,102 @@ const SearchableList = require('../../components/SearchableList');
 
 function LicensePackageInfoModal(props) {
     React.Component.call(this, props);
-    this.state = {};
+
+    this.state = {
+        name: (this.props.selectedPackage || {}).name,
+        description: (this.props.selectedPackage || {}).description,
+        selectedPackage: this.props.selectedPackage,
+        featuresInPackage: this.props.featuresInPackage || []
+    };
+
+    // this.listFeatureInPackage = listFeatureInPackage.bind(this);
+
+    this.updateProps = function() {
+        this.setState({
+            name: (this.props.selectedPackage || {}).name,
+            description: (this.props.selectedPackage || {}).description,
+            selectedPackage: this.props.selectedPackage,
+            featuresInPackage: this.props.featuresInPackage || []
+        });
+    }
 
     this.listFeatureInPackage = listFeatureInPackage.bind(this);
-
-    function listFeatureInPackage() {
-
+    function listFeatureInPackage(feature) {
+        // console.log(feature);
+        return (
+            <div style={{height: '18px'}}>
+                {feature ? (<Fragment>
+                    <div className="item-content">{'Hello'}</div>
+                    <i className="action-icon ti-close" onClick={() => {
+                        // this.setState(state => {
+                        //     let idx = state.addUsers.findIndex(u => u.idUser === user.idUser);
+                        //     if (idx >= 0) {
+                        //         state.addUsers.splice(idx,1);
+                        //     }
+                        //     idx = state.removeUsers.findIndex(u => u.idUser === user.idUser);
+                        //     if (idx < 0) {
+                        //         state.removeUsers.push(user);
+                        //     }
+                        //     //remove out
+                        //     idx = state.groupUsers.findIndex(u => u.idUser === user.idUser);
+                        //     state.groupUsers.splice(idx, 1);
+                        //     let index = state.users.findIndex(u => u.idUser === user.idUser);
+                        //     if (index < 0) {
+                        //         state.users.push(user);
+                        //     }
+                        //     return {groupUsers: state.groupUsers, users: state.users, removeUsers: state.removeUsers, addUsers: state.addUsers}                          
+                        // })
+                    }}></i>
+                </Fragment>) : "[select feature]"}
+            </div>
+        );
     }
 
-    this.listAllFeature = listAllFeature.bind(this);
-
-    function listAllFeature() {
-        api.get
+    // this.listFeatureNotInPackage = listFeatureNotInPackage.bind(this);
+    this.listFeatureNotInPackage = function(feature) {
+        return (
+            <div style={{height: '18px'}}>
+                {feature ? (<Fragment>
+                    <div className="item-content">{feature.name}</div>
+                    <i className="action-icon ti-close" onClick={() => {
+                        // this.setState(state => {
+                        //     let idx = state.addUsers.findIndex(u => u.idUser === user.idUser);
+                        //     if (idx >= 0) {
+                        //         state.addUsers.splice(idx,1);
+                        //     }
+                        //     idx = state.removeUsers.findIndex(u => u.idUser === user.idUser);
+                        //     if (idx < 0) {
+                        //         state.removeUsers.push(user);
+                        //     }
+                        //     //remove out
+                        //     idx = state.groupUsers.findIndex(u => u.idUser === user.idUser);
+                        //     state.groupUsers.splice(idx, 1);
+                        //     let index = state.users.findIndex(u => u.idUser === user.idUser);
+                        //     if (index < 0) {
+                        //         state.users.push(user);
+                        //     }
+                        //     return {groupUsers: state.groupUsers, users: state.users, removeUsers: state.removeUsers, addUsers: state.addUsers}                          
+                        // })
+                    }}></i>
+                </Fragment>) : "[select feature]"}
+            </div>
+        );
     }
+
+
+
+    // this.listAllFeature = listAllFeature.bind(this);
+
+    // function listAllFeature() {
+    //     api.get
+    // }
 
     this.render = function () {
+        console.log(this.state);
         return (
             <Modal isOpen={this.props.isOpen} portalClassName="ModalStyle" className="LicensePackageInfoModal"
-                   onAfterOpen={() => {
-                       this.setState({
-                           name: this.props.item.name,
-                           description: this.props.item.description,
-                           idLicensePackage: this.props.item.idLicensePackage
-                       });
-                   }}
-                   overlayClassName="modal-backdrop">
+                    onAfterOpen={()=>this.updateProps()}
+                    overlayClassName="modal-backdrop">
                 <h4>Edit license package <b>{this.state.name}</b></h4>
                 <div className="content-dialog">
                     <div style={{flex: 1, overflow: 'auto'}}>
@@ -56,11 +127,19 @@ function LicensePackageInfoModal(props) {
                         </div>
                         <div>Features:</div>
                         <div className={"column"}>
-                            <SearchableList/>
+                            <SearchableList
+                                items = {this.state.featuresInPackage}
+                                itemHeight={18}
+                                getItem={this.listFeatureInPackage}
+                            />
                         </div>
-                        <div className={"column"}>
-                            <SearchableList/>
-                        </div>
+                        {/* <div className={"column"}>
+                            <SearchableList
+                                items = {((this.props.item || {}).i2g_features) || []}
+                                itemHeight={18}
+                                // getItem={this.listFeatureNotInPackage}
+                            />
+                        </div> */}
                     </div>
                 </div>
                 <div className="footer-dialog">

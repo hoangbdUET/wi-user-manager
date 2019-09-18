@@ -158,7 +158,7 @@ function GroupInfoModal(props) {
     }
 
     function doRender(info) {
-        console.log(this.state.group);
+        //console.log(this.state.group);
         return (
         <Modal isOpen={this.props.isOpen} 
                 portalClassName="ModalStyle" 
@@ -224,7 +224,7 @@ function GroupInfoModal(props) {
                             </div>
                             <div className="column">
                                 <SearchableList disabled={!disabled} getItem={this.getGroupUser}
-                                    items={info.groupUsers} 
+                                    items={info.groupUsers}
                                     itemHeight={18} />
                             </div>
                         </div>

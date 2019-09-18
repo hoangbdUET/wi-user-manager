@@ -11,6 +11,8 @@ const UserStatus = require('../../components/UserStatus');
 
 
 function LicensePackage(props) {
+    React.Component.call(this, props);
+
     this.state = {
         items: [],
         isAddingLicensePackage: false,
@@ -18,12 +20,12 @@ function LicensePackage(props) {
         isDeletingLicensePackage: false,
         selectedLicensePackage: null
     };
+
     this.componentDidMount = function () {
         listPackage.call(this);
     };
 
     this.listPackage = listPackage.bind(this);
-
     function listPackage() {
         api.getLicensePackages().then(packages => {
             this.setState({items: packages || []});
@@ -31,13 +33,11 @@ function LicensePackage(props) {
     }
 
     this.deleteLicensePackage = deleteLicensePackage.bind(this);
-
     function deleteLicensePackage(selectedLicensePackage) {
         console.log("Call delete ", selectedLicensePackage);
     }
 
     this.newLicensePackage = newLicensePackage.bind(this);
-
     function newLicensePackage(item) {
         api.newLicensePacage(item).then(() => {
             listPackage.call(this);
@@ -48,7 +48,6 @@ function LicensePackage(props) {
     }
 
     this.editLicensePackage = editLicensePackage.bind(this);
-
     function editLicensePackage(item) {
         console.log(item)
         api.updateLicensePackage(item).then(() => {
@@ -124,7 +123,8 @@ function LicensePackage(props) {
                                                  this.listPackage();
                                              }}
                                              onOk={item => this.editLicensePackage(item)}
-                                             item={this.state.selectedLicensePackage}
+                                             featuresInPackage={this.getFeaturesInPackage(this.state.selectedLicensePackage)}
+                                             selectedPackage={Object.assign({},this.state.selectedLicensePackage)}
                     />
                     <LicensePackageNewModal isOpen={this.state.isAddingLicensePackage}
                                             onCancel={() => {
@@ -137,6 +137,27 @@ function LicensePackage(props) {
             </div>
         );
     }
+
+    
+    this.getFeaturesInPackage = function(selectedLicensePackage) {
+        // if (!group) return;
+        // console.log(_groups);
+        // let oriGroup = (_groups|| []).find(g => g.idGroup === group.idGroup);
+        // if (oriGroup) return oriGroup.users;
+        // else return [];
+        return (selectedLicensePackage || {}).i2g_features || [];
+    }
+
+    // function getUserNotInGroup(users, selectedGr) {
+    //     let originGr = (_groups || []).find(g => g.idGroup === (selectedGr || {}).idGroup);
+    //     if (!originGr)
+    //         return users;
+    //     let usersInGr = originGr.users;
+    //     let usersNotInGr = users.filter((u) => {
+    //         return !isExistUserInList(usersInGr, u.idUser);
+    //     });
+    //     return usersNotInGr;
+    // }
 }
 
 LicensePackage.prototype = Object.create(React.Component.prototype);

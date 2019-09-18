@@ -139,11 +139,9 @@ function newLicensePacage(item) {
 function updateLicensePackage(item) {
     return doPost('/license-package/edit', {...item})
 }
-
 function getFeatures(payload) {
     return doPost('/feature/list', {...payload});
 }
-
 function login(username, password) {
     let params = {username: username, password: password};
     return fetch(WI_AUTH_URL + '/login', {
