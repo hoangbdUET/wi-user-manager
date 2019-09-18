@@ -21,7 +21,8 @@ module.exports = {
     login,
     update,
     newUser,
-    deleteUser
+    deleteUser,
+    getFeatures
 };
 
 // const WI_AUTH_URL = "https://users.i2g.cloud";
@@ -139,6 +140,10 @@ function updateLicensePackage(item) {
     return doPost('/license-package/edit', {...item})
 }
 
+function getFeatures(payload) {
+    return doPost('/feature/list', {...payload});
+}
+
 function login(username, password) {
     let params = {username: username, password: password};
     return fetch(WI_AUTH_URL + '/login', {
@@ -164,3 +169,4 @@ function newUser(user) {
 function deleteUser(idUser) {
     return doPost('/user/delete', {idUser: idUser});
 }
+

@@ -6,11 +6,24 @@ const Modal = require('react-modal');
 Modal.setAppElement('#react-app');
 const api = require('../../services/apiClient');
 const Editable = require('../../components/Editable');
+const SearchableList = require('../../components/SearchableList');
 
 
 function LicensePackageInfoModal(props) {
     React.Component.call(this, props);
     this.state = {};
+
+    this.listFeatureInPackage = listFeatureInPackage.bind(this);
+
+    function listFeatureInPackage() {
+
+    }
+
+    this.listAllFeature = listAllFeature.bind(this);
+
+    function listAllFeature() {
+        api.get
+    }
 
     this.render = function () {
         return (
@@ -40,6 +53,13 @@ function LicensePackageInfoModal(props) {
                                       formatValue={(v) => ((v !== null && v !== undefined && v.length !== 0) ? v : "[empty]")}
                                       onValueChanged={(v) => this.setState({description: v})}
                             />
+                        </div>
+                        <div>Features:</div>
+                        <div className={"column"}>
+                            <SearchableList/>
+                        </div>
+                        <div className={"column"}>
+                            <SearchableList/>
                         </div>
                     </div>
                 </div>
