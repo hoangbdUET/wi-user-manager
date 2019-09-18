@@ -5,6 +5,7 @@ Modal.setAppElement('#react-app');
 const PropTypes = require('prop-types');
 require('./style.less');
 const Editable = require('../../components/Editable');
+const DropDown = require('../../components/DropDown');
 
 UserInfoModal.protoTypes = {
     isOpen: PropTypes.bool,
@@ -19,16 +20,19 @@ function UserInfoModal(props) {
         email: "",
         fullname: "",
         status: "",
-        role: ""
+        role: "",
+        idLicensePackage: ""
     };
 
     this.updateProps = function() {
+        console.log(this.props.user);
         this.setState({
             username: (this.props.user||{}).username,
             email: (this.props.user||{}).email,
             fullname: (this.props.user||{}).fullname,
             status: (this.props.user||{}).status,
-            role: (this.props.user||{}).role
+            role: (this.props.user||{}).role,
+            idLicensePackage: (this.props.user||{}).idLicensePackage
         });
     }
 
@@ -75,6 +79,21 @@ function UserInfoModal(props) {
                             />
                         </div>
                         <div className="fieldset">
+                            <div>License:</div>
+                            <DropDown  getItem={(license) => (
+                                <div style={{ height: '18px' }}>{license ? license.name : "[select license]"}</div>)}
+                                items = {this.props.licensePackages}
+                                itemHeight={18}
+                                onItemClicked = {(license)=>{
+                                    this.setState((state)=>{
+                                        return {
+                                            idLicensePackage: license.idLicensePackage
+                                        }
+                                    });
+                                }}
+                            />
+                        </div>
+                        <div className="fieldset">
                             <div>Status</div>
                             <Editable   value={this.state.status} 
                                         formatValue={(v) => ((v === null || v === undefined || v.length === 0 )? "[empty]" : v)}
@@ -99,7 +118,7 @@ function UserInfoModal(props) {
                     </div>
                 </div>
                 <div className="footer-dialog">
-                    <div className="btn-next" onClick={(e) => {props.onOk(user);}}>Ok</div>
+                    <div className="btn-next" onClick={(e) => {props.onOk(Object.assign({}, this.state));}}>Ok</div>
                     <div className="btn-next" onClick={props.onCancel}>Close</div>
                 </div>
                 

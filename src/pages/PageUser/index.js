@@ -17,6 +17,7 @@ function PageUser(props) {
     this.state = {
         items: [],
         companies: [],
+        licensePackages: [],
         isAddingUser: false,
         isEditingUser: false,
         isDeletingUser: false,
@@ -29,6 +30,7 @@ function PageUser(props) {
     this.initFromServer = function() {
         listUser.call(this);
         listCompanies.call(this);
+        listLicensePackage.call(this);
     }
 
     this.getItemList = function () {
@@ -62,6 +64,19 @@ function PageUser(props) {
         })
     }
 
+    this.listLicensePackage = listLicensePackage.bind(this);
+
+    function listLicensePackage() {
+        api.getLicensePackages().then(licensePackages => {
+            // console.log(licensePackages);
+            this.setState({
+                licensePackages: licensePackages
+            });
+        }).catch((e)=>{
+            toast.error(e);
+        })
+    }
+
     this.callApiAddUser = callApiAddUser.bind(this);
 
     function callApiAddUser(user) {
@@ -89,7 +104,7 @@ function PageUser(props) {
     this.callApiDeleteUser = callApiDeleteUser.bind(this);
 
     function callApiDeleteUser(user) {
-        console.log('run');
+        // console.log('run');
         api.deleteUser(user.idUser)
         .then((rs)=>{
             toast.success('Delete user successfully');
@@ -114,9 +129,6 @@ function PageUser(props) {
         this.setState({ isAddingUser: true });
     }
 
-    function addUser(user) {
-        console.log("Add user ", user);
-    }
 
     this.startEditUser = startEditUser.bind(this);
 
@@ -161,7 +173,9 @@ function PageUser(props) {
                     }]}
                 />
                 <UserInfoModal isOpen={this.state.isEditingUser} onOk={this.callApiUpdateUser} action={"edit"}
-                    onCancel={(e) => this.setState({ isEditingUser: false })} user={this.state.selectedUser} />
+                    onCancel={(e) => this.setState({ isEditingUser: false })} user={this.state.selectedUser} 
+                    licensePackages = {this.state.licensePackages}    
+                />
                 <UserAddModal isOpen={this.state.isAddingUser} onOk={this.callApiAddUser} action={"add"}
                     onCancel={(e) => this.setState({ isAddingUser: false })} 
                     companies = {this.state.companies}/>

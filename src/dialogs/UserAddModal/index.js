@@ -6,6 +6,7 @@ const PropTypes = require('prop-types');
 require('./style.less');
 const Editable = require('../../components/Editable');
 const DropDown = require('../../components/DropDown');
+// const DropDownWithOutSearchBar = require('../../components/DropDownWithoutSearchBar');
 
 UserInfoModal.protoTypes = {
     isOpen: PropTypes.bool,
@@ -25,6 +26,17 @@ function UserInfoModal(props) {
         repassword: "",
         idCompany: null
     };
+
+    this.status = [
+        {
+            statusName: "Active",
+            status: "Active"
+        },
+        {
+            statusName: "Inactive",
+            status: "Inactive"
+        }
+    ];
 
     this.updateProps = function() {
         this.setState({
@@ -112,7 +124,7 @@ function UserInfoModal(props) {
                                             })}
                             />
                         </div>
-                        <div className="fieldset">
+                        {/* <div className="fieldset">
                             <div>Status</div>
                             <Editable value={this.state.status} formatValue={(v) => ((v === null || v === undefined || v.length === 0 )? "[empty]" : v)}
                                             onValueChanged={(value) => this.setState((state)=>{
@@ -120,6 +132,24 @@ function UserInfoModal(props) {
                                                     status: value
                                                 };
                                             })}
+                            />
+                        </div> */}
+                        <div className="fieldset">
+                            <div>Status:</div>
+                            <DropDown  
+                                getItem={(status) => 
+                                    <div style={{ height: '18px' }}>{status ? status.statusName : "[select status]"}</div>
+                                }
+                                items = {this.status}
+                                itemHeight={18}
+                                // disableSearch={true}
+                                onItemClicked = {(status)=>{
+                                    this.setState((state)=>{
+                                        return {
+                                            status: status.status
+                                        }
+                                    });
+                                }}
                             />
                         </div>
                         <div className="fieldset">
@@ -133,10 +163,10 @@ function UserInfoModal(props) {
                             />
                         </div>
                         <div className="fieldset">
-                        <div>Company:</div>
+                            <div>Company:</div>
                             <DropDown  getItem={(company) => (
                                 <div style={{ height: '18px' }}>{company ? company.name : "[select company]"}</div>)}
-                                items={this.props.companies}
+                                items = {this.props.companies}
                                 itemHeight={18}
                                 onItemClicked = {(clickedCompany)=>{
                                     this.setState((state)=>{

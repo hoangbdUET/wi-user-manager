@@ -21,6 +21,7 @@ function DropDown(props) {
         return item;
     }
 
+
     let formatter = this.props.formatItem || this.props.getItem || defaultFormatItem;
 
     this.handleSearchStrChanged = handleSearchStrChanged.bind(this);
@@ -58,7 +59,7 @@ function DropDown(props) {
     this.onItemClicked = onItemClicked.bind(this);
 
     function onItemClicked(clickedItem) {
-        console.log(clickedItem);
+        //console.log(clickedItem);
         this.setState({
             selectedItem: clickedItem,
             showList: false
@@ -67,6 +68,7 @@ function DropDown(props) {
     }
 
     this.render = function() {
+        // console.log(this.props.items);
         return (<div tabIndex={0} className="DropDown" 
             onKeyDown={(e) => {if (e.keyCode == 27) {
                 this.setState({showList: false});
@@ -78,7 +80,7 @@ function DropDown(props) {
                 	setTimeout(() => {searchStrInput.current.focus()}, 500);
 
                 } }>{formatter(this.state.selectedItem)}</div>
-            <input className={this.state.showList?"":"hidden-block"} ref={searchStrInput}
+            <input disabled={this.props.disableSearch} className={this.state.showList?"":"hidden-block"} ref={searchStrInput}
                 type="text" value={this.state.searchStr} onChange={this.handleSearchStrChanged} onBlur={()=>this.handleBlur()}/>
             <div style={{
                 display:'block',
@@ -89,7 +91,11 @@ function DropDown(props) {
                 border: '1px solid #ccc',
                 boxShadow: '0px 0px 10px 5px #ddd',
                 zIndex: 10
-            }} className={this.state.showList?"":"hidden-block"}>
+            }} className={this.state.showList?"":"hidden-block"}
+                onBlur={()=>this.handleBlur()}
+                // contentEditable
+                // spellCheck = {false}
+            >
                 <VList getItem={this.props.getItem}
                        getRawItem={this.getRawItem}
                        onItemClicked={this.onItemClicked}
