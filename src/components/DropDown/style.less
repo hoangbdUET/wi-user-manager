@@ -1,10 +1,40 @@
 .DropDown {
     position: relative;
     box-sizing: border-box;
+    
     .hidden-block {
-        //display: none !important;
-        width:0px !important;
-        //height: 0px !important;
-        visibility: hidden !important;
+        display: none !important;
+        
+    }
+    .dropdow-content {
+        z-index: 1;
+        position: absolute;
+        right: 0;
+        top: 28px;
+        border-radius: 2px;
+        box-shadow: 0 11px 17px #0000000d;
+        .dropdown-list-item {
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 0 0 2px 2px; 
+            border: 1px solid #a7abae;
+        }
+        .dropdown-search {
+            background-color: #ffffff;
+            border: none;
+            padding: 10px;
+            border-radius: 2px 2px 0 0;
+            border-width: 1px 1px 0 1px;
+            border-color: #a7abae;
+            border-style: solid;
+        }
+        .dropdown-carret {
+
+            position: absolute;
+            top: -20px;
+            right: 13px;
+            border: 10px solid transparent;
+            border-bottom-color: #a7abae;
+        }
     }
 }

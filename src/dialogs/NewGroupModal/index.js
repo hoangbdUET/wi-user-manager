@@ -85,7 +85,7 @@ function NewGroupModal(props) {
                     <div className="fieldset">
                         <div>Company:</div>
                         <DropDown disabled={disabled} getItem={(company) => (
-                            <div style={{ height: '18px' }}>{company ? company.name : "[select company]"}</div>)}
+                            <div style={{ height: '18px', display: 'flex', alignItems: 'center' }}>{company ? company.name : "[select company]"}</div>)}
                             items={this.props.companies}
                             itemHeight={18}
                             onItemClicked = {(clickedCompany)=>{

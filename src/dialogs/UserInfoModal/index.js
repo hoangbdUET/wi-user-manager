@@ -44,7 +44,7 @@ function UserInfoModal(props) {
                 onAfterOpen = {()=>{this.updateProps();}}>
                 <h4>New User</h4>
                 <div className="content-dialog">
-                    <div style={{flex: 1, overflow: 'auto'}}>
+                    <div style={{flex: 1, overflow: 'visible'}}>
                         <div className="fieldset">
                             <div>Username</div>
                             <Editable   value={this.state.username} 
@@ -81,7 +81,7 @@ function UserInfoModal(props) {
                         <div className="fieldset">
                             <div>License:</div>
                             <DropDown  getItem={(license) => (
-                                <div style={{ height: '18px' }}>{license ? license.name : "[select license]"}</div>)}
+                                <div style={{ height: '18px', display: 'flex', alignItems: 'center' }}>{license ? license.name : "[select license]"}</div>)}
                                 items = {this.props.licensePackages}
                                 itemHeight={18}
                                 onItemClicked = {(license)=>{

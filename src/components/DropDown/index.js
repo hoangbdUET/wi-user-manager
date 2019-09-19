@@ -73,34 +73,24 @@ function DropDown(props) {
             onKeyDown={(e) => {if (e.keyCode == 27) {
                 this.setState({showList: false});
             }}}>
-            <div className={this.state.showList?"hidden-block":""}
-                onClick={() => {
+            <div onClick={() => {
                 	if (this.state.disabled) return;
                 	this.setState({showList:true});
                 	setTimeout(() => {searchStrInput.current.focus()}, 500);
 
-                } }>{formatter(this.state.selectedItem)}</div>
-            <input disabled={this.props.disableSearch} className={this.state.showList?"":"hidden-block"} ref={searchStrInput}
-                type="text" value={this.state.searchStr} onChange={this.handleSearchStrChanged} onBlur={()=>this.handleBlur()}/>
-            <div style={{
-                display:'block',
-                width: '100%',
-                height: '200px', 
-                position:'absolute', 
-                backgroundColor:'white',
-                border: '1px solid #ccc',
-                boxShadow: '0px 0px 10px 5px #ddd',
-                zIndex: 10
-            }} className={this.state.showList?"":"hidden-block"}
-                onBlur={()=>this.handleBlur()}
-                // contentEditable
-                // spellCheck = {false}
-            >
-                <VList getItem={this.props.getItem}
-                       getRawItem={this.getRawItem}
-                       onItemClicked={this.onItemClicked}
-                       totalItems={() => this.state.items.length} itemHeight={this.props.itemHeight}
-                />
+                } }>{formatter(this.state.selectedItem)}
+            </div>
+            <div className={this.state.showList?"dropdow-content":" dropdow-content hidden-block"}>
+                <div className="dropdown-carret"></div>
+                <input className="dropdown-search"disabled={this.props.disableSearch} ref={searchStrInput} placeholder="Search..."
+                    type="text" value={this.state.searchStr} onChange={this.handleSearchStrChanged} onBlur={()=>this.handleBlur()}/>
+                <div className="dropdown-list-item"  onBlur={()=>this.handleBlur()}>
+                    <VList getItem={this.props.getItem}
+                        getRawItem={this.getRawItem}
+                        onItemClicked={this.onItemClicked}
+                        totalItems={() => this.state.items.length} itemHeight={this.props.itemHeight}
+                    />
+                </div>
             </div>
         </div>)
     }

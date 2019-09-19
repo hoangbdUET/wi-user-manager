@@ -14,7 +14,7 @@ function App() {
     function getStudent(student) {
         return (
             <div style={{
-                // height: 18,
+                height: 18,
                 display: 'flex'
             }}>
                 <div style={{flex: 1}}>{student.name}</div>
