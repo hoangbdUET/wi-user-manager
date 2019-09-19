@@ -100,6 +100,7 @@ function VList(props) {
         });
     }
     this.render = function() {
+        // console.log('num:', this.state.startAt, this.state.viewLength, evaluate(this.state.totalItems))
         return (
             <div className="VList" ref={this.scrollContainer} style={{
                 height: '100%',

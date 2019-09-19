@@ -31,7 +31,7 @@ class SearchableList extends React.Component {
     }
 
     render() {
-        console.log('state:', this.state);
+        // console.log('state:', this.state);
         return (<div className="SearchableList">
             <div>
                 <input value={this.state.searchStr} onChange={(e) => {

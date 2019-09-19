@@ -1,5 +1,46 @@
 .LicensePackageInfoModal {
+    .content-dialog {
+        flex-direction: column;
+    }
+    
+    .tab-controls {
+        padding: 10px;
+        & > div {
+            display: inline-block;
+            border: 1px solid blue;
+            border-radius: 12px;
+            cursor: pointer;
+            padding: 6px;
+            margin-right: 10px;
+        }
+    }
+    .tab-content {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top:0;
+        left:0;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .members {
+        height: 400px;
+        padding: 10px;
+    }
+    .user-card {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 3px;
+        margin-right: 3px;
+    }
     .column {
-        flex: 1;
+        flex:1;
+    }
+    .action-icon {
+        display: block;
+        float:right;
+    }
+    .item-content {
+        float:left;
     }
 }

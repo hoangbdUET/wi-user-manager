@@ -97,7 +97,7 @@ function GroupInfoModal(props) {
             <div style={{height: '18px'}}>
                 {user ? (<Fragment>
                     <div className="item-content">{user.username}</div>
-                    <i className="action-icon ti-arrow-right" onClick={(e) => {1
+                    <i className="action-icon ti-arrow-right" onClick={(e) => {
                         this.setState(state => {
                             let idx = state.removeUsers.findIndex(u => u.idUser === user.idUser);
                             if (idx >= 0) {
