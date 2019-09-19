@@ -14,7 +14,8 @@ function LicensePackage(props) {
     React.Component.call(this, props);
 
     this.state = {
-        items: [],
+        licensePackages: [],
+        features: [],
         isAddingLicensePackage: false,
         isEditingLicensePackage: false,
         isDeletingLicensePackage: false,
@@ -23,12 +24,20 @@ function LicensePackage(props) {
 
     this.componentDidMount = function () {
         listPackage.call(this);
+        listFeature.call(this);
     };
 
     this.listPackage = listPackage.bind(this);
     function listPackage() {
         api.getLicensePackages().then(packages => {
-            this.setState({items: packages || []});
+            this.setState({licensePackages: packages || []});
+        });
+    }
+
+    this.listFeature = listFeature.bind(this);
+    function listFeature() {
+        api.getFeatures({}).then(features => {
+            this.setState({features: features || []});
         });
     }
 
@@ -47,9 +56,9 @@ function LicensePackage(props) {
         })
     }
 
+
     this.editLicensePackage = editLicensePackage.bind(this);
     function editLicensePackage(item) {
-        console.log(item)
         api.updateLicensePackage(item).then(() => {
             listPackage.call(this);
             this.setState({isEditingLicensePackage: false});
@@ -82,7 +91,7 @@ function LicensePackage(props) {
                         </div>
                         <UserStatus/>
                     </div>
-                    <ListLicensePackage itemPerPage={10} items={this.state.items} actions={[
+                    <ListLicensePackage itemPerPage={10} items={this.state.licensePackages} actions={[
                         {
                             name: "Add", handler: () => {
                                 this.setState({
@@ -124,6 +133,7 @@ function LicensePackage(props) {
                                              }}
                                              onOk={item => this.editLicensePackage(item)}
                                              featuresInPackage={this.getFeaturesInPackage(this.state.selectedLicensePackage)}
+                                             featuresNotInPackage={this.getFeaturesNotInPackage(this.state.features, this.state.selectedLicensePackage)}
                                              selectedPackage={Object.assign({},this.state.selectedLicensePackage)}
                     />
                     <LicensePackageNewModal isOpen={this.state.isAddingLicensePackage}
@@ -148,16 +158,12 @@ function LicensePackage(props) {
         return (selectedLicensePackage || {}).i2g_features || [];
     }
 
-    // function getUserNotInGroup(users, selectedGr) {
-    //     let originGr = (_groups || []).find(g => g.idGroup === (selectedGr || {}).idGroup);
-    //     if (!originGr)
-    //         return users;
-    //     let usersInGr = originGr.users;
-    //     let usersNotInGr = users.filter((u) => {
-    //         return !isExistUserInList(usersInGr, u.idUser);
-    //     });
-    //     return usersNotInGr;
-    // }
+    this.getFeaturesNotInPackage = function(features, selectedLicensePackage) {
+        let featuresInPackage = this.getFeaturesInPackage(selectedLicensePackage);
+        return (features || []).filter((feature)=>{
+            return featuresInPackage.findIndex((f)=>f.idFeature === feature.idFeature) < 0;
+        });
+    }
 }
 
 LicensePackage.prototype = Object.create(React.Component.prototype);

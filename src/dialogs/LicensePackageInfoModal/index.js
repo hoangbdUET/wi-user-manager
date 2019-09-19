@@ -13,20 +13,33 @@ function LicensePackageInfoModal(props) {
     React.Component.call(this, props);
 
     this.state = {
-        name: (this.props.selectedPackage || {}).name,
-        description: (this.props.selectedPackage || {}).description,
-        selectedPackage: this.props.selectedPackage,
-        featuresInPackage: this.props.featuresInPackage || []
+        name: this.props.selectedPackage.name || "",
+        description: this.props.selectedPackage.description || "",
+        selectedPackage: this.props.selectedPackage || {},
+        featuresInPackage: this.props.featuresInPackage || [],
+        featuresNotInPackage: this.props.featuresNotInPackage || [],
+        tabIdx: 0,
+        deleteFeatures: [],
+        addFeatures: []
     };
 
     // this.listFeatureInPackage = listFeatureInPackage.bind(this);
 
-    this.updateProps = function() {
+    this.updateProps = function () {
         this.setState({
-            name: (this.props.selectedPackage || {}).name,
-            description: (this.props.selectedPackage || {}).description,
-            selectedPackage: this.props.selectedPackage,
-            featuresInPackage: this.props.featuresInPackage || []
+            name: this.props.selectedPackage.name || "",
+            description: this.props.selectedPackage.description || "",
+            selectedPackage: this.props.selectedPackage || {},
+            featuresInPackage: this.props.featuresInPackage || [],
+            featuresNotInPackage: this.props.featuresNotInPackage || []
+        });
+    }
+
+    this.clearModalSession = function() {
+        this.setState({
+            tabIdx: 0,
+            deleteFeatures: [],
+            addFeatures: []
         });
     }
 
@@ -34,59 +47,76 @@ function LicensePackageInfoModal(props) {
     function listFeatureInPackage(feature) {
         // console.log(feature);
         return (
-            <div style={{height: '18px'}}>
+            <div style={{ height: '18px' }}>
                 {feature ? (<Fragment>
-                    <div className="item-content">{'Hello'}</div>
+                    <div className="item-content">{feature.name}</div>
                     <i className="action-icon ti-close" onClick={() => {
-                        // this.setState(state => {
-                        //     let idx = state.addUsers.findIndex(u => u.idUser === user.idUser);
-                        //     if (idx >= 0) {
-                        //         state.addUsers.splice(idx,1);
-                        //     }
-                        //     idx = state.removeUsers.findIndex(u => u.idUser === user.idUser);
-                        //     if (idx < 0) {
-                        //         state.removeUsers.push(user);
-                        //     }
-                        //     //remove out
-                        //     idx = state.groupUsers.findIndex(u => u.idUser === user.idUser);
-                        //     state.groupUsers.splice(idx, 1);
-                        //     let index = state.users.findIndex(u => u.idUser === user.idUser);
-                        //     if (index < 0) {
-                        //         state.users.push(user);
-                        //     }
-                        //     return {groupUsers: state.groupUsers, users: state.users, removeUsers: state.removeUsers, addUsers: state.addUsers}                          
-                        // })
+                        this.setState(state => {
+                            //delete it from add features if it already in
+                            let idx = state.addFeatures.findIndex(f => f.idFeature === feature.idFeature);
+                            if (idx >= 0) {
+                                state.addFeatures.splice(idx,1);
+                            }
+
+                            //add to delete features
+                            idx = state.deleteFeatures.findIndex(f => f.idFeature === feature.idFeature);
+                            if (idx < 0) {
+                                state.deleteFeatures.push(feature);
+                            }
+
+                            //remove it from in list
+                            idx = state.featuresInPackage.findIndex(f => f.idFeature === feature.idFeature);
+                            state.featuresInPackage.splice(idx, 1);
+
+                            //add it to other list
+                            idx = state.featuresNotInPackage.findIndex(f => f.idFeature === feature.idFeature);
+                            if (idx < 0) {
+                                state.featuresNotInPackage.push(feature);
+                            }
+                            return {featuresNotInPackage: state.featuresNotInPackage, featuresInPackage: state.featuresInPackage,
+                                    deleteFeatures: state.deleteFeatures, addFeatures: state.addFeatures}                          
+                        })
                     }}></i>
                 </Fragment>) : "[select feature]"}
             </div>
         );
     }
 
-    // this.listFeatureNotInPackage = listFeatureNotInPackage.bind(this);
-    this.listFeatureNotInPackage = function(feature) {
+    this.listFeatureNotInPackage = listFeatureNotInPackage.bind(this);
+    function listFeatureNotInPackage(feature) {
         return (
-            <div style={{height: '18px'}}>
+            <div style={{ height: '18px' }}>
                 {feature ? (<Fragment>
                     <div className="item-content">{feature.name}</div>
-                    <i className="action-icon ti-close" onClick={() => {
-                        // this.setState(state => {
-                        //     let idx = state.addUsers.findIndex(u => u.idUser === user.idUser);
-                        //     if (idx >= 0) {
-                        //         state.addUsers.splice(idx,1);
-                        //     }
-                        //     idx = state.removeUsers.findIndex(u => u.idUser === user.idUser);
-                        //     if (idx < 0) {
-                        //         state.removeUsers.push(user);
-                        //     }
-                        //     //remove out
-                        //     idx = state.groupUsers.findIndex(u => u.idUser === user.idUser);
-                        //     state.groupUsers.splice(idx, 1);
-                        //     let index = state.users.findIndex(u => u.idUser === user.idUser);
-                        //     if (index < 0) {
-                        //         state.users.push(user);
-                        //     }
-                        //     return {groupUsers: state.groupUsers, users: state.users, removeUsers: state.removeUsers, addUsers: state.addUsers}                          
-                        // })
+                    <i className="action-icon ti-arrow-right" onClick={() => {
+                        this.setState(state => {
+                            //delete from delete list
+                            let idx = state.deleteFeatures.findIndex(f => f.idFeature === feature.idFeature);
+                            if (idx >= 0) {
+                                state.deleteFeatures.splice(idx,1);
+                            }
+
+                            //add it to add list
+                            idx = state.addFeatures.findIndex(f => f.idFeature === feature.idFeature);
+                            if (idx < 0) {
+                                state.addFeatures.push(feature);
+                            }
+
+                            //remove it from in list
+                            idx = state.featuresNotInPackage.findIndex(f => f.idFeature === feature.idFeature);
+                            if (idx >= 0) {
+                                state.featuresNotInPackage.splice(idx, 1);
+                            }
+                            
+                            //add it to other list
+                            idx = state.featuresInPackage.findIndex(f => f.idFeature === feature.idFeature);
+                            if (idx < 0) {
+                                state.featuresInPackage.push(feature);
+                            }
+                            
+                            return {featuresNotInPackage: state.featuresNotInPackage, featuresInPackage: state.featuresInPackage,
+                                    deleteFeatures: state.deleteFeatures, addFeatures: state.addFeatures}   
+                        })
                     }}></i>
                 </Fragment>) : "[select feature]"}
             </div>
@@ -102,52 +132,72 @@ function LicensePackageInfoModal(props) {
     // }
 
     this.render = function () {
-        console.log(this.state);
         return (
-            <Modal isOpen={this.props.isOpen} portalClassName="ModalStyle" className="LicensePackageInfoModal"
-                    onAfterOpen={()=>this.updateProps()}
-                    overlayClassName="modal-backdrop">
+            <Modal isOpen={this.props.isOpen}
+                onAfterOpen={() => this.updateProps()}
+                portalClassName="ModalStyle" 
+                className="LicensePackageInfoModal" 
+                overlayClassName="modal-backdrop">
                 <h4>Edit license package <b>{this.state.name}</b></h4>
+
                 <div className="content-dialog">
-                    <div style={{flex: 1, overflow: 'auto'}}>
-                        <div className="fieldset">
-                            <div>Name</div>
-                            <Editable value={this.state.name || ""}
-                                      formatValue={(v) => ((v !== null && v !== undefined && v.length !== 0) ? v : "[empty]")}
-                                      onValueChanged={(v) => this.setState({name: v})}
-                                      disabled={true}
-                            />
+                    <div className="tab-controls">
+                        <div onClick={() => this.setState({
+                            tabIdx: 0
+                        })}>General</div>
+                        <div onClick={() => this.setState({
+                            tabIdx: 1
+                        })}>Members</div>
+                    </div>
+                    <div style={{ flex: 2, position: 'relative' }}>
+                        <div style={{ height: '400px' }}></div>
+                        <div className={"tab-content"} style={{ visibility: this.state.tabIdx === 0 ? 'visible' : 'hidden' }}>
+                            <div className="fieldset">
+                                <div>Name</div>
+                                <Editable value={this.state.name}
+                                    formatValue={(v) => ((v !== null && v !== undefined && v.length !== 0) ? v : "[empty]")}
+                                    onValueChanged={(v) => this.setState({ name: v })}
+                                    disabled={true}
+                                />
+                            </div>
+                            <div className="fieldset">
+                                <div>Description</div>
+                                <Editable value={this.state.description}
+                                    formatValue={(v) => ((v !== null && v !== undefined && v.length !== 0) ? v : "[empty]")}
+                                    onValueChanged={(v) => this.setState({ description: v })}
+                                />
+                            </div>
+                            <div className="members tab-content" style={{ visibility: this.state.tabIdx === 1 ? 'visible' : 'hidden' }}>
+                                <div>Members:</div>
+                                <div style={{ flex: 1, overflow: 'hidden', display: 'flex' }}>
+                                    <div className="column">
+                                        <SearchableList  getItem={this.listFeatureNotInPackage}
+                                            items={this.state.featuresNotInPackage}
+                                            itemHeight={18} />
+                                    </div>
+                                    <div className="column">
+                                        <SearchableList getItem={this.listFeatureInPackage}
+                                            items={this.state.featuresInPackage}
+                                            itemHeight={18} />
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div className="fieldset">
-                            <div>Description</div>
-                            <Editable value={this.state.description || ""}
-                                      formatValue={(v) => ((v !== null && v !== undefined && v.length !== 0) ? v : "[empty]")}
-                                      onValueChanged={(v) => this.setState({description: v})}
-                            />
-                        </div>
-                        <div>Features:</div>
-                        <div className={"column"}>
-                            <SearchableList
-                                items = {this.state.featuresInPackage}
-                                itemHeight={18}
-                                getItem={this.listFeatureInPackage}
-                            />
-                        </div>
-                        {/* <div className={"column"}>
-                            <SearchableList
-                                items = {((this.props.item || {}).i2g_features) || []}
-                                itemHeight={18}
-                                // getItem={this.listFeatureNotInPackage}
-                            />
-                        </div> */}
+                    </div>
+                    <div className="footer-dialog">
+                        <div className="btn-next" onClick={(e) => {
+                                this.clearModalSession();
+                                this.props.onOk(this.state);
+                            }}>Ok</div>
+                        <div className="btn-next" onClick={()=>{
+                                    this.clearModalSession();
+                                    this.props.onCancel();
+                                }
+                            }>Close</div>
                     </div>
                 </div>
-                <div className="footer-dialog">
-                    <div className="btn-next" onClick={(e) => props.onOk(this.state)}>Ok</div>
-                    <div className="btn-next" onClick={props.onCancel}>Close</div>
-                </div>
             </Modal>
-        )
+        );
     }
 }
 
