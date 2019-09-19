@@ -28,7 +28,8 @@ function VListItem(props) {
     this.render = function() {
         return <div onClick={this.handleClick} style={{
             cursor: 'pointer',
-            transform: `translateY(${this.props.offset}px)`
+            transform: `translateY(${this.props.offset}px)`,
+            padding: '5px 0'
         }} className={(this.props.item || {}).selected?"selectedRow":""}>{this.props.children}</div>;
     }
 }
