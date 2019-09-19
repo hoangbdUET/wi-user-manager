@@ -80,11 +80,11 @@ function DropDown(props) {
 
                 } }>{formatter(this.state.selectedItem)}
             </div>
-            <div className={this.state.showList?"dropdow-content":" dropdow-content hidden-block"}>
-                <div className="dropdown-carret"></div>
-                <input className="dropdown-search"disabled={this.props.disableSearch} ref={searchStrInput} placeholder="Search..."
+            <div className="dropdow-content">
+                <div className={this.state.showList?"dropdown-carret":"dropdown-carret hidden-block"}></div>
+                <input className={this.state.showList?"dropdown-search":"dropdown-search hidden-block"} disabled={this.props.disableSearch} ref={searchStrInput} placeholder="Search..."
                     type="text" value={this.state.searchStr} onChange={this.handleSearchStrChanged} onBlur={()=>this.handleBlur()}/>
-                <div className="dropdown-list-item"  onBlur={()=>this.handleBlur()}>
+                <div className={this.state.showList?"dropdown-list-item":"dropdown-list-item hidden-block"}  onBlur={()=>this.handleBlur()}>
                     <VList getItem={this.props.getItem}
                         getRawItem={this.getRawItem}
                         onItemClicked={this.onItemClicked}

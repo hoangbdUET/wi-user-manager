@@ -41,7 +41,7 @@ function VList(props) {
         startAt: props.startAt || 0,
         viewLength: props.viewLength || 10,
         totalItems: props.totalItems || 1000,
-        itemHeight: props.itemHeight || 20
+        itemHeight: props.itemHeight || 18
     }
     this.scrollContainer = React.createRef();
     function defaultGetItem(item) {
@@ -102,14 +102,14 @@ function VList(props) {
     this.render = function() {
         // console.log('num:', this.state.startAt, this.state.viewLength, evaluate(this.state.totalItems))
         return (
-            <div className="VList" ref={this.scrollContainer} style={{
+            <div className="VList" ref={this.scrollContainer} style={{ 
                 height: '100%',
                 overflow:'auto'
             }} onScroll={(e) => this.handleScroll(e)}>
-                <div style={{
-                    // width: '100%',
-                    height: this.state.itemHeight * evaluate(this.state.totalItems)
-                }}>
+                <div 
+                    style={{
+                    height: this.state.itemHeight * evaluate(this.state.totalItems)}}
+                    >
                     {this.getItems(this.state.startAt, Math.min(this.state.viewLength, evaluate(this.state.totalItems)))}
                 </div>
             </div>
