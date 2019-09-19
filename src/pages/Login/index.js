@@ -46,7 +46,7 @@ function Login(props) {
         return (
             <div className="dialog-login" onKeyDown = {(e)=>{if (e.keyCode == 13) this.login();}}>
                 <div className="left-dialog-login">
-
+                    <div className="info-dialog-login">Copyright Revotech</div>
                 </div>
                 <div className="right-dialog-login">
                     <div style={{marginBottom:'10px'}}>Login to</div>

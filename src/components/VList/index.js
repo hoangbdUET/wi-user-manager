@@ -41,7 +41,7 @@ function VList(props) {
         startAt: props.startAt || 0,
         viewLength: props.viewLength || 10,
         totalItems: props.totalItems || 1000,
-        itemHeight: props.itemHeight || 18
+        itemHeight: props.itemHeight || 20
     }
     this.scrollContainer = React.createRef();
     function defaultGetItem(item) {

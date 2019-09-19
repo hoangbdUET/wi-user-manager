@@ -78,7 +78,7 @@ function UserInfoModal(props) {
                 onAfterOpen = {()=>{this.updateProps();}}>
                 <h4>New User</h4>
                 <div className="content-dialog">
-                    <div style={{flex: 1, overflow: 'auto'}}>
+                    <div style={{flex: 1, overflow: 'visible'}}>
                         <div className="fieldset">
                             <div>Username</div>
                             <Editable value={this.state.username} formatValue={(v) => ((v === null || v === undefined || v.length === 0 )? "[empty]" : v)}
@@ -134,6 +134,21 @@ function UserInfoModal(props) {
                             />
                         </div>
                         <div className="fieldset">
+                            <div>Company:</div>
+                            <DropDown  getItem={(company) => (
+                                <div style={{ height: '18px', display: 'flex', alignItems: 'center' }}>{company ? company.name : "[select company]"}</div>)}
+                                items = {this.props.companies}
+                                itemHeight={18}
+                                onItemClicked = {(clickedCompany)=>{
+                                    this.setState((state)=>{
+                                        return {
+                                            idCompany: clickedCompany.idCompany
+                                        }
+                                    });
+                                }}
+                            />
+                        </div>
+                        <div className="fieldset">
                             <div>Full Name</div>
                             <Editable value={this.state.fullname} formatValue={(v) => ((v === null || v === undefined || v.length === 0 )? "[empty]" : v)}
                                             onValueChanged={(value) => this.setState((state)=>{
@@ -157,7 +172,7 @@ function UserInfoModal(props) {
                             <div>Status:</div>
                             <DropDown  
                                 getItem={(status) => 
-                                    <div style={{ height: '18px' }}>{status ? status.statusName : "[select status]"}</div>
+                                    <div style={{ height: '18px', display: 'flex', alignItems: 'center' }}>{status ? status.statusName : "[select status]"}</div>
                                 }
                                 items = {this.status}
                                 itemHeight={18}
@@ -195,7 +210,7 @@ function UserInfoModal(props) {
                                             })}
                             />
                         </div> */}
-                        <div className="fieldset">
+                        {/* <div className="fieldset">
                             <div>Company:</div>
                             <DropDown  getItem={(company) => (
                                 <div style={{ height: '18px' }}>{company ? company.name : "[select company]"}</div>)}
@@ -209,7 +224,7 @@ function UserInfoModal(props) {
                                     });
                                 }}
                             />
-                        </div>
+                        </div> */}
                     </div>
                 </div>
                 <div className="footer-dialog">

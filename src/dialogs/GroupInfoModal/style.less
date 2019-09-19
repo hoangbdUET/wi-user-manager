@@ -4,14 +4,20 @@
     }
     
     .tab-controls {
-        padding: 10px;
+        margin-left: 20px;
         & > div {
             display: inline-block;
-            border: 1px solid blue;
-            border-radius: 12px;
             cursor: pointer;
-            padding: 6px;
-            margin-right: 10px;
+            border-bottom: 2px solid #fff;
+            padding: 20px 0;
+            margin-right: 20px;
+            opacity: 0.6;
+            transition: all ease-in 0.2s;
+            &.active-tab {
+                border-bottom: 2px solid #677eff;
+                opacity: 1;
+                transition: all ease-in 0.2s;
+            }
         }
     }
     .tab-content {
@@ -25,7 +31,7 @@
     }
     .members {
         height: 400px;
-        padding: 10px;
+        padding: 20px;
     }
     .user-card {
         border: 1px solid #ccc;
