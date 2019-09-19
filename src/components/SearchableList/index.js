@@ -24,37 +24,24 @@ class SearchableList extends React.Component {
 
     static getDerivedStateFromProps(nextProps, currentState) {
         return {
-            items: currentState.searchStr == "" ? nextProps.items : nextProps.items.filter(item=>{
+            items: currentState.searchStr == "" ? nextProps.items : nextProps.items.filter(item => {
                 return JSON.stringify(item).toLowerCase().includes(currentState.searchStr);
             })
         };
     }
 
     render() {
-        // console.log('state:', this.state);
         return (<div className="SearchableList">
             <div>
                 <input value={this.state.searchStr} onChange={(e) => {
-                    // console.log('runed');
-                    // if (e.target.value == "") {
-                    //     this.setState({
-                    //         searchStr: e.target.value,
-                    //         items: this.props.items
-                    //     });
-                    // }
-                    // this.setState({
-                    //     searchStr: e.target.value,
-                    //     items: this.props.items.filter(item => {
-                    //         return JSON.stringify(item).toLowerCase().includes(e.target.value);
-                    //     })
-                    // })
                     this.setState({
-                        searchStr: e.target.value
-                    });
+                            searchStr: e.target.value
+                        });
                 }} placeholder="Search ..."/>
             </div>
             <div style={{flex:1, overflow:'hidden'}}>
-                <VList startAt={this.state.startAt} totalItems={() => (this.state.items || []).length} 
+                <VList startAt={this.state.startAt} 
+                    totalItems={() => (this.state.items || []).length} 
                     itemHeight={this.props.itemHeight}
                     onItemClicked={this.props.onItemClicked}
                     getItem={this.props.getItem}

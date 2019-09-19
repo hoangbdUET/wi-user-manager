@@ -167,12 +167,12 @@ function GroupInfoModal(props) {
                 onAfterOpen={()=>this.runPropsUpdate()}
         >
             <div className="header-dialog-tab">
-                <div className="title-dialog">New Group</div>
+                <div className="title-dialog">Group Info</div>
                 <div className="tab-controls">
-                    <div onClick={() => this.setState({
+                    <div className={this.state.tabIdx == 0 ? "active-tab":""} onClick={() => this.setState({
                         tabIdx:0
                     })}>General</div>
-                    <div onClick={() => this.setState({
+                    <div className={this.state.tabIdx == 1 ? "active-tab":""} onClick={() => this.setState({
                         tabIdx: 1
                     })}>Members</div>
                 </div>
@@ -222,12 +222,12 @@ function GroupInfoModal(props) {
                             <div className="column" style={{marginRight: "20px"}}>
                                 <SearchableList disabled={!disabled} getItem={this.getUser}
                                     items={info.users}
-                                    itemHeight={20} />
+                                    itemHeight={32} />
                             </div>
                             <div className="column">
                                 <SearchableList disabled={!disabled} getItem={this.getGroupUser}
                                     items={info.groupUsers}
-                                    itemHeight={20} />
+                                    itemHeight={32} />
                             </div>
                         </div>
                     </div>

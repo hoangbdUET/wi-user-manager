@@ -173,12 +173,12 @@ function LicensePackageInfoModal(props) {
                                     <div className="column">
                                         <SearchableList  getItem={this.listFeatureNotInPackage}
                                             items={this.state.featuresNotInPackage}
-                                            itemHeight={18} />
+                                            itemHeight={32} />
                                     </div>
                                     <div className="column">
                                         <SearchableList getItem={this.listFeatureInPackage}
                                             items={this.state.featuresInPackage}
-                                            itemHeight={18} />
+                                            itemHeight={32} />
                                     </div>
                                 </div>
                             </div>
