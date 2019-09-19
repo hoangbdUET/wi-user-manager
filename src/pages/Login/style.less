@@ -27,6 +27,7 @@ select:-webkit-autofill:focus {
     
     .right-dialog-login {
         flex: 1;
+        z-index: 1;
         padding: 40px;
         display: flex;
         flex-direction: column;
@@ -36,6 +37,13 @@ select:-webkit-autofill:focus {
         background-color: #416be8;
         border-top-left-radius: 2px;
         border-bottom-left-radius: 2px;
+        .info-dialog-login {
+            position: absolute;
+            bottom: 40px;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 100;
+        }
 
     }
     .input-login {

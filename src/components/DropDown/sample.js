@@ -15,7 +15,7 @@ function App() {
     function getStudent(student) {
         return (
             <div style={{
-                height: 18,
+                height: 20,
                 display: 'flex'
             }}>
                 {
@@ -31,7 +31,7 @@ function App() {
     function formatStudent(student) {
         return (
             <div style={{
-                height: 18,
+                height: 20,
                 display: 'flex'
             }}>
                 {
@@ -45,7 +45,7 @@ function App() {
 
     this.render = function () {
         return (<DropDown formatItem={formatStudent} getItem={getStudent.bind(this)} items={this.state.students}
-                          itemHeight={18}/>)
+                          itemHeight={20}/>)
     }
 }
 

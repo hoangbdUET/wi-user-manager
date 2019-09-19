@@ -94,7 +94,7 @@ function GroupInfoModal(props) {
 
     function getUser(user) {
         return (
-            <div style={{height: '18px'}}>
+            <div style={{display: 'flex',padding:'10px 0', justifyContent: 'space-between', alignItems: 'center'}}>
                 {user ? (<Fragment>
                     <div className="item-content">{user.username}</div>
                     <i className="action-icon ti-arrow-right" onClick={(e) => {1
@@ -124,7 +124,7 @@ function GroupInfoModal(props) {
     this.getGroupUser = getGroupUser.bind(this);
     function getGroupUser(user) {
         return (
-            <div style={{height: '18px'}}>
+            <div style={{display: 'flex',padding:'10px 0', justifyContent: 'space-between', alignItems: 'center'}}>
                 {user ? (<Fragment>
                     <div className="item-content">{user.username}</div>
                     <i className="action-icon ti-close" onClick={() => {
@@ -166,8 +166,8 @@ function GroupInfoModal(props) {
                 overlayClassName="modal-backdrop"
                 onAfterOpen={()=>this.runPropsUpdate()}
         >
-            <h4>New Group</h4>
-            <div className="content-dialog">
+            <div className="header-dialog-tab">
+                <div className="title-dialog">New Group</div>
                 <div className="tab-controls">
                     <div onClick={() => this.setState({
                         tabIdx:0
@@ -176,6 +176,9 @@ function GroupInfoModal(props) {
                         tabIdx: 1
                     })}>Members</div>
                 </div>
+            </div>
+            <div className="content-dialog">
+                
                 <div style={{flex:2, position: 'relative'}}>
                     <div style={{height: '400px'}}></div>
                     <div className={"tab-content"} style={{visibility:this.state.tabIdx===0?'visible':'hidden'}}>
@@ -215,17 +218,16 @@ function GroupInfoModal(props) {
                         </div> */}
                     </div>
                     <div className="members tab-content" style={{visibility:this.state.tabIdx===1?'visible':'hidden'}}>
-                        <div>Members:</div>
                         <div style={{flex:1, overflow:'hidden', display:'flex'}}>
-                            <div className="column">
+                            <div className="column" style={{marginRight: "20px"}}>
                                 <SearchableList disabled={!disabled} getItem={this.getUser}
                                     items={info.users}
-                                    itemHeight={18} />
+                                    itemHeight={20} />
                             </div>
                             <div className="column">
                                 <SearchableList disabled={!disabled} getItem={this.getGroupUser}
                                     items={info.groupUsers}
-                                    itemHeight={18} />
+                                    itemHeight={20} />
                             </div>
                         </div>
                     </div>
