@@ -31,7 +31,7 @@ function DropDown(props) {
             this.setState({
                 showList: false
             });
-        }, 250);
+        }, 150);
         // this.setState({
         //     showList: false
         // });
@@ -79,13 +79,13 @@ function DropDown(props) {
                 	this.setState({showList:true});
                 	setTimeout(() => {searchStrInput.current.focus()}, 500);
 
-                } }>{formatter(this.state.selectedItem)}</div>
+                } }>{formatter(this.props.selectedItem)}</div>
             <input disabled={this.props.disableSearch} className={this.state.showList?"":"hidden-block"} ref={searchStrInput}
                 type="text" value={this.state.searchStr} onChange={this.handleSearchStrChanged} onBlur={()=>this.handleBlur()}/>
             <div style={{
                 display:'block',
                 width: '100%',
-                height: '200px', 
+                height: '150px', 
                 position:'absolute', 
                 backgroundColor:'white',
                 border: '1px solid #ccc',

@@ -38,6 +38,25 @@ function UserInfoModal(props) {
         }
     ];
 
+    this.role = [
+        {
+            role: 0,
+            roleName: "System Manager"
+        },
+        {
+            role: 1,
+            roleName: "Company Admin"
+        },
+        {
+            role: 2,
+            roleName: "Normal User"
+        },
+        {
+            role: 3,
+            roleName: "Admin Storage"
+        }
+    ];
+
     this.updateProps = function() {
         this.setState({
             username: "",
@@ -144,15 +163,29 @@ function UserInfoModal(props) {
                                 itemHeight={18}
                                 // disableSearch={true}
                                 onItemClicked = {(status)=>{
-                                    this.setState((state)=>{
-                                        return {
-                                            status: status.status
-                                        }
+                                    this.setState({
+                                        status: status.status
                                     });
                                 }}
                             />
                         </div>
                         <div className="fieldset">
+                            <div>Role:</div>
+                            <DropDown  
+                                getItem={(role) => 
+                                    <div style={{ height: '18px' }}>{role ? role.roleName : "[select role]"}</div>
+                                }
+                                items = {this.role}
+                                itemHeight={18}
+                                // disableSearch={true}
+                                onItemClicked = {(role)=>{
+                                    this.setState({
+                                        role: role.role
+                                    });
+                                }}
+                            />
+                        </div>
+                        {/* <div className="fieldset">
                             <div>Role</div>
                             <Editable value={this.state.role} formatValue={(v) => ((v === null || v === undefined || v.length === 0 )? "[empty]" : v)} 
                                             onValueChanged={(value) => this.setState((state)=>{
@@ -161,7 +194,7 @@ function UserInfoModal(props) {
                                                 };
                                             })}
                             />
-                        </div>
+                        </div> */}
                         <div className="fieldset">
                             <div>Company:</div>
                             <DropDown  getItem={(company) => (

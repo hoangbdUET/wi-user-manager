@@ -24,8 +24,39 @@ function UserInfoModal(props) {
         idLicensePackage: ""
     };
 
+    this.status = [
+        {
+            statusName: "Active",
+            status: "Active"
+        },
+        {
+            statusName: "Inactive",
+            status: "Inactive"
+        }
+    ];
+
+    this.role = [
+        {
+            role: 0,
+            roleName: "System Manager"
+        },
+        {
+            role: 1,
+            roleName: "Company Admin"
+        },
+        {
+            role: 2,
+            roleName: "Normal User"
+        },
+        {
+            role: 3,
+            roleName: "Admin Storage"
+        }
+    ];
+
     this.updateProps = function() {
-        console.log(this.props.user);
+        // console.log(this.props.user);
+        console.log(this.props.licensePackages);
         this.setState({
             username: (this.props.user||{}).username,
             email: (this.props.user||{}).email,
@@ -84,6 +115,7 @@ function UserInfoModal(props) {
                                 <div style={{ height: '18px' }}>{license ? license.name : "[select license]"}</div>)}
                                 items = {this.props.licensePackages}
                                 itemHeight={18}
+                                selectedItem={this.props.licensePackages.find((e)=>e.idLicensePackage === this.state.idLicensePackage)}
                                 onItemClicked = {(license)=>{
                                     this.setState((state)=>{
                                         return {
@@ -94,25 +126,37 @@ function UserInfoModal(props) {
                             />
                         </div>
                         <div className="fieldset">
-                            <div>Status</div>
-                            <Editable   value={this.state.status} 
-                                        formatValue={(v) => ((v === null || v === undefined || v.length === 0 )? "[empty]" : v)}
-                                        onValueChanged={(value) => this.setState((state)=>{
-                                            return {
-                                                status: value
-                                            };
-                                        })}
+                            <div>Status:</div>
+                            <DropDown  
+                                getItem={(status) => 
+                                    <div style={{ height: '18px' }}>{status ? status.statusName : "[select status]"}</div>
+                                }
+                                items = {this.status}
+                                itemHeight={18}
+                                selectedItem={this.status.find((e)=>e.status === this.state.status) || {}}
+                                // disableSearch={true}
+                                onItemClicked = {(status)=>{
+                                    this.setState({
+                                        status: status.status
+                                    });
+                                }}
                             />
                         </div>
                         <div className="fieldset">
-                            <div>Role</div>
-                            <Editable   value={this.state.role} 
-                                        formatValue={(v) => ((v === null || v === undefined || v.length === 0 )? "[empty]" : v)}
-                                        onValueChanged={(value) => this.setState((state)=>{
-                                            return {
-                                                role: value
-                                            };
-                                        })}
+                            <div>Role:</div>
+                            <DropDown  
+                                getItem={(role) => 
+                                    <div style={{ height: '18px' }}>{role ? role.roleName : "[select role]"}</div>
+                                }
+                                items = {this.role}
+                                itemHeight={18}
+                                selectedItem={this.role.find((e)=>e.role === this.state.role) || {}}
+                                // disableSearch={true}
+                                onItemClicked = {(role)=>{
+                                    this.setState({
+                                        role: role.role
+                                    });
+                                }}
                             />
                         </div>
                     </div>
