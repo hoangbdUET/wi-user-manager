@@ -164,8 +164,7 @@ function GroupInfoModal(props) {
                 portalClassName="ModalStyle" 
                 className="GroupInfoModal" 
                 overlayClassName="modal-backdrop"
-                onAfterOpen={()=>this.runPropsUpdate()}
-        >
+                onAfterOpen={()=>this.runPropsUpdate()} >
             <div className="header-dialog-tab">
                 <div className="title-dialog">Group Info</div>
                 <div className="tab-controls">

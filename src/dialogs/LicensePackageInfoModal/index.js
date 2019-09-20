@@ -47,7 +47,7 @@ function LicensePackageInfoModal(props) {
     function listFeatureInPackage(feature) {
         // console.log(feature);
         return (
-            <div style={{ height: '18px' }}>
+            <div style={{display: 'flex',padding:'10px 0', justifyContent: 'space-between', alignItems: 'center'}}>
                 {feature ? (<Fragment>
                     <div className="item-content">{feature.name}</div>
                     <i className="action-icon ti-close" onClick={() => {
@@ -85,7 +85,7 @@ function LicensePackageInfoModal(props) {
     this.listFeatureNotInPackage = listFeatureNotInPackage.bind(this);
     function listFeatureNotInPackage(feature) {
         return (
-            <div style={{ height: '18px' }}>
+            <div style={{display: 'flex',padding:'10px 0', justifyContent: 'space-between', alignItems: 'center'}}>
                 {feature ? (<Fragment>
                     <div className="item-content">{feature.name}</div>
                     <i className="action-icon ti-arrow-right" onClick={() => {
@@ -138,17 +138,18 @@ function LicensePackageInfoModal(props) {
                 portalClassName="ModalStyle" 
                 className="LicensePackageInfoModal" 
                 overlayClassName="modal-backdrop">
-                <h4>Edit license package <b>{this.state.name}</b></h4>
-
-                <div className="content-dialog">
+                <div className="header-dialog-tab">
+                    <div className="title-dialog">Edit license package </div>
                     <div className="tab-controls">
-                        <div onClick={() => this.setState({
-                            tabIdx: 0
+                        <div className={this.state.tabIdx == 0 ? "active-tab":""} onClick={() => this.setState({
+                            tabIdx:0
                         })}>General</div>
-                        <div onClick={() => this.setState({
+                        <div className={this.state.tabIdx == 1 ? "active-tab":""} onClick={() => this.setState({
                             tabIdx: 1
                         })}>Members</div>
-                    </div>
+                </div>
+            </div>
+                <div className="content-dialog">       
                     <div style={{ flex: 2, position: 'relative' }}>
                         <div style={{ height: '400px' }}></div>
                         <div className={"tab-content"} style={{ visibility: this.state.tabIdx === 0 ? 'visible' : 'hidden' }}>
@@ -168,9 +169,8 @@ function LicensePackageInfoModal(props) {
                                 />
                             </div>
                             <div className="members tab-content" style={{ visibility: this.state.tabIdx === 1 ? 'visible' : 'hidden' }}>
-                                <div>Members:</div>
                                 <div style={{ flex: 1, overflow: 'hidden', display: 'flex' }}>
-                                    <div className="column">
+                                    <div className="column" style={{marginRight: "20px"}}>
                                         <SearchableList  getItem={this.listFeatureNotInPackage}
                                             items={this.state.featuresNotInPackage}
                                             itemHeight={32} />
