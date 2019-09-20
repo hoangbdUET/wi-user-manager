@@ -129,7 +129,7 @@ function UserInfoModal(props) {
                             <div>Status:</div>
                             <DropDown  
                                 getItem={(status) => 
-                                    <div style={{ height: '18px' }}>{status ? status.statusName : "[select status]"}</div>
+                                    <div style={{ height: '18px', display: 'flex', alignItems: 'center' }}>{status ? status.statusName : "[select status]"}</div>
                                 }
                                 items = {this.status}
                                 itemHeight={18}
@@ -146,7 +146,7 @@ function UserInfoModal(props) {
                             <div>Role:</div>
                             <DropDown  
                                 getItem={(role) => 
-                                    <div style={{ height: '18px' }}>{role ? role.roleName : "[select role]"}</div>
+                                    <div style={{ height: '18px', display: 'flex', alignItems: 'center' }}>{role ? role.roleName : "[select role]"}</div>
                                 }
                                 items = {this.role}
                                 itemHeight={18}

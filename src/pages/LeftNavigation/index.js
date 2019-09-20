@@ -19,7 +19,7 @@ function LeftNavigation(props) {
         {routes.map((aRoute, idx) =>
             <div key={idx}>
                 <NavLink className={classMap[aRoute.label]} to={aRoute.path}
-                         activeStyle={{backgroundColor: '#4B7DEF',  filter: 'grayscale(0) opacity(1)', backgroundBlendMode:'screen'}}/>
+                         activeStyle={{backgroundColor: '#4B7DEF',  filter: 'grayscale(0) opacity(1)', backgroundBlendMode:'color-dodge'}}/>
             </div>
         )}
     </div>);
