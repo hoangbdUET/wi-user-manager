@@ -25,7 +25,7 @@ function PageProject() {
             if (users) {
                 users = users.map(u => (u.username));
                 api.getProjectsPromise(users).then(projects => {
-                    this.setState({
+                    self.setState({
                         items: projects
                     });
                 });

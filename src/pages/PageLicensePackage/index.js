@@ -8,6 +8,7 @@ const {ConfirmationModal, LicensePackageInfoModal, LicensePackageNewModal} = req
 const Redirect = require('react-router-dom').Redirect;
 const apiUser = require('../../services/apiUser');
 const UserStatus = require('../../components/UserStatus');
+const {toast} = require('react-toastify');
 
 
 function LicensePackage(props) {
@@ -28,6 +29,7 @@ function LicensePackage(props) {
     };
 
     this.listPackage = listPackage.bind(this);
+
     function listPackage() {
         api.getLicensePackages().then(packages => {
             this.setState({licensePackages: packages || []});
@@ -35,6 +37,7 @@ function LicensePackage(props) {
     }
 
     this.listFeature = listFeature.bind(this);
+
     function listFeature() {
         api.getFeatures({}).then(features => {
             this.setState({features: features || []});
@@ -42,11 +45,18 @@ function LicensePackage(props) {
     }
 
     this.deleteLicensePackage = deleteLicensePackage.bind(this);
+
     function deleteLicensePackage(selectedLicensePackage) {
-        console.log("Call delete ", selectedLicensePackage);
+        api.deleteLicensePackage(selectedLicensePackage).then(() => {
+            listPackage.call(this);
+            this.setState({isDeletingLicensePackage: false});
+        }).catch(e => {
+            toast.error(e);
+        })
     }
 
     this.newLicensePackage = newLicensePackage.bind(this);
+
     function newLicensePackage(item) {
         api.newLicensePacage(item).then(() => {
             listPackage.call(this);
@@ -58,12 +68,20 @@ function LicensePackage(props) {
 
 
     this.editLicensePackage = editLicensePackage.bind(this);
+
     function editLicensePackage(item) {
-        api.updateLicensePackage(item).then(() => {
-            listPackage.call(this);
+        let payload = {
+            name: item.name,
+            description: item.description,
+            idLicensePackage: item.selectedPackage.idLicensePackage,
+            i2g_feature: item.featuresInPackage || []
+        };
+        api.updateLicensePackage(payload).then(() => {
+            toast.success("Success");
             this.setState({isEditingLicensePackage: false});
+            listPackage.call(this);
         }).catch(e => {
-            console.log(e);
+            toast.error(e);
         })
     }
 
@@ -78,7 +96,8 @@ function LicensePackage(props) {
                         {path: "/group", label: "Group"},
                         {path: "/company", label: "Company"},
                         {path: "/project", label: "Project"},
-                        {path: '/license-package', label: "License Package"}
+                        {path: '/license-package', label: "License Package"},
+                        {path: '/feature', label: "Feature"}
                     ]
                 }/>
                 <div style={{width: 'calc(100vw - 102px)', display: 'flex', flexDirection: 'column'}}>
@@ -134,7 +153,7 @@ function LicensePackage(props) {
                                              onOk={item => this.editLicensePackage(item)}
                                              featuresInPackage={this.getFeaturesInPackage(this.state.selectedLicensePackage)}
                                              featuresNotInPackage={this.getFeaturesNotInPackage(this.state.features, this.state.selectedLicensePackage)}
-                                             selectedPackage={Object.assign({},this.state.selectedLicensePackage)}
+                                             selectedPackage={Object.assign({}, this.state.selectedLicensePackage)}
                     />
                     <LicensePackageNewModal isOpen={this.state.isAddingLicensePackage}
                                             onCancel={() => {
@@ -148,8 +167,8 @@ function LicensePackage(props) {
         );
     }
 
-    
-    this.getFeaturesInPackage = function(selectedLicensePackage) {
+
+    this.getFeaturesInPackage = function (selectedLicensePackage) {
         // if (!group) return;
         // console.log(_groups);
         // let oriGroup = (_groups|| []).find(g => g.idGroup === group.idGroup);
@@ -158,10 +177,10 @@ function LicensePackage(props) {
         return (selectedLicensePackage || {}).i2g_features || [];
     }
 
-    this.getFeaturesNotInPackage = function(features, selectedLicensePackage) {
+    this.getFeaturesNotInPackage = function (features, selectedLicensePackage) {
         let featuresInPackage = this.getFeaturesInPackage(selectedLicensePackage);
-        return (features || []).filter((feature)=>{
-            return featuresInPackage.findIndex((f)=>f.idFeature === feature.idFeature) < 0;
+        return (features || []).filter((feature) => {
+            return featuresInPackage.findIndex((f) => f.idFeature === feature.idFeature) < 0;
         });
     }
 }

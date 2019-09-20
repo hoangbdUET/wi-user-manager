@@ -33,19 +33,20 @@ ReactDOM.render((
                     {path: '/license-package', label: "License Package"}
                 ]
             }/> */}
-           
-            <MainContent default="/company" routes={
+
+            <MainContent default="/user" routes={
                 [
                     {path: "/user", component: "PageUser", auth: "true"},
                     {path: "/group", component: "PageGroup", auth: "true"},
                     {path: "/company", component: "PageCompany", auth: "true"},
                     {path: "/project", component: "PageProject", auth: "true"},
                     {path: '/license-package', component: "PageLicensePackage", auth: "true"},
-                    {path: "/login", component: "Login", auth: "false"}
+                    {path: "/login", component: "Login", auth: "false"},
+                    {path: "/feature", component: "PageFeature", auth: "true"}
                 ]
             }/>
 
         </Router>
-        <ToastContainer />
+        <ToastContainer/>
     </div>
 ), containerElem);

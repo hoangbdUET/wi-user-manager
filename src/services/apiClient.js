@@ -22,7 +22,10 @@ module.exports = {
     update,
     newUser,
     deleteUser,
-    getFeatures
+    getFeatures,
+    deleteLicensePackage,
+    deleteFeature
+
 };
 
 // const WI_AUTH_URL = "https://users.i2g.cloud";
@@ -43,11 +46,12 @@ function doPost(url, params, token, service) {
                 "Authorization": token || window.localStorage.getItem('token')
             }
         }).then(response => {
+            if (response.status !== 200) return reject(response.statusText);
             response.json().then(payload => {
                 if (parseInt(payload.code) === 401) {
                     console.log('redirect and logout');
                     apiUser.removeLoginSession();
-                    if (!window.location.href == "/login") window.location.href = '/login';
+                    if (!window.location.href === "/login") window.location.href = '/login';
                 } else if (parseInt(payload.code) === 200) {
                     resolve(payload.content);
                 } else {
@@ -132,6 +136,10 @@ function getLicensePackages() {
     return doPost('/license-package/list', {})
 }
 
+function deleteLicensePackage(payload) {
+    return doPost('/license-package/delete', payload)
+}
+
 function newLicensePacage(item) {
     return doPost('/license-package/new', {...item})
 }
@@ -139,9 +147,15 @@ function newLicensePacage(item) {
 function updateLicensePackage(item) {
     return doPost('/license-package/edit', {...item})
 }
+
 function getFeatures(payload) {
     return doPost('/feature/list', {...payload});
 }
+
+function deleteFeature(payload) {
+    return doPost('/feature/delete', {...payload})
+}
+
 function login(username, password) {
     let params = {username: username, password: password};
     return fetch(WI_AUTH_URL + '/login', {
