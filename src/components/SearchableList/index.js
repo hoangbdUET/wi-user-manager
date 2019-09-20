@@ -22,10 +22,11 @@ class SearchableList extends React.Component {
         }
     }
 
-    static getDerivedStateFromProps(nextProps, currentState) {
+    static getDerivedStateFromProps(props, state) {
         return {
-            items: currentState.searchStr == "" ? nextProps.items : nextProps.items.filter(item => {
-                return JSON.stringify(item).toLowerCase().includes(currentState.searchStr);
+            searchStr: props.searchStr || state.searchStr,
+            items: state.searchStr == "" ? props.items : props.items.filter(item => {
+                return JSON.stringify(item).toLowerCase().includes(state.searchStr);
             })
         };
     }
@@ -35,8 +36,11 @@ class SearchableList extends React.Component {
             <div>
                 <input value={this.state.searchStr} onChange={(e) => {
                     this.setState({
-                            searchStr: e.target.value
-                        });
+                        searchStr: e.target.value,
+                        // items: this.props.items.filter(item => {
+                        //     return JSON.stringify(item).toLowerCase().includes(e.target.value);
+                        // })
+                    });
                 }} placeholder="Search ..."/>
             </div>
             <div style={{flex:1, overflow:'hidden'}}>
