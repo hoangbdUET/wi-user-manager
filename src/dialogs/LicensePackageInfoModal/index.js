@@ -146,7 +146,7 @@ function LicensePackageInfoModal(props) {
                         })}>General</div>
                         <div className={this.state.tabIdx == 1 ? "active-tab":""} onClick={() => this.setState({
                             tabIdx: 1
-                        })}>Members</div>
+                        })}>Features</div>
                 </div>
             </div>
                 <div className="content-dialog">       

@@ -21,6 +21,7 @@ module.exports = {
     login,
     update,
     newUser,
+    updateUserPromise,
     deleteUser,
     getFeatures,
     deleteLicensePackage,
@@ -180,5 +181,9 @@ function newUser(user) {
 
 function deleteUser(idUser) {
     return doPost('/user/delete', {idUser: idUser});
+}
+
+function updateUserPromise(payload) {
+    return doPost('/user/edit', {...payload})
 }
 

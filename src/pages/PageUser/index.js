@@ -6,7 +6,7 @@ const UserInfoModal = require('../../dialogs').UserInfoModal;
 const ConfirmationModal = require('../../dialogs').ConfirmationModal;
 const UserAddModal = require('../../dialogs').UserAddModal;
 const ListUser = require('../../components/ListUser');
-const { toast } = require('react-toastify');
+const {toast} = require('react-toastify');
 const LeftNavigation = require('./../LeftNavigation');
 const apiUser = require('../../services/apiUser');
 const Redirect = require('react-router-dom').Redirect;
@@ -27,7 +27,7 @@ function PageUser(props) {
         this.initFromServer();
     }
 
-    this.initFromServer = function() {
+    this.initFromServer = function () {
         listUser.call(this);
         listCompanies.call(this);
         listLicensePackage.call(this);
@@ -46,7 +46,7 @@ function PageUser(props) {
 
     function listUser() {
         api.getUsersPromise().then(users => {
-            this.setState({ items: users })
+            this.setState({items: users})
         }).catch(err => {
             console.log(err);
         })
@@ -59,7 +59,7 @@ function PageUser(props) {
             this.setState({
                 companies: companies
             });
-        }).catch((e)=>{
+        }).catch((e) => {
             toast.error(e);
         })
     }
@@ -72,7 +72,7 @@ function PageUser(props) {
             this.setState({
                 licensePackages: licensePackages
             });
-        }).catch((e)=>{
+        }).catch((e) => {
             toast.error(e);
         })
     }
@@ -85,20 +85,28 @@ function PageUser(props) {
             return;
         }
         api.newUser(user)
-        .then((rs)=>{
-            toast.success('Create user successfully');
-            this.initFromServer();
-            this.setState({
-                isAddingUser: false
+            .then((rs) => {
+                toast.success('Create user successfully');
+                this.initFromServer();
+                this.setState({
+                    isAddingUser: false
+                });
+            })
+            .catch(e => {
+                toast.error(e);
             });
-        })
-        .catch(e=>{toast.error(e);});
     }
 
     this.callApiUpdateUser = callApiUpdateUser.bind(this);
 
     function callApiUpdateUser(user) {
         console.log("call api edit user", user);
+        api.updateUserPromise(user).then(()=>{
+            this.initFromServer();
+            this.setState({isEditingUser: false})
+        }).catch(err => {
+            toast.error(err);
+        })
     }
 
     this.callApiDeleteUser = callApiDeleteUser.bind(this);
@@ -106,27 +114,27 @@ function PageUser(props) {
     function callApiDeleteUser(user) {
         // console.log('run');
         api.deleteUser(user.idUser)
-        .then((rs)=>{
-            toast.success('Delete user successfully');
-            this.initFromServer();
-            this.setState({ isDeletingUser: false });
-        })
-        .catch(e=>{
-            toast.error(e);
-        });
+            .then((rs) => {
+                toast.success('Delete user successfully');
+                this.initFromServer();
+                this.setState({isDeletingUser: false});
+            })
+            .catch(e => {
+                toast.error(e);
+            });
     }
 
     this.startDeleteUser = startDeleteUser.bind(this);
 
     function startDeleteUser(selectedUser) {
-        this.setState({ isDeletingUser: true, selectedUser: selectedUser });
+        this.setState({isDeletingUser: true, selectedUser: selectedUser});
         console.log("Delete ", selectedUser);
     }
 
     this.startAddUser = startAddUser.bind(this);
 
     function startAddUser() {
-        this.setState({ isAddingUser: true });
+        this.setState({isAddingUser: true});
     }
 
 
@@ -134,56 +142,57 @@ function PageUser(props) {
 
     function startEditUser(user) {
         console.log("edit user", user)
-        this.setState({ isEditingUser: true, selectedUser: user });
+        this.setState({isEditingUser: true, selectedUser: user});
     }
 
 
     this.render = function () {
-        if (!apiUser.isLoggedIn()) return <Redirect to={{pathname:"/login", from:"/user"}} />;
+        if (!apiUser.isLoggedIn()) return <Redirect to={{pathname: "/login", from: "/user"}}/>;
         return (
             <div className={"PageUser"} style={{width: '100%', display: 'flex', flexDirection: 'row'}}>
                 <LeftNavigation routes={
                     [
-                        { path: "/user", label: "User" },
-                        { path: "/group", label: "Group" },
-                        { path: "/company", label: "Company" },
-                        { path: "/project", label: "Project" },
-                        { path: '/license-package', label: "License Package" }
+                        {path: "/user", label: "User"},
+                        {path: "/group", label: "Group"},
+                        {path: "/company", label: "Company"},
+                        {path: "/project", label: "Project"},
+                        {path: '/license-package', label: "License Package"}
                     ]
-                } />
+                }/>
                 <div style={{width: 'calc(100vw - 102px)', display: 'flex', flexDirection: 'column'}}>
                     <div className={"top-bar"}>
                         <div className={"search-box"}>
-                            <div style={{ marginRight: '10px', color: '#000' }} className={"ti ti-search"} />
+                            <div style={{marginRight: '10px', color: '#000'}} className={"ti ti-search"}/>
                             <input placeholder="Filter" value={this.state.filter} onChange={(e) => {
-                                this.setState({ filter: e.target.value });
-                            }} />
+                                this.setState({filter: e.target.value});
+                            }}/>
                         </div>
-                        <UserStatus />
+                        <UserStatus/>
                     </div>
-                <ListUser itemPerPage={20} items={this.getItemList()}
-                    actions={[{
-                        name: "Add", handler: this.startAddUser, show: true
-                    }, {
-                        name: "Delete", handler: this.startDeleteUser, show: true
-                    }, {
-                        name: "Edit", handler: this.startEditUser, show: true
-                    }, {
-                        name: "Refresh", handler: this.listUser, show: true
-                    }]}
-                />
-                <UserInfoModal isOpen={this.state.isEditingUser} onOk={this.callApiUpdateUser} action={"edit"}
-                    onCancel={(e) => this.setState({ isEditingUser: false })} user={this.state.selectedUser} 
-                    licensePackages = {this.state.licensePackages}    
-                />
-                <UserAddModal isOpen={this.state.isAddingUser} onOk={this.callApiAddUser} action={"add"}
-                    onCancel={(e) => this.setState({ isAddingUser: false })} 
-                    companies = {this.state.companies}/>
-                <ConfirmationModal isOpen={this.state.isDeletingUser} title={"Confirmation"}
-                    message={"Are you sure to delete selected user?"}
-                    onCancel={() => this.setState({ isDeletingUser: false })}
-                    onOk={() => this.callApiDeleteUser(this.state.selectedUser)}
-                />
+                    <ListUser itemPerPage={20} items={this.getItemList()}
+                              actions={[{
+                                  name: "Add", handler: this.startAddUser, show: true
+                              }, {
+                                  name: "Delete", handler: this.startDeleteUser, show: true
+                              }, {
+                                  name: "Edit", handler: this.startEditUser, show: true
+                              }, {
+                                  name: "Refresh", handler: this.listUser, show: true
+                              }]}
+                    />
+                    <UserInfoModal isOpen={this.state.isEditingUser} onOk={this.callApiUpdateUser} action={"edit"}
+                                   onCancel={(e) => this.setState({isEditingUser: false})}
+                                   user={this.state.selectedUser}
+                                   licensePackages={this.state.licensePackages}
+                    />
+                    <UserAddModal isOpen={this.state.isAddingUser} onOk={this.callApiAddUser} action={"add"}
+                                  onCancel={(e) => this.setState({isAddingUser: false})}
+                                  companies={this.state.companies}/>
+                    <ConfirmationModal isOpen={this.state.isDeletingUser} title={"Confirmation"}
+                                       message={"Are you sure to delete selected user?"}
+                                       onCancel={() => this.setState({isDeletingUser: false})}
+                                       onOk={() => this.callApiDeleteUser(this.state.selectedUser)}
+                    />
                 </div>
             </div>
         )

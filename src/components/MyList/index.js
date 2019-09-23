@@ -131,6 +131,7 @@ function MyList(props) {
         "Manage Users": {style: {color: "#4B7DEF", fontWeight: "bold"}, icon: "ti ti-settings"},
         "Stop Sharing": {style: {color: "#4B7DEF", fontWeight: "bold"}, icon: "ti ti-sharethis-alt"},
         "Start Sharing": {style: {color: "#4B7DEF", fontWeight: "bold"}, icon: "ti ti-sharethis"},
+        "Import": {style: {color: "rgb(22, 187, 29)", fontWeight: "bold"}, icon: "ti ti-import"}
     };
     this.render = function () {
         return (
