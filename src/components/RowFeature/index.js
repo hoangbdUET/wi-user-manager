@@ -10,9 +10,16 @@ function RowFeature(props) {
                onClick={props.onClick}
                cells={[
                    isNaN(idx) ? "" : idx,
-                   props.item.name,
-                   props.item.description,
-                   props.isHeader ? props.item.api : JSON.stringify(props.item.i2g_apis)
+                   <div className="cell-ellipsis">
+                        {props.item.name}
+                    </div>,
+                    <div className="cell-ellipsis">
+                        {props.item.description}
+                    </div>,
+                    <div className="cell-ellipsis">
+                        {props.isHeader ? props.item.api : JSON.stringify(props.item.i2g_apis)}
+                    </div>
+                   
                ]}
                colWidths={props.colWidths}
                onColWidthChanged={props.onColWidthChanged}

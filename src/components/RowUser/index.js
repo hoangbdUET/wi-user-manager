@@ -16,16 +16,33 @@ function RowUser(props) {
                cells={
                    [
                        isNaN(idx) ? "" : idx,
-                       props.item.username,
-                       props.item.email,
                        props.isHeader ? props.item.status : props.item.status === "Active" ?
-                           <b style={{color: "green"}}>{props.item.status}</b> :
-                           <b style={{color: "red"}}>{props.item.status}</b>,
-                       props.isHeader ? props.item.role : myRole['' + props.item.role],
-                       props.item.fullname,
-                       props.isHeader ? props.item.company : props.item.company ? props.item.company.name : "",
-                       props.isHeader ? props.item.license_package : props.item.license_package ?
-                           props.item.license_package.name : ""
+                           <div className="activeUser">
+                                 {/* <div></div> */}
+                                {props.item.status}
+                            </div> :
+                           <div className="inActiveUser">
+                                 {/* <div></div> */}
+                                {props.item.status}
+                           </div>,
+                        <div className="cell-ellipsis">
+                            {props.item.username}
+                        </div>,
+                       <div className="cell-ellipsis">
+                           {props.item.email}
+                       </div>,
+                       <div className="cell-ellipsis">
+                            {props.isHeader ? props.item.role : myRole['' + props.item.role]}
+                        </div>,
+                       <div className="cell-ellipsis">
+                            {props.item.fullname}
+                        </div>,
+                        <div className="cell-ellipsis">
+                            {props.isHeader ? props.item.company : props.item.company ? props.item.company.name : ""}
+                        </div>,
+                        <div className="cell-ellipsis">
+                            {props.isHeader ? props.item.license_package : props.item.license_package ? props.item.license_package.name : ""}
+                        </div>
                    ]
                }
                colWidths={props.colWidths}

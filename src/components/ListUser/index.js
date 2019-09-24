@@ -8,7 +8,7 @@ function ListUser(props) {
     this.listName = "User";
     this.state = Object.assign(this.state, {
         orderByText: "",
-        colWidths: [50, 150, 250, 100, 150, 250, 150]
+        colWidths: [50, 100, 250, 150, 150, 250, 150]
     });
     let superRender = this.render;
     this.render = function () {

@@ -9,10 +9,18 @@ function RowCompany(props) {
         <MyRow className="RowCompany" onClick={props.onClick}
                cells={[
                    isNaN(idx) ? "" : idx,
-                   props.item.name,
-                   props.item.location,
-                   props.item.licenses,
-                   props.item.description
+                   <div className="cell-ellipsis">
+                        {props.item.name}
+                    </div>,
+                    <div className="cell-ellipsis">
+                        {props.item.location}
+                    </div>,
+                    <div className="cell-ellipsis">
+                        {props.item.licenses}
+                    </div>,
+                    <div className="cell-ellipsis">
+                        {props.item.description}
+                    </div>
                ]}
                colWidths={props.colWidths}
                onColWidthChanged={props.onColWidthChanged}

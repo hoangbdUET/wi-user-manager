@@ -11,7 +11,7 @@ function LeftNavigation(props) {
         'User': 'tab-icon user-user-manager',
         'Project': 'tab-icon project-user-manager',
         'License Package': 'tab-icon license-package-manager',
-        'Feature': 'tab-icon license-package-manager'
+        'Feature': 'tab-icon feature-package-manager'
     };
     return (<div className={"LeftNavigation"}>
         <span className="logo">
