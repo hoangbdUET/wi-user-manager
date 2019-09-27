@@ -9,9 +9,15 @@ function RowGroup(props) {
         <MyRow className="RowGroup" onClick={props.onClick}
                cells={[
                    isNaN(idx) ? "" : idx,
-                   props.item.name,
-                   props.item.description,
-                   props.item.company
+                   <div className="cell-ellipsis">
+                        {props.item.name}
+                    </div>,
+                    <div className="cell-ellipsis">
+                        {props.item.description}
+                    </div>,
+                    <div className="cell-ellipsis">
+                        {props.item.company}
+                    </div>
                ]}
                colWidths={props.colWidths}
                onColWidthChanged={props.onColWidthChanged}

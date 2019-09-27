@@ -9,8 +9,12 @@ function RowLicensePackage(props) {
         <MyRow className={"RowLicensePackage"} onClick={props.onClick}
                cells={[
                    isNaN(idx) ? "" : idx,
-                   props.item.name,
-                   props.item.description
+                   <div className="cell-ellipsis">
+                        {props.item.name}
+                    </div>,
+                    <div className="cell-ellipsis">
+                        {props.item.description}
+                    </div>
                ]}
                colWidths={props.colWidths}
                onColWidthChanged={props.onColWidthChanged}

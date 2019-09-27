@@ -10,13 +10,27 @@ function RowProject(props) {
                onClick={props.onClick}
                cells={[
                    isNaN(idx) ? "" : idx,
-                   props.item.name,
-                   props.item.company,
-                   props.item.location,
-                   props.item.department,
-                   props.item.createdBy,
-                   props.item.description,
-                   props.item.shareKey
+                   <div className="cell-ellipsis">
+                        {props.item.name}
+                    </div>,
+                    <div className="cell-ellipsis">
+                        {props.item.company}
+                    </div>,
+                    <div className="cell-ellipsis">
+                        {props.item.location}
+                    </div>,
+                    <div className="cell-ellipsis">
+                        {props.item.department}
+                    </div>,
+                    <div className="cell-ellipsis">
+                        {props.item.createdBy}
+                    </div>,
+                    <div className="cell-ellipsis">
+                        {props.item.description}
+                    </div>,
+                    <div className="cell-ellipsis">
+                        {props.item.shareKey}
+                    </div>
                ]}
                colWidths={props.colWidths}
                onColWidthChanged={props.onColWidthChanged}
