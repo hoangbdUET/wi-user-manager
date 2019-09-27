@@ -2,7 +2,9 @@
   "name": "wi-user-manager",
   "version": "0.0.1",
   "scripts": {
-    "start:dev": "webpack-dev-server --mode development --hot --inline --content-base=dist --history-api-fallback"
+    "start:dev": "webpack-dev-server --mode development --hot --inline --content-base=dist --history-api-fallback",
+    "start:prod": "webpack-dev-server --mode production --hot --inline --content-base=dist --history-api-fallback",
+    "start:local": "webpack-dev-server --mode default --hot --inline --content-base=dist --history-api-fallback"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",

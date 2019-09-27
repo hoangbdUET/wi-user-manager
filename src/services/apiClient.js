@@ -28,11 +28,18 @@ module.exports = {
     deleteFeature
 
 };
+const env = process.env.NODE_ENV;
+console.log("=======", env);
+let config = require('../config/default').default;
+if (env === "development") {
+    config = require("../config/default").dev;
+} else if (env === "production") {
+    config = require("../config/default").production;
+}
 
-// const WI_AUTH_URL = "https://users.i2g.cloud";
-// const WI_AUTH_URL = "http://127.0.0.1:2999";
-const WI_AUTH_URL = "http://admin.dev.i2g.cloud";
-const WI_BACKEND_URL = "http://dev.i2g.cloud";
+
+const WI_AUTH_URL = config.wi_auth;
+const WI_BACKEND_URL = config.wi_backend;
 
 const apiUser = require('./apiUser');
 
