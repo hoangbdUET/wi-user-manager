@@ -21,7 +21,6 @@ function DropDown(props) {
         return item;
     }
 
-
     let formatter = this.props.formatItem || this.props.getItem || defaultFormatItem;
 
     this.handleSearchStrChanged = handleSearchStrChanged.bind(this);

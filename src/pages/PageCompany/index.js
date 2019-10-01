@@ -42,7 +42,7 @@ function PageCompany() {
 
     function addCompany(company) {
         api.addCompanyPromise(company).then(company => {
-            toast(`Company ${company.name} is created`, { type: 'info' });
+            toast(`Company ${company.name} is created`, { type: 'success' });
             this.setState(state => {
                 state.items.push(company);
                 return {

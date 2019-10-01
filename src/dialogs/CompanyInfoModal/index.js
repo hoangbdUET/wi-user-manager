@@ -14,42 +14,66 @@ CompanyInfoModal.propTypes = {
 }
 
 function CompanyInfoModal(props) {
-    let company = props.company || {};
+    React.Component.call(this, props);
 
-    return (<Modal isOpen={props.isOpen} portalClassName="ModalStyle" className="CompanyInfoModal" overlayClassName="modal-backdrop" >
-        <h4>New Company</h4>
-        <div className="content-dialog">
-            <div style={{flex:2}}>
-                <div className="fieldset">
-                    <div>Name:</div>
-                    <Editable value={company.name || ""}
+    this.state = {
+        name: "",
+        location: "",
+        description: "",
+        licenses: 10,
+        idCompany: null
+    }
+
+    this.updateProps = function() {
+        this.setState({
+            name: (this.props.company || {}).name || "",
+            location: (this.props.company || {}).location || "",
+            description: (this.props.company || {}).description || "",
+            licenses: (this.props.company || {}).licenses || 10,
+            idCompany: (this.props.company || {}).idCompany || null
+        });
+    }
+
+    this.render = function () {
+        return (<Modal isOpen={this.props.isOpen} portalClassName="ModalStyle"
+                className="CompanyInfoModal" overlayClassName="modal-backdrop"
+                onAfterOpen = {()=>{this.updateProps();}} >
+            <h4>New Company</h4>
+            <div className="content-dialog">
+                <div style={{ flex: 2 }}>
+                    <div className="fieldset">
+                        <div>Name:</div>
+                        <Editable value={this.state.name || ""}
                             formatValue={(v) => (((v !== null || v != undefined) && v.length) ? v : '[empty]')}
-                            onValueChanged={(name) => company.name = name}/>
-                </div>
-                <div className="fieldset">
-                    <div>Location:</div>
-                    <Editable value={company.location || ""}
+                            onValueChanged={(name) => this.setState({name: name})} />
+                    </div>
+                    <div className="fieldset">
+                        <div>Location:</div>
+                        <Editable value={this.state.location || ""}
                             formatValue={(v) => (((v !== null || v != undefined) && v.length) ? v : '[empty]')}
-                            onValueChanged={(location) => company.location = location}/>
-                </div>
-                <div className="fieldset">
-                    <div>Description:</div>
-                    <Editable value={company.description || ""}
+                            onValueChanged={(location) => this.setState({location: location})} />
+                    </div>
+                    <div className="fieldset">
+                        <div>Description:</div>
+                        <Editable value={this.state.description || ""}
                             formatValue={(v) => (((v !== null || v != undefined) && v.length) ? v : '[empty]')}
-                            onValueChanged={(description) => company.description = description}/>
-                </div>
-                <div className="fieldset">
-                    <div>Licenses:</div>
-                    <Editable value={company.licenses || 10}
+                            onValueChanged={(description) => this.setState({description: description})} />
+                    </div>
+                    <div className="fieldset">
+                        <div>Licenses:</div>
+                        <Editable value={this.state.licenses}
                             formatValue={(v) => (((v !== null || v != undefined) && !isNaN(v)) ? v : '[empty]')}
                             setValue={input => isNaN(parseInt(input)) ? 0 : parseInt(input)}
-                            onValueChanged={(licenses) => company.licenses = licenses}/>
+                            onValueChanged={(licenses) => this.setState({licenses: licenses})} />
+                    </div>
                 </div>
             </div>
-        </div>
-        <div className="footer-dialog">
-            <div className="btn-next" onClick={(e) => props.onOk(company)}>OK</div>
-            <div className="btn-next" onClick={props.onCancel}>Cancel</div>
-        </div>
-    </Modal>);
+            <div className="footer-dialog">
+                <div className="btn-next" onClick={(e) => props.onOk(this.state)}>OK</div>
+                <div className="btn-next" onClick={props.onCancel}>Cancel</div>
+            </div>
+        </Modal>);
+    }
 }
+
+CompanyInfoModal.prototype = Object.create(React.Component.prototype);

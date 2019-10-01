@@ -90,6 +90,16 @@ function UserInfoModal(props) {
                             />
                         </div>
                         <div className="fieldset">
+                            <div>Full Name</div>
+                            <Editable value={this.state.fullname} formatValue={(v) => ((v === null || v === undefined || v.length === 0 )? "[empty]" : v)}
+                                            onValueChanged={(value) => this.setState((state)=>{
+                                                return {
+                                                    fullname: value
+                                                };
+                                            })}
+                            />
+                        </div>
+                        <div className="fieldset">
                             <div>Password</div>
                             <Editable   value={this.state.password} 
                                         formatValue={(v) => {
@@ -139,6 +149,7 @@ function UserInfoModal(props) {
                                 <div style={{ height: '18px', display: 'flex', alignItems: 'center' }}>{company ? company.name : "[select company]"}</div>)}
                                 items = {this.props.companies}
                                 itemHeight={18}
+                                selectedItem={this.props.companies.find((e) => e.idCompany === this.state.idCompany)}
                                 onItemClicked = {(clickedCompany)=>{
                                     this.setState((state)=>{
                                         return {
@@ -146,16 +157,6 @@ function UserInfoModal(props) {
                                         }
                                     });
                                 }}
-                            />
-                        </div>
-                        <div className="fieldset">
-                            <div>Full Name</div>
-                            <Editable value={this.state.fullname} formatValue={(v) => ((v === null || v === undefined || v.length === 0 )? "[empty]" : v)}
-                                            onValueChanged={(value) => this.setState((state)=>{
-                                                return {
-                                                    fullname: value
-                                                };
-                                            })}
                             />
                         </div>
                         {/* <div className="fieldset">
@@ -177,6 +178,7 @@ function UserInfoModal(props) {
                                 items = {this.status}
                                 itemHeight={18}
                                 // disableSearch={true}
+                                selectedItem={this.status.find((e) => e.status === this.state.status)}
                                 onItemClicked = {(status)=>{
                                     this.setState({
                                         status: status.status
@@ -193,6 +195,7 @@ function UserInfoModal(props) {
                                 items = {this.role}
                                 itemHeight={18}
                                 // disableSearch={true}
+                                selectedItem={this.role.find((e) => e.role === this.state.role)}
                                 onItemClicked = {(role)=>{
                                     this.setState({
                                         role: role.role

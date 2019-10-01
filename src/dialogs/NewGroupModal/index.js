@@ -88,6 +88,7 @@ function NewGroupModal(props) {
                             <div style={{ height: '18px', display: 'flex', alignItems: 'center' }}>{company ? company.name : "[select company]"}</div>)}
                             items={this.props.companies}
                             itemHeight={18}
+                            selectedItem={this.props.companies.find((e) => e.idCompany === this.state.idCompany)}
                             onItemClicked = {(clickedCompany)=>{
                                 this.setState((state)=>{
                                     return {
