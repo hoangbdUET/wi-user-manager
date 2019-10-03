@@ -54,7 +54,7 @@ function doPost(url, params, token, service) {
                 "Authorization": token || window.localStorage.getItem('token')
             }
         }).then(response => {
-            if (response.status !== 200) return reject(response.statusText);
+            if (response.status !== 200 && response.status !== 401) return reject(response.statusText);
             response.json().then(payload => {
                 if (parseInt(payload.code) === 401) {
                     console.log('redirect and logout');
