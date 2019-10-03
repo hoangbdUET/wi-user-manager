@@ -79,6 +79,8 @@ function MyList(props) {
     this.filterAndSort = filterAndSort.bind(this);
 
     function filterAndSort(items) {
+        console.log(items);
+        console.log(this.state.orderByText);
         return items.filter((item) => {
             let str = JSON.stringify(item).toLowerCase();
             return str.includes(this.state.searchStr.toLowerCase());
@@ -115,8 +117,9 @@ function MyList(props) {
     this.onHeaderClicked = onHeaderClicked.bind(this);
 
     function onHeaderClicked(headerIdx, headerText) {
+        // console.log('headerText:', headerText);
         this.setState({
-            orderByText: headerText
+            orderByText: headerText.props.children
         });
     }
 
