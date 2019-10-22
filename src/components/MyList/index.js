@@ -23,11 +23,11 @@ function MyList(props) {
         startAt: props.startAt || 0,
         selectedItem: null,
         itemPerPage: props.itemPerPage || 5,
-        searchStr: searchStr,
+        searchStr: searchStr
     };
 
-    //
 
+    //
     this.handleNextClick = handleNextClick.bind(this);
 
     function handleNextClick(e) {
@@ -46,6 +46,7 @@ function MyList(props) {
             selectedItem: item
         });
     }
+
 
     this.handlePrevClick = handlePrevClick.bind(this);
 
@@ -79,8 +80,8 @@ function MyList(props) {
     this.filterAndSort = filterAndSort.bind(this);
 
     function filterAndSort(items) {
-        console.log(items);
-        console.log(this.state.orderByText);
+        // console.log(items);
+        // console.log(this.state.orderByText);
         return items.filter((item) => {
             let str = JSON.stringify(item).toLowerCase();
             return str.includes(this.state.searchStr.toLowerCase());
@@ -185,7 +186,7 @@ function MyList(props) {
                     {/*</div>*/}
                     <div className={"btn-next"} style={{color: "#4B7DEF", fontWeight: "bold", padding: '5px 10px'}}>
                         Item of page:
-                        <select onChange={this.handleItemPerPageChanged} style={{border: 'none', background: 'none'}}>
+                        <select onChange={this.handleItemPerPageChanged} style={{border: 'none', background: 'none'}} value={this.state.itemPerPage}>
                             <option value={5}>5</option>
                             <option value={10}>10</option>
                             <option value={20}>20</option>
@@ -194,9 +195,9 @@ function MyList(props) {
                     </div>
 
                     <div className={"btn-next"} onClick={this.handlePrevClick}>
-                        <div className={"ti ti-angle-left"} style={{marginRight: '0px'}}/>
-                        
+                        <div className={"ti ti-angle-left"} style={{marginRight: '0px'}}/>         
                     </div>
+                    <div><p>Page: {this.state.startAt/this.state.itemPerPage + 1}/{Math.ceil(this.props.items.length/this.state.itemPerPage)}</p></div>
                     <div className={"btn-next"} onClick={this.handleNextClick}>
                         <div className={"ti ti-angle-right"} style={{marginLeft: '0px'}}/>
                     </div>
