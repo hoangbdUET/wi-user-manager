@@ -197,7 +197,7 @@ function MyList(props) {
                     <div className={"btn-next"} onClick={this.handlePrevClick}>
                         <div className={"ti ti-angle-left"} style={{marginRight: '0px'}}/>         
                     </div>
-                    <div><p>Page: {this.state.startAt/this.state.itemPerPage + 1}/{Math.ceil(this.props.items.length/this.state.itemPerPage)}</p></div>
+                    <div style={{marginLeft: '10px'}}><p>Page: {this.state.startAt/this.state.itemPerPage + 1}/{Math.ceil(this.props.items.length/this.state.itemPerPage)}</p></div>
                     <div className={"btn-next"} onClick={this.handleNextClick}>
                         <div className={"ti ti-angle-right"} style={{marginLeft: '0px'}}/>
                     </div>
