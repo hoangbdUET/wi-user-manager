@@ -50,7 +50,19 @@ function UserInfoModal(props) {
         },
         {
             role: 3,
-            roleName: "Admin Storage"
+            roleName: "Company Storage (Full permission)"
+        },
+        {
+            role: 3.1,
+            roleName: "Company Storage (Upload only)"
+        },
+        {
+            role: 3.2,
+            roleName: "Company Storage (Edit only)"
+        },
+        {
+            role: 3.3,
+            roleName: "Company Storage (View only)"
         }
     ];
 
