@@ -68,7 +68,7 @@ function UserInfoModal(props) {
 
     this.updateProps = function () {
         // console.log(this.props.user);
-        console.log(this.props.licensePackages);
+        //console.log(this.props.licensePackages);
         this.setState({
             idUser: (this.props.user || {}).idUser,
             username: (this.props.user || {}).username,

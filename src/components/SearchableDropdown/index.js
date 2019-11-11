@@ -1,7 +1,7 @@
 import React from 'react';
 import { fromEvent } from 'rxjs';
 import './style.less';
-import DelayTextInput from './../DelayTextInput';
+import DelayTextInput from '../DelayTextInput';
 
 /*
     props.choices: a list of object like {display: "bla", value: "blo"}
@@ -34,6 +34,10 @@ export default class SearchableDropdown extends React.Component {
         });
     }
 
+    componentWillUnmount() {
+        if (this.clickStream) this.clickStream.unsubscribe();
+    }
+
     handleClick(e) {
         this.setState({
             edditing: false
@@ -57,7 +61,6 @@ export default class SearchableDropdown extends React.Component {
     }
 
     render() {
-        console.log(this.props.value);
         return (
             <div style = {{position: "relative", display: "inline-block"}} ref = {this.contentRef}>
                 <div onClick = {()=>{this.setState({edditing: !this.state.edditing})}}>
@@ -70,7 +73,7 @@ export default class SearchableDropdown extends React.Component {
                     <div className="dropdown-search">
                         <DelayTextInput placeholder="Search" onChange = {(e)=>{this.setState({searchValue: e})}}/>
                     </div>
-                    <div className="dropdown-list-item">
+                    <div className="dropdown-list-item" style = {{maxHeight: this.props.maxHeight || "300px"}}>
                         {this.getFilteredList(this.props.choices).map((e, idx) => (
                             <div key={idx} onClick = {()=>{this.handleClick(e)}} 
                                 className = {e.value == this.props.value ? "active": ""}>

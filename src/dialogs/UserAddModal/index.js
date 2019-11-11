@@ -6,7 +6,8 @@ const PropTypes = require('prop-types');
 require('./style.less');
 const Editable = require('../../components/Editable');
 const DropDown = require('../../components/DropDown');
-const SearchableDropdown = require('./../../components/SearchableDropdown');
+
+const SearchableDropdown = require('./../../components/SearchableDropdown').default;
 
 // const DropDownWithOutSearchBar = require('../../components/DropDownWithoutSearchBar');
 
@@ -186,13 +187,13 @@ function UserInfoModal(props) {
                         <div className="fieldset">
                             <div>Status:</div>
                             <SearchableDropdown 
-                                choices = {this.status} value = {this.state.status} onChange={(e)=>{this.setState({status: e})}}
+                                choices = {this.status} value = {this.state.status} onChange={(e)=>{this.setState({status: e});}}
                             />
                         </div>
                         <div className="fieldset">
                             <div>Role:</div>
-                            <SearchableDropdown 
-                                choices = {this.role} value = {this.state.role} onChange={(e)=>{this.setState({role: e})}}
+                            <SearchableDropdown  maxHeight="200px"
+                                choices = {this.role} value = {this.state.role} onChange={(e)=>{this.setState({role: e});}}
                             />
                         </div>
                         {/* <div className="fieldset">
