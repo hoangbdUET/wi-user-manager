@@ -6,6 +6,8 @@ const PropTypes = require('prop-types');
 require('./style.less');
 const Editable = require('../../components/Editable');
 const DropDown = require('../../components/DropDown');
+const SearchableDropdown = require('./../../components/SearchableDropdown');
+
 // const DropDownWithOutSearchBar = require('../../components/DropDownWithoutSearchBar');
 
 UserInfoModal.protoTypes = {
@@ -29,43 +31,43 @@ function UserInfoModal(props) {
 
     this.status = [
         {
-            statusName: "Active",
-            status: "Active"
+            display: "Active",
+            value: "Active"
         },
         {
-            statusName: "Inactive",
-            status: "Inactive"
+            display: "Inactive",
+            value: "Inactive"
         }
     ];
 
     this.role = [
         {
-            role: 0,
-            roleName: "System Manager"
+            value: 0,
+            display: "System Manager"
         },
         {
-            role: 1,
-            roleName: "Company Admin"
+            value: 1,
+            display: "Company Admin"
         },
         {
-            role: 2,
-            roleName: "Normal User"
+            value: 2,
+            display: "Normal User"
         },
         {
-            role: 3,
-            roleName: "Company Storage (Full permission)"
+            value: 3,
+            display: "Company Storage (Full permission)"
         },
         {
-            role: 3.1,
-            roleName: "Company Storage (Upload only)"
+            value: 3.1,
+            display: "Company Storage (Upload only)"
         },
         {
-            role: 3.2,
-            roleName: "Company Storage (Edit only)"
+            value: 3.2,
+            display: "Company Storage (Edit only)"
         },
         {
-            role: 3.3,
-            roleName: "Company Storage (View only)"
+            value: 3.3,
+            display: "Company Storage (View only)"
         }
     ];
 
@@ -183,36 +185,14 @@ function UserInfoModal(props) {
                         </div> */}
                         <div className="fieldset">
                             <div>Status:</div>
-                            <DropDown  
-                                getItem={(status) => 
-                                    <div style={{ height: '18px', display: 'flex', alignItems: 'center' }}>{status ? status.statusName : "[select status]"}</div>
-                                }
-                                items = {this.status}
-                                itemHeight={18}
-                                // disableSearch={true}
-                                selectedItem={this.status.find((e) => e.status === this.state.status)}
-                                onItemClicked = {(status)=>{
-                                    this.setState({
-                                        status: status.status
-                                    });
-                                }}
+                            <SearchableDropdown 
+                                choices = {this.status} value = {this.state.status} onChange={(e)=>{this.setState({status: e})}}
                             />
                         </div>
                         <div className="fieldset">
                             <div>Role:</div>
-                            <DropDown  
-                                getItem={(role) => 
-                                    <div style={{ height: '18px', display: 'flex', alignItems: 'center' }}>{role ? role.roleName : "[select role]"}</div>
-                                }
-                                items = {this.role}
-                                itemHeight={18}
-                                // disableSearch={true}
-                                selectedItem={this.role.find((e) => e.role === this.state.role)}
-                                onItemClicked = {(role)=>{
-                                    this.setState({
-                                        role: role.role
-                                    });
-                                }}
+                            <SearchableDropdown 
+                                choices = {this.role} value = {this.state.role} onChange={(e)=>{this.setState({role: e})}}
                             />
                         </div>
                         {/* <div className="fieldset">
