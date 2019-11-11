@@ -1,7 +1,7 @@
 import React from 'react';
 import { fromEvent } from 'rxjs';
 import './style.less';
-import DelayTextInput from '../DelayTextInput';
+import DelayTextInput from './../DelayTextInput';
 
 /*
     props.choices: a list of object like {display: "bla", value: "blo"}

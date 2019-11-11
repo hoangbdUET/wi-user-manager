@@ -30,6 +30,7 @@
     "react-draggable": "^3.3.2",
     "react-modal": "^3.10.1",
     "react-router-dom": "^5.0.1",
-    "react-toastify": "^5.3.2"
+    "react-toastify": "^5.3.2",
+    "rxjs": "^6.5.3"
   }
 }
