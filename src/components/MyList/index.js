@@ -23,7 +23,8 @@ function MyList(props) {
         startAt: props.startAt || 0,
         selectedItem: null,
         itemPerPage: props.itemPerPage || 5,
-        searchStr: searchStr
+        searchStr: searchStr,
+        reverseCache: {}
     };
 
 
@@ -51,6 +52,7 @@ function MyList(props) {
     this.handlePrevClick = handlePrevClick.bind(this);
 
     function handlePrevClick(e) {
+        console.log(this.props.items.length);
         this.setState((state) => {
             let newStartAt = state.startAt - this.state.itemPerPage;
             return {
@@ -82,12 +84,25 @@ function MyList(props) {
     function filterAndSort(items) {
         // console.log(items);
         // console.log(this.state.orderByText);
+        let key = this.state.orderByText.toLowerCase();
+        if (this.state.reverseCache[key] === undefined) {
+            this.state.reverseCache[key] = true;
+        } else {
+            this.state.reverseCache[key] = !this.state.reverseCache[key];
+        }
         return items.filter((item) => {
             let str = JSON.stringify(item).toLowerCase();
             return str.includes(this.state.searchStr.toLowerCase());
         }).sort((a, b) => {
-            let key = this.state.orderByText.toLowerCase();
-            return ("" + a[key]).localeCompare("" + b[key]);
+            let aKey = a[key];
+            let bKey = b[key];
+            if (typeof(a[key]) == 'object') {
+                aKey = (a[key] || {}).name;
+                bKey = (b[key] || {}).name;
+            }
+            if (this.state.reverseCache[key])
+                return ((aKey || "").toString()).localeCompare((bKey || "").toString());
+            return -((aKey || "").toString()).localeCompare((bKey || "").toString());
         }).filter((item, idx) => (
             idx >= this.state.startAt && idx < this.state.startAt + this.state.itemPerPage
         ));
@@ -197,7 +212,7 @@ function MyList(props) {
                     <div className={"btn-next"} onClick={this.handlePrevClick}>
                         <div className={"ti ti-angle-left"} style={{marginRight: '0px'}}/>         
                     </div>
-                    <div style={{marginLeft: '10px'}}><p>Page: {this.state.startAt/this.state.itemPerPage + 1}/{Math.ceil(this.props.items.length/this.state.itemPerPage)}</p></div>
+                    <div style={{marginLeft: '10px'}}><p>Page: {Math.round(this.state.startAt/this.state.itemPerPage) + 1}/{Math.ceil(this.props.items.length/this.state.itemPerPage)}</p></div>
                     <div className={"btn-next"} onClick={this.handleNextClick}>
                         <div className={"ti ti-angle-right"} style={{marginLeft: '0px'}}/>
                     </div>
