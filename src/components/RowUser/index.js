@@ -9,7 +9,10 @@ function RowUser(props) {
         "0": "System Manager",
         "1": "Company Admin",
         "2": "Normal User",
-        "3": "Admin Storage"
+        "3": "Company Storage (Full permission)",
+        "3.1": "Company Storage (Upload only)",
+        "3.2": "Company Storage (Edit only)",
+        "3.3": "Company Storage (View only)"
     };
     return (
         <MyRow className="RowUser" onClick={props.onClick || null}

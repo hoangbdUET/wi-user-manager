@@ -74,7 +74,9 @@ function LicensePackage(props) {
             name: item.name,
             description: item.description,
             idLicensePackage: item.selectedPackage.idLicensePackage,
-            i2g_feature: item.featuresInPackage || []
+            i2g_feature: item.featuresInPackage.map(f => {
+                return {idFeature: f.idFeature}
+            }) || []
         };
         api.updateLicensePackage(payload).then(() => {
             toast.success("Success");
