@@ -33,12 +33,17 @@ function PageUser(props) {
         listLicensePackage.call(this);
     }
 
+    function myStringify(item) {
+        return Object.values(item).filter(value => typeof value !== 'object').join(',');
+        // return JSON.stringify(item).toLowerCase()
+    }
+
     this.getItemList = function () {
-        if (this.state.filter == "") return (this.state.items || []);
-        if (this.state.items.length)
-            return this.state.items.filter((item) => {
-                return JSON.stringify(item).toLowerCase().includes(this.state.filter.toLowerCase());
-            });
+        // if (this.state.filter == "") return (this.state.items || []);
+        if (this.state.items.length) return this.state.items;
+            // return this.state.items.filter((item) => {
+            //     return myStringify(item).toLowerCase().includes(this.state.filter.toLowerCase());
+            // });
         return [];
     }
 
@@ -169,7 +174,7 @@ function PageUser(props) {
                         </div>
                         <UserStatus/>
                     </div>
-                    <ListUser itemPerPage={20} items={this.getItemList()}
+                    <ListUser itemPerPage={20} items={this.state.items || []} searchStr = {this.state.filter}
                               actions={[{
                                   name: "Add", handler: this.startAddUser, show: true
                               }, {

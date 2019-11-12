@@ -43,6 +43,7 @@ function MyList(props) {
     this.handleRowClick = handleRowClick.bind(this);
 
     function handleRowClick(item) {
+        console.log('hello');
         this.setState({
             selectedItem: item
         });
@@ -52,7 +53,7 @@ function MyList(props) {
     this.handlePrevClick = handlePrevClick.bind(this);
 
     function handlePrevClick(e) {
-        console.log(this.props.items.length);
+        // console.log(this.props.items.length);
         this.setState((state) => {
             let newStartAt = state.startAt - this.state.itemPerPage;
             return {
@@ -80,19 +81,22 @@ function MyList(props) {
     }
 
     this.filterAndSort = filterAndSort.bind(this);
-
+    function myStringify(item) {
+        return Object.values(item).filter(value => typeof value !== 'object').join(',');
+        // return JSON.stringify(item).toLowerCase()
+    }
     function filterAndSort(items) {
         // console.log(items);
         // console.log(this.state.orderByText);
         let key = this.state.orderByText.toLowerCase();
-        if (this.state.reverseCache[key] === undefined) {
-            this.state.reverseCache[key] = true;
-        } else {
-            this.state.reverseCache[key] = !this.state.reverseCache[key];
-        }
+        // if (this.state.reverseCache[key] === undefined) {
+        //     this.state.reverseCache[key] = true;
+        // } else {
+        //     this.state.reverseCache[key] = !this.state.reverseCache[key];
+        // }
         return items.filter((item) => {
-            let str = JSON.stringify(item).toLowerCase();
-            return str.includes(this.state.searchStr.toLowerCase());
+            let str = myStringify(item);
+            return str.includes((this.props.searchStr||"").toLowerCase());
         }).sort((a, b) => {
             let aKey = a[key];
             let bKey = b[key];
@@ -100,7 +104,7 @@ function MyList(props) {
                 aKey = (a[key] || {}).name;
                 bKey = (b[key] || {}).name;
             }
-            if (this.state.reverseCache[key])
+            if (this.state.reverse)
                 return ((aKey || "").toString()).localeCompare((bKey || "").toString());
             return -((aKey || "").toString()).localeCompare((bKey || "").toString());
         }).filter((item, idx) => (
@@ -134,9 +138,11 @@ function MyList(props) {
 
     function onHeaderClicked(headerIdx, headerText) {
         // console.log('headerText:', headerText);
-        this.setState({
-            orderByText: headerText.props.children
-        });
+        console.log('header click');
+        this.setState(state => ({
+            orderByText: headerText.props.children,
+            reverse: !state.reverse
+        }));
     }
 
     let buttonStyle = {
@@ -167,7 +173,7 @@ function MyList(props) {
                                 if (evaluate(action.show, [this.state.selectedItem])) {
                                     return (<div className={"btn-next"}
                                                  style={buttonStyle[action.name] ? buttonStyle[action.name].style : {}}
-                                                 key={idx} onClick={(e) => action.handler(this.state.selectedItem)}>
+                                                 key={idx} onClick={(e) => {action.handler(this.state.selectedItem);}}>
                                         <div className={buttonStyle[action.name] ? buttonStyle[action.name].icon : ""}
                                              style={{marginRight: '10px'}}/>
                                         {action.label || action.title || action.name}
@@ -206,6 +212,8 @@ function MyList(props) {
                             <option value={10}>10</option>
                             <option value={20}>20</option>
                             <option value={30}>30</option>
+                            <option value={50}>50</option>
+                            <option value={50}>100</option>
                         </select>
                     </div>
 

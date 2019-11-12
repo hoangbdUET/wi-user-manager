@@ -35,12 +35,12 @@ function PageProject() {
         })
     }
 
-    this.getItemList = function () {
-        if (this.state.filter == "") return this.state.items;
-        return this.state.items.filter((item) => {
-            return JSON.stringify(item).toLowerCase().includes(this.state.filter.toLowerCase());
-        });
-    }
+    // this.getItemList = function () {
+    //     if (this.state.filter == "") return this.state.items;
+    //     return this.state.items.filter((item) => {
+    //         return JSON.stringify(item).toLowerCase().includes(this.state.filter.toLowerCase());
+    //     });
+    // }
 
     this.startSharingProject = startSharingProjectClicked.bind(this);
 
@@ -102,7 +102,7 @@ function PageProject() {
                             },
                             { name: "Refresh", handler: self.listProjects, show: true }
 
-                        ]} items={this.getItemList()}
+                        ]} items={this.state.items || []} searchStr={this.state.filter}
                     />
                 </div>
             </div>

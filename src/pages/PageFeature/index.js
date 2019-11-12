@@ -71,7 +71,7 @@ function PageFeature(pops) {
                         }, show: true
                     },
                     {name: "Refresh", handler: self.getAllFeatures, show: true}
-                ]}/>
+                ]} searchStr={this.state.filter}/>
             </div>
         </div>)
     }

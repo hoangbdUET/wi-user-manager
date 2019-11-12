@@ -20,7 +20,8 @@ function LicensePackage(props) {
         isAddingLicensePackage: false,
         isEditingLicensePackage: false,
         isDeletingLicensePackage: false,
-        selectedLicensePackage: null
+        selectedLicensePackage: null,
+        filter: ""
     };
 
     this.componentDidMount = function () {
@@ -137,7 +138,7 @@ function LicensePackage(props) {
                             }, show: ([selectedLicensePackage]) => (!!selectedLicensePackage)
                         },
                         {name: "Refresh", handler: listPackage.bind(this), show: true}
-                    ]}
+                    ]}  searchStr={this.state.filter}
                     />
                     <ConfirmationModal isOpen={this.state.isDeletingLicensePackage}
                                        title="Confirmation" message="Are you sure to delete this package?"
