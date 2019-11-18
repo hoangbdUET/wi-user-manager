@@ -176,6 +176,12 @@ function UserInfoModal(props) {
                             />
                         </div>
                         <div className="fieldset">
+                            <div>Role:</div>
+                            <SearchableDropdown  maxHeight="200px"
+                                choices = {this.role} value = {this.state.role} onChange={(e)=>{this.setState({role: e});}}
+                            />
+                        </div>
+                        <div className="fieldset">
                             <div>License:</div>
                             <DropDown getItem={(license) => (
                                 <div style={{
@@ -199,12 +205,6 @@ function UserInfoModal(props) {
                             <div>Status:</div>
                             <SearchableDropdown 
                                 choices = {this.status} value = {this.state.status} onChange={(e)=>{this.setState({status: e});}}
-                            />
-                        </div>
-                        <div className="fieldset">
-                            <div>Role:</div>
-                            <SearchableDropdown  maxHeight="200px"
-                                choices = {this.role} value = {this.state.role} onChange={(e)=>{this.setState({role: e});}}
                             />
                         </div>
                     </div>
