@@ -105,14 +105,11 @@ function PageUser(props) {
     this.callApiUpdateUser = callApiUpdateUser.bind(this);
 
     function callApiUpdateUser(user) {
-        if (user.password.length <= 0) {
-            delete user.password;
-            delete user.repassword;
-        }
         if (user.password != user.repassword) {
             toast.error('Your confirm password is not match');
             return;
         }
+        delete user.repassword;
         api.updateUserPromise(user).then(()=>{
             this.initFromServer();
             this.setState({isEditingUser: false})
