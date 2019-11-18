@@ -23,7 +23,9 @@ function UserInfoModal(props) {
         fullname: "",
         status: "",
         role: "",
-        idLicensePackage: ""
+        idLicensePackage: "",
+        password: "",
+        repassword: ""
     };
 
     this.status = [
@@ -93,6 +95,52 @@ function UserInfoModal(props) {
                 <h4>Edit User {this.state.username}</h4>
                 <div className="content-dialog">
                     <div style={{flex: 1, overflow: 'visible'}}>
+                        <div className="fieldset">
+                            <div>Username</div>
+                            <Editable value={this.state.username}
+                                      formatValue={(v) => ((v === null || v === undefined || v.length === 0) ? "[empty]" : v)}
+                                      onValueChanged={(value) => this.setState((state) => {
+                                          return {
+                                              username: value
+                                          };
+                                      })}
+                                      disabled={true}
+                            />
+                        </div>
+                        <div className="fieldset">
+                            <div>Password</div>
+                            <Editable   value={this.state.password} 
+                                        formatValue={(v) => {
+                                            if (v.length === 0) {
+                                                return '[empty]';
+                                            }
+                                            return new Array(v.length).fill('*', 0, v.length);
+                                        }}
+                                        onValueChanged={(value) => this.setState((state)=>{
+                                            return {
+                                                password: value
+                                            };
+                                        })}
+                                        hideText
+                            />
+                        </div>
+                        <div className="fieldset">
+                            <div>Re-password</div>
+                            <Editable   value={this.state.repassword} 
+                                        formatValue={(v) => {
+                                            if (v.length === 0) {
+                                                return '[empty]';
+                                            }
+                                            return new Array(v.length).fill('*', 0, v.length);
+                                        }}
+                                        onValueChanged={(value) => this.setState((state)=>{
+                                            return {
+                                                repassword: value
+                                            };
+                                        })}
+                                        hideText
+                            />
+                        </div>
                         <div className="fieldset">
                             <div>Username</div>
                             <Editable value={this.state.username}
