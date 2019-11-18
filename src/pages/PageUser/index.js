@@ -111,6 +111,7 @@ function PageUser(props) {
         }
         delete user.repassword;
         api.updateUserPromise(user).then(()=>{
+            toast.success('Update user successfully');
             this.initFromServer();
             this.setState({isEditingUser: false})
         }).catch(err => {
