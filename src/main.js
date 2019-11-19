@@ -6,7 +6,7 @@ const Router = ReactRouter.BrowserRouter;
 const LeftNavigation = require('./pages/LeftNavigation');
 const MainContent = require('./pages/MainContent');
 const {ToastContainer, toast} = require('react-toastify');
-// require('../node_modules/@icon/themify-icons/themify-icons.css');
+require('../node_modules/@icon/themify-icons/themify-icons.css');
 const Fragment = React.Fragment;
 
 require('react-toastify/dist/ReactToastify.min.css');

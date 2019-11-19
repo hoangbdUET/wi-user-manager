@@ -1,5 +1,6 @@
 module.exports = MyList;
 const React = require('react');
+const _ = require('lodash');
 require('./style.less');
 const RowCompany = require('../RowCompany');
 const PropTypes = require('prop-types');
@@ -27,6 +28,11 @@ function MyList(props) {
         reverseCache: {}
     };
 
+    this.componentDidMount = function() {
+        this.setState({
+            itemPerPage: 20
+        })
+    }
 
     //
     this.handleNextClick = handleNextClick.bind(this);
@@ -43,7 +49,6 @@ function MyList(props) {
     this.handleRowClick = handleRowClick.bind(this);
 
     function handleRowClick(item) {
-        console.log('hello');
         this.setState({
             selectedItem: item
         });
@@ -86,14 +91,7 @@ function MyList(props) {
         // return JSON.stringify(item).toLowerCase()
     }
     function filterAndSort(items) {
-        // console.log(items);
-        // console.log(this.state.orderByText);
         let key = this.state.orderByText.toLowerCase();
-        // if (this.state.reverseCache[key] === undefined) {
-        //     this.state.reverseCache[key] = true;
-        // } else {
-        //     this.state.reverseCache[key] = !this.state.reverseCache[key];
-        // }
         return items.filter((item) => {
             let str = myStringify(item);
             return str.includes((this.props.searchStr||"").toLowerCase());
@@ -136,11 +134,13 @@ function MyList(props) {
 
     this.onHeaderClicked = onHeaderClicked.bind(this);
 
-    function onHeaderClicked(headerIdx, headerText) {
-        // console.log('headerText:', headerText);
-        console.log('header click');
+    function onHeaderClicked(headerIdx, headerCellElem) {
+        let headerText = _.get(headerCellElem, 'props.children');
+        if (!headerText) return;
+        if (!this.props.items || !this.props.items.length) return;
+        if (!this.props.items[0].hasOwnProperty(headerText.toLowerCase())) return;
         this.setState(state => ({
-            orderByText: headerText.props.children,
+            orderByText: (headerCellElem.props || {children: "NULL"}).children,
             reverse: !state.reverse
         }));
     }
@@ -213,7 +213,7 @@ function MyList(props) {
                             <option value={20}>20</option>
                             <option value={30}>30</option>
                             <option value={50}>50</option>
-                            <option value={50}>100</option>
+                            <option value={100}>100</option>
                         </select>
                     </div>
 

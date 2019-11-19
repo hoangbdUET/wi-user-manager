@@ -21,10 +21,15 @@ function PageUser(props) {
         isAddingUser: false,
         isEditingUser: false,
         isDeletingUser: false,
-        filter: ""
+        filter: "",
+        companyFilter: null
     };
     this.componentDidMount = function () {
         this.initFromServer();
+        this.setState({
+            filter: "",
+            companyFilter: -1
+        })
     }
 
     this.initFromServer = function () {
@@ -33,10 +38,10 @@ function PageUser(props) {
         listLicensePackage.call(this);
     }
 
-    function myStringify(item) {
-        return Object.values(item).filter(value => typeof value !== 'object').join(',');
-        // return JSON.stringify(item).toLowerCase()
-    }
+    // function myStringify(item) {
+    //     return Object.values(item).filter(value => typeof value !== 'object').join(',');
+    //     // return JSON.stringify(item).toLowerCase()
+    // }
 
     this.getItemList = function () {
         // if (this.state.filter == "") return (this.state.items || []);
@@ -171,6 +176,12 @@ function PageUser(props) {
                 }/>
                 <div style={{width: 'calc(100vw - 102px)', display: 'flex', flexDirection: 'column'}}>
                     <div className={"top-bar"}>
+                        <div className = "select-company">
+                        <select onChange={(e)=>this.setState({companyFilter: e.target.value})} 
+                            style={{border: 'none', background: 'none'}} value={this.state.companyFilter || ""}>
+                            {(([{idCompany: -1, name: "All"}].concat(this.state.companies))).map((e, idx)=><option key={idx} value={e.idCompany}>{e.name}</option>)}
+                        </select>
+                        </div>
                         <div className={"search-box"}>
                             <div style={{marginRight: '10px', color: '#000'}} className={"ti ti-search"}/>
                             <input placeholder="Filter" value={this.state.filter} onChange={(e) => {
@@ -179,7 +190,7 @@ function PageUser(props) {
                         </div>
                         <UserStatus/>
                     </div>
-                    <ListUser itemPerPage={20} items={this.state.items || []} searchStr = {this.state.filter}
+                    <ListUser itemPerPage={20} items={this.state.items || []} searchStr = {this.state.filter} companyFilter = {this.state.companyFilter}
                               actions={[{
                                   name: "Add", handler: this.startAddUser, show: true
                               }, {
