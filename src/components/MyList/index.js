@@ -92,7 +92,7 @@ function MyList(props) {
     }
     function filterAndSort(items) {
         let key = this.state.orderByText.toLowerCase();
-        console.log('filter and sort:', items);
+        //console.log('filter and sort:', items);
         return items.filter((item) => {
             let str = myStringify(item);
             return str.includes((this.props.searchStr||"").toLowerCase());

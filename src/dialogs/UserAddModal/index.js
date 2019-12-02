@@ -27,7 +27,8 @@ function UserInfoModal(props) {
         role: "",
         password: "",
         repassword: "",
-        idCompany: null
+        idCompany: null,
+        idLicensePackage: null
     };
 
     this.status = [
@@ -81,7 +82,8 @@ function UserInfoModal(props) {
             role: "",
             password: "",
             repassword: "",
-            idCompany: null
+            idCompany: null,
+            idLicensePackage: null
         });
     }
 
@@ -174,6 +176,26 @@ function UserInfoModal(props) {
                                 }}
                             />
                         </div>
+                        <div className="fieldset">
+                            <div>License:</div>
+                            <DropDown getItem={(license) => (
+                                <div style={{
+                                    height: '18px',
+                                    display: 'flex',
+                                    alignItems: 'center'
+                                }}>{license ? license.name : "[select license]"}</div>)}
+                                      items={this.props.licensePackages}
+                                      itemHeight={18}
+                                      selectedItem={this.props.licensePackages.find((e) => e.idLicensePackage === this.state.idLicensePackage)}
+                                      onItemClicked={(license) => {
+                                          this.setState((state) => {
+                                              return {
+                                                  idLicensePackage: license.idLicensePackage
+                                              }
+                                          });
+                                      }}
+                            />
+                        </div>
                         {/* <div className="fieldset">
                             <div>Status</div>
                             <Editable value={this.state.status} formatValue={(v) => ((v === null || v === undefined || v.length === 0 )? "[empty]" : v)}
@@ -185,15 +207,15 @@ function UserInfoModal(props) {
                             />
                         </div> */}
                         <div className="fieldset">
-                            <div>Status:</div>
-                            <SearchableDropdown 
-                                choices = {this.status} value = {this.state.status} onChange={(e)=>{this.setState({status: e});}}
-                            />
-                        </div>
-                        <div className="fieldset">
                             <div>Role:</div>
                             <SearchableDropdown  maxHeight="200px"
                                 choices = {this.role} value = {this.state.role} onChange={(e)=>{this.setState({role: e});}}
+                            />
+                        </div>
+                        <div className="fieldset">
+                            <div>Status:</div>
+                            <SearchableDropdown 
+                                choices = {this.status} value = {this.state.status} onChange={(e)=>{this.setState({status: e});}}
                             />
                         </div>
                         {/* <div className="fieldset">

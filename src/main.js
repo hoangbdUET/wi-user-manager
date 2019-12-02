@@ -24,7 +24,6 @@ toast.configure({
 ReactDOM.render((
     <div style={{width: '100%'}}>
         <Router>
-
             <MainContent default="/user" routes={
                 [
                     {path: "/user", component: "PageUser", auth: "true"},
@@ -36,7 +35,6 @@ ReactDOM.render((
                     {path: "/feature", component: "PageFeature", auth: "true"}
                 ]
             }/>
-
         </Router>
         <ToastContainer closeButton={false}/>
     </div>

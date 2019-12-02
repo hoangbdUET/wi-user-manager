@@ -208,7 +208,7 @@ function PageUser(props) {
                     />
                     <UserAddModal isOpen={this.state.isAddingUser} onOk={this.callApiAddUser} action={"add"}
                                   onCancel={(e) => this.setState({isAddingUser: false})}
-                                  companies={this.state.companies}/>
+                                  companies={this.state.companies} licensePackages={this.state.licensePackages} />
                     <ConfirmationModal isOpen={this.state.isDeletingUser} title={"Confirmation"}
                                        message={"Are you sure to delete selected user?"}
                                        onCancel={() => this.setState({isDeletingUser: false})}

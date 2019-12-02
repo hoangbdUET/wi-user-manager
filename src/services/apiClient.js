@@ -28,6 +28,7 @@ module.exports = {
     deleteFeature
 
 };
+
 const env = process.env.NODE_ENV;
 console.log("=======", env);
 let config = require('../config/default').default;
