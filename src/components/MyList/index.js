@@ -92,6 +92,7 @@ function MyList(props) {
     }
     function filterAndSort(items) {
         let key = this.state.orderByText.toLowerCase();
+        console.log('filter and sort:', items);
         return items.filter((item) => {
             let str = myStringify(item);
             return str.includes((this.props.searchStr||"").toLowerCase());
@@ -182,29 +183,6 @@ function MyList(props) {
                             }
                     )
                     }
-
-                    {/*<div className={"btn-next"}*/}
-                    {/*     style={{color: "rgb(22, 187, 29)", fontWeight: "bold", border: "1px solid rgb(22, 187, 29)"}}>*/}
-                    {/*    <div className={"ti ti-plus"} style={{marginRight: '10px'}}/>*/}
-                    {/*    Add*/}
-                    {/*</div>*/}
-                    {/*<div className={"btn-next"}*/}
-                    {/*     style={{color: "#F44336", fontWeight: "bold", border: "1px solid #F44336"}}>*/}
-                    {/*    <div className={"ti ti-close"} style={{marginRight: '10px'}}/>*/}
-                    {/*    Delete*/}
-                    {/*</div>*/}
-                    {/*<div className={"btn-next"} style={{color: "#4B7DEF", fontWeight: "bold"}}>*/}
-                    {/*    <div className={"ti ti-pencil"} style={{marginRight: '10px'}}/>*/}
-                    {/*    Edit*/}
-                    {/*</div>*/}
-                    {/*<div className={"btn-next"} style={{color: "#4B7DEF", fontWeight: "bold"}}>*/}
-                    {/*    <div className={"ti ti-reload"} style={{marginRight: '10px'}}/>*/}
-                    {/*    Refresh*/}
-                    {/*</div>*/}
-                    {/*<div className={"btn-next"} style={{color: "#4B7DEF", fontWeight: "bold"}}>*/}
-                    {/*    <div className={"ti ti-settings"} style={{marginRight: '10px'}}/>*/}
-                    {/*    Manager*/}
-                    {/*</div>*/}
                     <div className={"btn-next"} style={{color: "#4B7DEF", fontWeight: "bold", padding: '5px 10px'}}>
                         Item of page:
                         <select onChange={this.handleItemPerPageChanged} style={{border: 'none', background: 'none'}} value={this.state.itemPerPage}>
