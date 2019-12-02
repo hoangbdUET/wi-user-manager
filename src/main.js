@@ -18,22 +18,12 @@ const containerElem = document.getElementById('react-app');
 toast.configure({
     autoClose: 5000,
     draggable: false,
-    position: toast.POSITION.BOTTOM_RIGHT
+    position: toast.POSITION.TOP_RIGHT
 });
 
 ReactDOM.render((
     <div style={{width: '100%'}}>
         <Router>
-            {/* <LeftNavigation routes={
-                [
-
-                    {path: "/user", label: "User"},
-                    {path: "/group", label: "Group"},
-                    {path: "/company", label: "Company"},
-                    {path: "/project", label: "Project"},
-                    {path: '/license-package', label: "License Package"}
-                ]
-            }/> */}
 
             <MainContent default="/user" routes={
                 [
@@ -48,6 +38,6 @@ ReactDOM.render((
             }/>
 
         </Router>
-        <ToastContainer/>
+        <ToastContainer closeButton={false}/>
     </div>
 ), containerElem);

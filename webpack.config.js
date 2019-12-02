@@ -1,5 +1,7 @@
 const path = require("path");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const devMode = process.env.NODE_ENV !== 'production';
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 // const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 webpackConfigure = {
@@ -19,7 +21,15 @@ webpackConfigure = {
 			},
 			{
 				test: /\.css$/,
-				use: ["style-loader", "css-loader"]
+				use: [
+					{
+						loader: MiniCssExtractPlugin.loader,
+						options: {
+							hmr: process.env.NODE_ENV === 'development',
+						}
+					},
+					"css-loader"
+				]
 			},
 			{
 				test: /\.less$/,
@@ -41,6 +51,10 @@ webpackConfigure = {
 		new HtmlWebpackPlugin({
 			template: "./src/index.html"
 		}),
+		new MiniCssExtractPlugin({
+			filename: devMode ? '[name].css' : '[name].[hash].css',
+			chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
+		})
 		// new CopyWebpackPlugin([
 		// 	{from: 'src/assets', to:'assets'}
 		// ])
