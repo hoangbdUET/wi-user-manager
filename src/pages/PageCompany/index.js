@@ -113,6 +113,7 @@ function PageCompany() {
     }
 
     this.render = function () {
+        if (apiUser.getRole() > 0) return <Redirect to={{pathname: "/", from: "/"}}/>;
         if (!apiUser.isLoggedIn()) return <Redirect to={{pathname:"/login", from:"/company"}} />;
         return (
             <div className={"PageCompany"} style={{ width: '100%', display: 'flex', flexDirection: 'row' }}>

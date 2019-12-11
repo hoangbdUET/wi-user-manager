@@ -37,6 +37,7 @@ function PageFeature(pops) {
         });
     };
     this.render = function () {
+        if (apiUser.getRole() > 0) return <Redirect to={{pathname: "/", from: "/"}}/>;
         if (!apiUser.isLoggedIn()) return <Redirect to={{pathname: "/login", from: "/company"}}/>;
         return (<div className={"PageFeature"} style={{width: '100%', display: 'flex', flexDirection: 'row'}}>
             <LeftNavigation routes={

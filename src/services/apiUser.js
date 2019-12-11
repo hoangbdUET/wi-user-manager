@@ -1,9 +1,12 @@
+let role = null;
+let jwt = require('jsonwebtoken');
 const api = require('./apiClient');
 module.exports = {
     removeLoginSession: function() {
         localStorage.removeItem("token");
         localStorage.removeItem('username');
-        localStorage.removeItem('company');
+        localStorage.removeItem('role');
+        role = null;
     },
     isLoggedIn: function() {
         return localStorage.getItem('token');
@@ -12,11 +15,15 @@ module.exports = {
         return new Promise((resolve, reject)=>{
             api.login(username, password)
             .then((res)=>{
-                console.log(res);
                 if (res.code == 200) {
-                    localStorage.setItem('token', res.content.token);
-                    localStorage.setItem('username', res.content.user.username);
-                    resolve(true);
+                    if (res.content.user.role <= 1) {
+                        localStorage.setItem('token', res.content.token);
+                        localStorage.setItem('username', res.content.user.username);
+                        localStorage.setItem('role', res.content.user.role);
+                        resolve(true);
+                    } else {
+                        reject("Have no permission to access");
+                    }
                 } else {
                     reject(res.reason);
                 }
@@ -25,5 +32,8 @@ module.exports = {
                 reject(e.message);
             });
         });
+    },
+    getRole: function() {
+        return localStorage.getItem('role');
     }
 }

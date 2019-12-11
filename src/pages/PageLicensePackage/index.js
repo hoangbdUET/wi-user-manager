@@ -89,6 +89,7 @@ function LicensePackage(props) {
     }
 
     this.render = function () {
+        if (apiUser.getRole() > 0) return <Redirect to={{pathname: "/", from: "/"}}/>;
         if (!apiUser.isLoggedIn()) return <Redirect to={{pathname: "/login", from: "/license-package"}}/>;
         return (
             <div className={"LicensePackage"} style={{width: '100%', display: 'flex', flexDirection: 'row'}}>

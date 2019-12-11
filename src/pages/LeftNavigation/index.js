@@ -2,6 +2,7 @@ module.exports = LeftNavigation;
 require('./style.less');
 const NavLink = require('react-router-dom').NavLink;
 const React = require('react');
+const userService = require('./../../services/apiUser');
 
 function LeftNavigation(props) {
     let routes = props.routes;
@@ -17,7 +18,14 @@ function LeftNavigation(props) {
         <span className="logo">
 
         </span>
-        {routes.map((aRoute, idx) =>
+        {routes.filter((e)=>{
+            let role = userService.getRole();
+            if (role > 0) {
+                if (e.path == '/license-package' || e.path == '/company') return false;
+                else return true;
+            }  
+            return true;
+        }).map((aRoute, idx) =>
             <div key={idx}>
                 <NavLink className={classMap[aRoute.label]} to={aRoute.path} title={aRoute.label}
                          activeStyle={{backgroundColor: '#4B7DEF',  filter: 'grayscale(0) opacity(1)', backgroundBlendMode:'color-dodge'}}/>
