@@ -183,22 +183,8 @@ function UserInfoModal(props) {
                         </div>
                         <div className="fieldset">
                             <div>License:</div>
-                            <DropDown getItem={(license) => (
-                                <div style={{
-                                    height: '18px',
-                                    display: 'flex',
-                                    alignItems: 'center'
-                                }}>{license ? license.name : "[select license]"}</div>)}
-                                      items={this.props.licensePackages}
-                                      itemHeight={18}
-                                      selectedItem={this.props.licensePackages.find((e) => e.idLicensePackage === this.state.idLicensePackage)}
-                                      onItemClicked={(license) => {
-                                          this.setState((state) => {
-                                              return {
-                                                  idLicensePackage: license.idLicensePackage
-                                              }
-                                          });
-                                      }}
+                            <SearchableDropdown choices = {this.props.licensePackages.map((e)=>({value: e.idLicensePackage, display: e.name}))} 
+                                                value = {this.state.idLicensePackage} onChange = {(e)=>{this.setState({idLicensePackage: e})}}
                             />
                         </div>
                         <div className="fieldset">

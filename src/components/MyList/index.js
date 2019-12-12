@@ -20,18 +20,19 @@ function MyList(props) {
     const MIN_WIDTH = 60;
     this.listName = "abstractTab";
     let searchStr = props.searchStr || "";
+    this.itemCount = 0;
     this.state = {
         startAt: props.startAt || 0,
         selectedItem: null,
         itemPerPage: props.itemPerPage || 5,
-        searchStr: searchStr,
         reverseCache: {}
     };
 
     this.componentDidMount = function() {
         this.setState({
             itemPerPage: 20
-        })
+        });
+        this.filterAndSort(this.props.items);
     }
 
     //
@@ -41,7 +42,7 @@ function MyList(props) {
         this.setState((state) => {
             let newStartAt = state.startAt + this.state.itemPerPage;
             return {
-                startAt: newStartAt > this.props.items.length ? this.state.startAt : newStartAt
+                startAt: newStartAt > this.itemCount ? this.state.startAt : newStartAt
             }
         });
     }
@@ -93,7 +94,7 @@ function MyList(props) {
     function filterAndSort(items) {
         let key = this.state.orderByText.toLowerCase();
         //console.log('filter and sort:', items);
-        return items.filter((item) => {
+        let newItems = items.filter((item) => {
             let str = myStringify(item);
             return str.includes((this.props.searchStr||"").toLowerCase());
         }).sort((a, b) => {
@@ -106,7 +107,9 @@ function MyList(props) {
             if (this.state.reverse)
                 return ((aKey || "").toString()).localeCompare((bKey || "").toString());
             return -((aKey || "").toString()).localeCompare((bKey || "").toString());
-        }).filter((item, idx) => (
+        });
+        this.itemCount = newItems.length;
+        return newItems.filter((item, idx) => (
             idx >= this.state.startAt && idx < this.state.startAt + this.state.itemPerPage
         ));
     }
@@ -198,7 +201,7 @@ function MyList(props) {
                     <div className={"btn-next"} onClick={this.handlePrevClick}>
                         <div className={"ti ti-angle-left"} style={{marginRight: '0px'}}/>         
                     </div>
-                    <div style={{marginLeft: '10px'}}><p>Page: {Math.round(this.state.startAt/this.state.itemPerPage) + 1}/{Math.ceil(this.props.items.length/this.state.itemPerPage)}</p></div>
+                    <div style={{marginLeft: '10px'}}><p>Page: {Math.round(this.state.startAt/this.state.itemPerPage) + 1}/{Math.ceil(this.itemCount/this.state.itemPerPage)}</p></div>
                     <div className={"btn-next"} onClick={this.handleNextClick}>
                         <div className={"ti ti-angle-right"} style={{marginLeft: '0px'}}/>
                     </div>

@@ -5,7 +5,7 @@
   },
   "dev": {
     "wi_auth": "https://users.i2g.cloud",
-    "wi_backend": "https://api-1.i2g.cloud"
+    "wi_backend": "https://users.i2g.cloud"
   },
   "production": {
     "wi_auth": "https://users.i2g.cloud",

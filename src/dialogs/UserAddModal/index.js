@@ -23,7 +23,7 @@ function UserInfoModal(props) {
         username: "",
         email: "",
         fullname: "",
-        status: "",
+        status: "Inactive",
         role: "",
         password: "",
         repassword: "",
@@ -78,7 +78,7 @@ function UserInfoModal(props) {
             username: "",
             email: "",
             fullname: "",
-            status: "",
+            status: "Inactive",
             role: "",
             password: "",
             repassword: "",
@@ -162,7 +162,7 @@ function UserInfoModal(props) {
                         </div>
                         <div className="fieldset">
                             <div>Company:</div>
-                            <DropDown  getItem={(company) => (
+                            {/* <DropDown  getItem={(company) => (
                                 <div style={{ height: '18px', display: 'flex', alignItems: 'center' }}>{company ? company.name : "[select company]"}</div>)}
                                 items = {this.props.companies}
                                 itemHeight={18}
@@ -174,11 +174,14 @@ function UserInfoModal(props) {
                                         }
                                     });
                                 }}
+                            /> */}
+                            <SearchableDropdown choices = {this.props.companies.map((e)=>({value: e.idCompany, display: e.name}))} 
+                                                value = {this.state.idCompany} onChange = {(e)=>{this.setState({idCompany: e})}}
                             />
                         </div>
                         <div className="fieldset">
                             <div>License:</div>
-                            <DropDown getItem={(license) => (
+                            {/* <DropDown getItem={(license) => (
                                 <div style={{
                                     height: '18px',
                                     display: 'flex',
@@ -194,6 +197,9 @@ function UserInfoModal(props) {
                                               }
                                           });
                                       }}
+                            /> */}
+                            <SearchableDropdown choices = {this.props.licensePackages.map((e)=>({value: e.idLicensePackage, display: e.name}))} 
+                                                value = {this.state.idLicensePackage} onChange = {(e)=>{this.setState({idLicensePackage: e})}}
                             />
                         </div>
                         {/* <div className="fieldset">
