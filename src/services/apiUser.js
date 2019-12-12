@@ -36,4 +36,4 @@ module.exports = {
     getRole: function() {
         return localStorage.getItem('role');
     }
-}
+};

@@ -42,8 +42,6 @@ if (env === "development") {
 const WI_AUTH_URL = config.wi_auth;
 const WI_BACKEND_URL = config.wi_backend;
 
-const apiUser = require('./apiUser');
-
 function doPost(url, params, token, service) {
     return new Promise((resolve, reject) => {
         let fullUrl = service === "BACKEND" ? WI_BACKEND_URL + url : WI_AUTH_URL + url;
@@ -58,8 +56,7 @@ function doPost(url, params, token, service) {
             if (response.status !== 200 && response.status !== 401) return reject(response.statusText);
             response.json().then(payload => {
                 if (parseInt(payload.code) === 401) {
-                    console.log('redirect and logout');
-                    apiUser.removeLoginSession();
+                    require('./apiUser').removeLoginSession();
                     if (!window.location.href === "/login") window.location.href = '/login';
                 } else if (parseInt(payload.code) === 200) {
                     resolve(payload.content);
