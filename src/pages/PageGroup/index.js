@@ -165,10 +165,6 @@ function PageGroup(props) {
                             })
                         }, show: true
                     }, {
-                        name: 'Manage Users',
-                        handler: this.listGroups,
-                        show: true
-                    }, {
                         name: "Refresh",
                         handler: () => { this.initListFromServer(); },
                         show: true

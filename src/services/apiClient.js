@@ -191,4 +191,3 @@ function deleteUser(idUser) {
 function updateUserPromise(payload) {
     return doPost('/user/edit', {...payload})
 }
-

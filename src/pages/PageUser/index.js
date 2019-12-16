@@ -6,7 +6,7 @@ const UserInfoModal = require('../../dialogs').UserInfoModal;
 const ConfirmationModal = require('../../dialogs').ConfirmationModal;
 const UserAddModal = require('../../dialogs').UserAddModal;
 const ListUser = require('../../components/ListUser');
-const {toast} = require('react-toastify');
+const { toast } = require('react-toastify');
 const LeftNavigation = require('./../LeftNavigation');
 const apiUser = require('../../services/apiUser');
 const Redirect = require('react-router-dom').Redirect;
@@ -46,9 +46,9 @@ function PageUser(props) {
     this.getItemList = function () {
         // if (this.state.filter == "") return (this.state.items || []);
         if (this.state.items.length) return this.state.items;
-            // return this.state.items.filter((item) => {
-            //     return myStringify(item).toLowerCase().includes(this.state.filter.toLowerCase());
-            // });
+        // return this.state.items.filter((item) => {
+        //     return myStringify(item).toLowerCase().includes(this.state.filter.toLowerCase());
+        // });
         return [];
     }
 
@@ -56,7 +56,7 @@ function PageUser(props) {
 
     function listUser() {
         api.getUsersPromise().then(users => {
-            this.setState({items: users})
+            this.setState({ items: users.sort((a,b)=>a.username.toString().localeCompare(b.username.toString())) });
         }).catch(err => {
             console.log(err);
         })
@@ -127,10 +127,10 @@ function PageUser(props) {
             return;
         }
         delete user.repassword;
-        api.updateUserPromise(user).then(()=>{
+        api.updateUserPromise(user).then(() => {
             toast.success('Update user successfully');
             this.initFromServer();
-            this.setState({isEditingUser: false})
+            this.setState({ isEditingUser: false })
         }).catch(err => {
             toast.error(err);
         })
@@ -144,7 +144,7 @@ function PageUser(props) {
             .then((rs) => {
                 toast.success('Delete user successfully');
                 this.initFromServer();
-                this.setState({isDeletingUser: false});
+                this.setState({ isDeletingUser: false });
             })
             .catch(e => {
                 toast.error(e);
@@ -154,14 +154,14 @@ function PageUser(props) {
     this.startDeleteUser = startDeleteUser.bind(this);
 
     function startDeleteUser(selectedUser) {
-        this.setState({isDeletingUser: true, selectedUser: selectedUser});
+        this.setState({ isDeletingUser: true, selectedUser: selectedUser });
         console.log("Delete ", selectedUser);
     }
 
     this.startAddUser = startAddUser.bind(this);
 
     function startAddUser() {
-        this.setState({isAddingUser: true});
+        this.setState({ isAddingUser: true });
     }
 
 
@@ -169,62 +169,67 @@ function PageUser(props) {
 
     function startEditUser(user) {
         console.log("edit user", user)
-        this.setState({isEditingUser: true, selectedUser: user});
+        this.setState({ isEditingUser: true, selectedUser: user });
     }
 
 
     this.render = function () {
-        if (!apiUser.isLoggedIn()) return <Redirect to={{pathname: "/login", from: "/user"}}/>;
+        if (!apiUser.isLoggedIn()) return <Redirect to={{ pathname: "/login", from: "/user" }} />;
         return (
-            <div className={"PageUser"} style={{width: '100%', display: 'flex', flexDirection: 'row'}}>
+            <div className={"PageUser"} style={{ width: '100%', display: 'flex', flexDirection: 'row' }}>
                 <LeftNavigation routes={
                     [
-                        {path: "/user", label: "User"},
-                        {path: "/group", label: "Group"},
-                        {path: "/company", label: "Company"},
-                        {path: "/project", label: "Project"},
-                        {path: '/license-package', label: "License Package"}
+                        { path: "/user", label: "User" },
+                        { path: "/group", label: "Group" },
+                        { path: "/company", label: "Company" },
+                        { path: "/project", label: "Project" },
+                        { path: '/license-package', label: "License Package" }
                     ]
-                }/>
-                <div style={{width: 'calc(100vw - 102px)', display: 'flex', flexDirection: 'column'}}>
+                } />
+                <div style={{ width: 'calc(100vw - 102px)', display: 'flex', flexDirection: 'column' }}>
                     <div className={"top-bar"}>
-                        <div className = "select-company">
-                        <select onChange={(e)=>this.setState({companyFilter: e.target.value})} 
-                            style={{border: 'none', background: 'none'}} value={this.state.companyFilter || ""}>
-                            {(([{idCompany: -1, name: "All"}].concat(this.state.companies))).map((e, idx)=><option key={idx} value={e.idCompany}>{e.name}</option>)}
-                        </select>
-                        </div>
+                        {
+                            apiUser.getRole() > 0 ?
+                                <React.Fragment></React.Fragment>
+                                :
+                                <div className="select-company">
+                                    <select onChange={(e) => this.setState({ companyFilter: e.target.value })}
+                                        style={{ border: 'none', background: 'none' }} value={this.state.companyFilter || ""}>
+                                        {(([{ idCompany: -1, name: "All" }].concat(this.state.companies))).map((e, idx) => <option key={idx} value={e.idCompany}>{e.name}</option>)}
+                                    </select>
+                                </div>
+                        }
                         <div className={"search-box"}>
-                            <div style={{marginRight: '10px', color: '#000'}} className={"ti ti-search"}/>
+                            <div style={{ marginRight: '10px', color: '#000' }} className={"ti ti-search"} />
                             <input placeholder="Filter" value={this.state.filter} onChange={(e) => {
-                                this.setState({filter: e.target.value});
-                            }}/>
+                                this.setState({ filter: e.target.value });
+                            }} />
                         </div>
-                        <UserStatus/>
+                        <UserStatus />
                     </div>
-                    <ListUser itemPerPage={20} items={this.state.items || []} searchStr = {this.state.filter} companyFilter = {this.state.companyFilter}
-                              actions={[{
-                                  name: "Add", handler: this.startAddUser, show: true
-                              }, {
-                                  name: "Delete", handler: this.startDeleteUser, show: true
-                              }, {
-                                  name: "Edit", handler: this.startEditUser, show: true
-                              }, {
-                                  name: "Refresh", handler: this.listUser, show: true
-                              }]}
+                    <ListUser itemPerPage={20} items={this.state.items || []} searchStr={this.state.filter} companyFilter={this.state.companyFilter}
+                        actions={[{
+                            name: "Add", handler: this.startAddUser, show: true
+                        }, {
+                            name: "Delete", handler: this.startDeleteUser, show: true
+                        }, {
+                            name: "Edit", handler: this.startEditUser, show: true
+                        }, {
+                            name: "Refresh", handler: this.listUser, show: true
+                        }]}
                     />
                     <UserInfoModal isOpen={this.state.isEditingUser} onOk={this.callApiUpdateUser} action={"edit"}
-                                   onCancel={(e) => this.setState({isEditingUser: false})}
-                                   user={this.state.selectedUser}
-                                   licensePackages={this.state.licensePackages}
+                        onCancel={(e) => this.setState({ isEditingUser: false })}
+                        user={this.state.selectedUser}
+                        licensePackages={this.state.licensePackages}
                     />
                     <UserAddModal isOpen={this.state.isAddingUser} onOk={this.callApiAddUser} action={"add"}
-                                  onCancel={(e) => this.setState({isAddingUser: false})}
-                                  companies={this.state.companies} licensePackages={this.state.licensePackages} />
+                        onCancel={(e) => this.setState({ isAddingUser: false })}
+                        companies={this.state.companies} licensePackages={this.state.licensePackages} />
                     <ConfirmationModal isOpen={this.state.isDeletingUser} title={"Confirmation"}
-                                       message={"Are you sure to delete selected user?"}
-                                       onCancel={() => this.setState({isDeletingUser: false})}
-                                       onOk={() => this.callApiDeleteUser(this.state.selectedUser)}
+                        message={"Are you sure to delete selected user?"}
+                        onCancel={() => this.setState({ isDeletingUser: false })}
+                        onOk={() => this.callApiDeleteUser(this.state.selectedUser)}
                     />
                 </div>
             </div>
