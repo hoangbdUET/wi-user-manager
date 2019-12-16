@@ -8,6 +8,7 @@ const Editable = require('../../components/Editable');
 const DropDown = require('../../components/DropDown');
 
 const SearchableDropdown = require('./../../components/SearchableDropdown').default;
+const userService = require('./../../services/apiUser');
 
 // const DropDownWithOutSearchBar = require('../../components/DropDownWithoutSearchBar');
 
@@ -23,8 +24,8 @@ function UserInfoModal(props) {
         username: "",
         email: "",
         fullname: "",
-        status: "Inactive",
-        role: "",
+        status: "Active",
+        role: 2,
         password: "",
         repassword: "",
         idCompany: null,
@@ -73,13 +74,13 @@ function UserInfoModal(props) {
         }
     ];
 
-    this.updateProps = function() {
+    this.updateProps = function () {
         this.setState({
             username: "",
             email: "",
             fullname: "",
-            status: "Inactive",
-            role: "",
+            status: "Active",
+            role: 2,
             password: "",
             repassword: "",
             idCompany: null,
@@ -88,81 +89,84 @@ function UserInfoModal(props) {
     }
 
 
-    this.render = function() {
+    this.render = function () {
         return (
-            <Modal isOpen={this.props.isOpen} portalClassName="ModalStyle" 
+            <Modal isOpen={this.props.isOpen} portalClassName="ModalStyle"
                 className="UserInfoModal" overlayClassName="modal-backdrop"
-                onAfterOpen = {()=>{this.updateProps();}}>
+                onAfterOpen={() => { this.updateProps(); }}>
                 <h4>New User</h4>
                 <div className="content-dialog">
-                    <div style={{flex: 1, overflow: 'visible'}}>
+                    <div style={{ flex: 1, overflow: 'visible' }}>
                         <div className="fieldset">
                             <div>Username</div>
-                            <Editable value={this.state.username} formatValue={(v) => ((v === null || v === undefined || v.length === 0 )? "[empty]" : v)}
-                                        onValueChanged={(value) => this.setState((state)=>{
-                                            return {
-                                                username: value
-                                            };
-                                        })}
+                            <Editable value={this.state.username} formatValue={(v) => ((v === null || v === undefined || v.length === 0) ? "[empty]" : v)}
+                                onValueChanged={(value) => this.setState((state) => {
+                                    return {
+                                        username: value
+                                    };
+                                })}
                             />
                         </div>
                         <div className="fieldset">
                             <div>Full Name</div>
-                            <Editable value={this.state.fullname} formatValue={(v) => ((v === null || v === undefined || v.length === 0 )? "[empty]" : v)}
-                                            onValueChanged={(value) => this.setState((state)=>{
-                                                return {
-                                                    fullname: value
-                                                };
-                                            })}
+                            <Editable value={this.state.fullname} formatValue={(v) => ((v === null || v === undefined || v.length === 0) ? "[empty]" : v)}
+                                onValueChanged={(value) => this.setState((state) => {
+                                    return {
+                                        fullname: value
+                                    };
+                                })}
                             />
                         </div>
                         <div className="fieldset">
                             <div>Password</div>
-                            <Editable   value={this.state.password} 
-                                        formatValue={(v) => {
-                                            if (v.length === 0) {
-                                                return '[empty]';
-                                            }
-                                            return new Array(v.length).fill('*', 0, v.length);
-                                        }}
-                                        onValueChanged={(value) => this.setState((state)=>{
-                                            return {
-                                                password: value
-                                            };
-                                        })}
-                                        hideText
+                            <Editable value={this.state.password}
+                                formatValue={(v) => {
+                                    if (v.length === 0) {
+                                        return '[empty]';
+                                    }
+                                    return new Array(v.length).fill('*', 0, v.length);
+                                }}
+                                onValueChanged={(value) => this.setState((state) => {
+                                    return {
+                                        password: value
+                                    };
+                                })}
+                                hideText
                             />
                         </div>
                         <div className="fieldset">
                             <div>Re-password</div>
-                            <Editable   value={this.state.repassword} 
-                                        formatValue={(v) => {
-                                            if (v.length === 0) {
-                                                return '[empty]';
-                                            }
-                                            return new Array(v.length).fill('*', 0, v.length);
-                                        }}
-                                        onValueChanged={(value) => this.setState((state)=>{
-                                            return {
-                                                repassword: value
-                                            };
-                                        })}
-                                        hideText
+                            <Editable value={this.state.repassword}
+                                formatValue={(v) => {
+                                    if (v.length === 0) {
+                                        return '[empty]';
+                                    }
+                                    return new Array(v.length).fill('*', 0, v.length);
+                                }}
+                                onValueChanged={(value) => this.setState((state) => {
+                                    return {
+                                        repassword: value
+                                    };
+                                })}
+                                hideText
                             />
                         </div>
                         <div className="fieldset">
                             <div>Email</div>
-                            <Editable value={this.state.email} formatValue={(v) => ((v === null || v === undefined || v.length === 0 )? "[empty]" : v)}
-                                            onValueChanged={(value) => this.setState((state)=>{
-                                                return {
-                                                    email: value
-                                                };
-                                            })}
+                            <Editable value={this.state.email} formatValue={(v) => ((v === null || v === undefined || v.length === 0) ? "[empty]" : v)}
+                                onValueChanged={(value) => this.setState((state) => {
+                                    return {
+                                        email: value
+                                    };
+                                })}
                             />
                         </div>
-                        <div className="fieldset">
-                            <div>Company:</div>
-                            {/* <DropDown  getItem={(company) => (
+                        {userService.getRole() > 0 ? 
+                            <React.Fragment></React.Fragment>
+                            :
+                            <div className="fieldset">
+                                <div>Company:</div>
+                                {/* <DropDown  getItem={(company) => (
                                 <div style={{ height: '18px', display: 'flex', alignItems: 'center' }}>{company ? company.name : "[select company]"}</div>)}
                                 items = {this.props.companies}
                                 itemHeight={18}
@@ -175,10 +179,11 @@ function UserInfoModal(props) {
                                     });
                                 }}
                             /> */}
-                            <SearchableDropdown choices = {this.props.companies.map((e)=>({value: e.idCompany, display: e.name}))} 
-                                                value = {this.state.idCompany} onChange = {(e)=>{this.setState({idCompany: e})}}
-                            />
-                        </div>
+                                <SearchableDropdown choices={this.props.companies.map((e) => ({ value: e.idCompany, display: e.name }))}
+                                    value={this.state.idCompany} onChange={(e) => { this.setState({ idCompany: e }) }}
+                                />
+                            </div>
+                        }
                         <div className="fieldset">
                             <div>License:</div>
                             {/* <DropDown getItem={(license) => (
@@ -198,8 +203,8 @@ function UserInfoModal(props) {
                                           });
                                       }}
                             /> */}
-                            <SearchableDropdown choices = {this.props.licensePackages.map((e)=>({value: e.idLicensePackage, display: e.name}))} 
-                                                value = {this.state.idLicensePackage} onChange = {(e)=>{this.setState({idLicensePackage: e})}}
+                            <SearchableDropdown choices={this.props.licensePackages.map((e) => ({ value: e.idLicensePackage, display: e.name }))}
+                                value={this.state.idLicensePackage} onChange={(e) => { this.setState({ idLicensePackage: e }) }}
                             />
                         </div>
                         {/* <div className="fieldset">
@@ -214,14 +219,14 @@ function UserInfoModal(props) {
                         </div> */}
                         <div className="fieldset">
                             <div>Role:</div>
-                            <SearchableDropdown  maxHeight="200px"
-                                choices = {this.role} value = {this.state.role} onChange={(e)=>{this.setState({role: e});}}
+                            <SearchableDropdown maxHeight="200px"
+                                choices={this.role} value={this.state.role} onChange={(e) => { this.setState({ role: e }); }}
                             />
                         </div>
                         <div className="fieldset">
                             <div>Status:</div>
-                            <SearchableDropdown 
-                                choices = {this.status} value = {this.state.status} onChange={(e)=>{this.setState({status: e});}}
+                            <SearchableDropdown
+                                choices={this.status} value={this.state.status} onChange={(e) => { this.setState({ status: e }); }}
                             />
                         </div>
                         {/* <div className="fieldset">
@@ -252,10 +257,10 @@ function UserInfoModal(props) {
                     </div>
                 </div>
                 <div className="footer-dialog">
-                    <div className="btn-next" onClick={(e) => props.onOk(Object.assign({},this.state))}>Ok</div>
+                    <div className="btn-next" onClick={(e) => props.onOk(Object.assign({}, this.state))}>Ok</div>
                     <div className="btn-next" onClick={props.onCancel}>Close</div>
                 </div>
-                
+
             </Modal>
         );
     };

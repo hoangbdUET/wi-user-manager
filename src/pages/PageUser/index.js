@@ -118,6 +118,10 @@ function PageUser(props) {
     this.callApiUpdateUser = callApiUpdateUser.bind(this);
 
     function callApiUpdateUser(user) {
+        if (!user.email.match(/^[a-z][a-z0-9_\.]{5,32}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}$/)) {
+            toast.error('Email is not valid');
+            return;
+        }
         if (user.password != user.repassword) {
             toast.error('Your confirm password is not match');
             return;
