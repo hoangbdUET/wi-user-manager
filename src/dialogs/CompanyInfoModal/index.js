@@ -69,7 +69,7 @@ function CompanyInfoModal(props) {
                 </div>
             </div>
             <div className="footer-dialog">
-                <div className="btn-next" onClick={(e) => props.onOk(this.state)}>OK</div>
+                <div className="btn-next" onClick={(e) => props.onOk(this.state)} style={{background: '#4B7DEF', color: '#fff'}}>OK</div>
                 <div className="btn-next" onClick={props.onCancel}>Cancel</div>
             </div>
         </Modal>);

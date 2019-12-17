@@ -1,5 +1,5 @@
 const React = require('react');
-require('./style.css');
+require('./style.less');
 
 class CenteredModal extends React.Component {
     constructor(props) {
@@ -17,7 +17,7 @@ class CenteredModal extends React.Component {
 
     render() {
         return (
-            <div style={{display: this.props.active?"block":"none"}} className = "modal-background" onClick = {(e)=>{this.onBackGroundClick(e);}}>
+            <div className="CenteredModal modal-background" style={{display: this.props.active?"flex":"none"}} onClick = {(e)=>{this.onBackGroundClick(e);}}>
                     <div ref={this.contentRef} className="modal-center">
                         {this.props.children}
                     </div>

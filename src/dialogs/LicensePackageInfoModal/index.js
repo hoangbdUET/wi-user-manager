@@ -50,7 +50,7 @@ function LicensePackageInfoModal(props) {
             <div style={{display: 'flex',padding:'10px 0', justifyContent: 'space-between', alignItems: 'center'}}>
                 {feature ? (<Fragment>
                     <div className="item-content">{feature.name}</div>
-                    <i className="action-icon ti-close" onClick={() => {
+                    <i className="action-icon ti ti-close" onClick={() => {
                         this.setState(state => {
                             //delete it from add features if it already in
                             let idx = state.addFeatures.findIndex(f => f.idFeature === feature.idFeature);
@@ -88,7 +88,7 @@ function LicensePackageInfoModal(props) {
             <div style={{display: 'flex',padding:'10px 0', justifyContent: 'space-between', alignItems: 'center'}}>
                 {feature ? (<Fragment>
                     <div className="item-content">{feature.name}</div>
-                    <i className="action-icon ti-arrow-right" onClick={() => {
+                    <i className="action-icon ti ti-arrow-right" onClick={() => {
                         this.setState(state => {
                             //delete from delete list
                             let idx = state.deleteFeatures.findIndex(f => f.idFeature === feature.idFeature);
@@ -188,7 +188,7 @@ function LicensePackageInfoModal(props) {
                         <div className="btn-next" onClick={(e) => {
                                 this.clearModalSession();
                                 this.props.onOk(this.state);
-                            }}>Ok</div>
+                            }} style={{background: '#4B7DEF', color: '#fff'}}>Ok</div>
                         <div className="btn-next" onClick={()=>{
                                     this.clearModalSession();
                                     this.props.onCancel();

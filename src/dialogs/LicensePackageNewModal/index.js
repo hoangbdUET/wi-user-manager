@@ -37,7 +37,7 @@ function LicensePackageNewModal(props) {
                     </div>
                 </div>
                 <div className="footer-dialog">
-                    <div className="btn-next" onClick={(e) => props.onOk(this.state)}>Ok</div>
+                    <div className="btn-next" onClick={(e) => props.onOk(this.state)} style={{background: '#4B7DEF', color: '#fff'}}>Ok</div>
                     <div className="btn-next" onClick={props.onCancel}>Close</div>
                 </div>
             </Modal>

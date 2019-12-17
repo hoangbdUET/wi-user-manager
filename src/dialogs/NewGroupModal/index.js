@@ -108,7 +108,7 @@ function NewGroupModal(props) {
                         // e.preventDefault();
                         this.submitAndClose(e);
                         // this.props.onOk();
-                    }}>OK</div>
+                    }} style={{background: '#4B7DEF', color: '#fff'}}>OK</div>
                     <div className="btn-next" onClick={(e) => {
                         this.clearModelSession();
                         this.props.onCancel();

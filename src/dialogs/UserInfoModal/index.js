@@ -199,7 +199,7 @@ function UserInfoModal(props) {
                 <div className="footer-dialog">
                     <div className="btn-next" onClick={(e) => {
                         props.onOk(Object.assign({}, this.state));
-                    }}>Ok
+                    }} style={{background: '#4B7DEF', color: '#fff'}}>Ok
                     </div>
                     <div className="btn-next" onClick={props.onCancel}>Close</div>
                 </div>
