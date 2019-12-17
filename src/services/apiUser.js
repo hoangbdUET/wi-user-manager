@@ -1,11 +1,11 @@
 let role = null;
-let jwt = require('jsonwebtoken');
 const api = require('./apiClient');
 module.exports = {
     removeLoginSession: function() {
         localStorage.removeItem("token");
         localStorage.removeItem('username');
         localStorage.removeItem('role');
+        localStorage.removeItem('company');
         role = null;
     },
     isLoggedIn: function() {
@@ -20,6 +20,11 @@ module.exports = {
                         localStorage.setItem('token', res.content.token);
                         localStorage.setItem('username', res.content.user.username);
                         localStorage.setItem('role', res.content.user.role);
+                        //get company name 
+                        api.getCompanyInfo(res.content.user.idCompany)
+                        .then((rs)=>{
+                            localStorage.setItem('company', rs.name);
+                        });
                         resolve(true);
                     } else {
                         reject("Have no permission to access");
@@ -35,5 +40,8 @@ module.exports = {
     },
     getRole: function() {
         return localStorage.getItem('role');
+    },
+    getCompanyName: function() {
+        return localStorage.getItem('company');
     }
 };

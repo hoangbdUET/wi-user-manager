@@ -25,8 +25,8 @@ module.exports = {
     deleteUser,
     getFeatures,
     deleteLicensePackage,
-    deleteFeature
-
+    deleteFeature,
+    getCompanyInfo
 };
 
 const env = process.env.NODE_ENV;
@@ -112,6 +112,10 @@ function getProjectsPromise(users) {
     return doPost('/project/list-of-all-user', {
         users: users
     }, null, "BACKEND");
+}
+
+function getCompanyInfo(idCompany) {
+    return doPost('/company/info', {idCompany: idCompany});
 }
 
 function stopSharingProject(project) {

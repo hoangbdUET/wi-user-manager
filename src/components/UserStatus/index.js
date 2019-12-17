@@ -42,11 +42,11 @@ function UserStatus(props) {
                 }}>Logout</div>
                 <div className={"user-picture"} />
 
-            <CenteredModal active={this.state.modalOpen}>
+            <CenteredModal active={this.state.modalOpen} onCancel={()=>{this.onCancelModal();}}>
                 <div>
                     <h1>Confirm logout ?</h1>
-                    <button onClick = {()=>this.logout()}>Yes</button>
-                    <button onClick = {()=>this.onCancelModal()}>No</button>
+                    <button onClick = {()=>{this.logout();}}>Yes</button>
+                    <button onClick = {()=>{this.onCancelModal();}}>No</button>
                 </div>
             </CenteredModal>
             </React.Fragment>
