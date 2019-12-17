@@ -31,7 +31,7 @@ function PageUser(props) {
             filter: "",
             companyFilter: -1
         });
-        this.companyName = apiUser.getRole() > 0 ? apiUser.getCompanyName() + '_' : "";
+        this.companyName = apiUser.getRole() > 0 ? apiUser.getCompanyName().toString().toLowerCase() + '_' : "";
     }
 
     this.initFromServer = function () {

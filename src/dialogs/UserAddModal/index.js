@@ -99,8 +99,7 @@ function UserInfoModal(props) {
                     <div style={{ flex: 1, overflow: 'visible' }}>
                         <div className="fieldset">
                             <div>Username</div>
-                            <span>{this.props.prefix}</span>
-                            <Editable value={this.state.username} formatValue={(v) => ((v === null || v === undefined || v.length === 0) ? "[empty]" : v)}
+                            <Editable value={this.state.username} formatValue={(v) => ((v === null || v === undefined || v.length === 0) ? "[empty]" : this.props.prefix + v)}
                                 onValueChanged={(value) => this.setState((state) => {
                                     return {
                                         username: value

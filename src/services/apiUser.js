@@ -24,8 +24,11 @@ module.exports = {
                         api.getCompanyInfo(res.content.user.idCompany)
                         .then((rs)=>{
                             localStorage.setItem('company', rs.name);
+                            resolve(true);
+                        })
+                        .catch(e=>{
+                            reject(e.message);
                         });
-                        resolve(true);
                     } else {
                         reject("Have no permission to access");
                     }
