@@ -9,7 +9,7 @@ function ConfirmationModal(props) {
             <div className="fieldset" style={{border: "none"}}><label>{props.message}</label></div>
         </div>
         <div className={"footer-dialog"}>
-            <div className="btn-next" onClick={() => props.onOk(props.params)}>Yes</div>
+            <div className="btn-next" onClick={() => props.onOk(props.params)} style={{background: '#4B7DEF', color: '#fff'}}>Yes</div>
             <div className="btn-next" onClick={props.onCancel}>No</div>
 
         </div>

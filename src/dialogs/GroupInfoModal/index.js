@@ -97,7 +97,7 @@ function GroupInfoModal(props) {
             <div style={{display: 'flex',padding:'10px 0', justifyContent: 'space-between', alignItems: 'center'}}>
                 {user ? (<Fragment>
                     <div className="item-content">{user.username}</div>
-                    <i className="action-icon ti-arrow-right" onClick={(e) => {
+                    <i className="action-icon ti ti-arrow-right" onClick={(e) => {
                         this.setState(state => {
                             let idx = state.removeUsers.findIndex(u => u.idUser === user.idUser);
                             if (idx >= 0) {
@@ -127,7 +127,7 @@ function GroupInfoModal(props) {
             <div style={{display: 'flex',padding:'10px 0', justifyContent: 'space-between', alignItems: 'center'}}>
                 {user ? (<Fragment>
                     <div className="item-content">{user.username}</div>
-                    <i className="action-icon ti-close" onClick={() => {
+                    <i className="action-icon ti ti-close" onClick={() => {
                         this.setState(state => {
                             let idx = state.addUsers.findIndex(u => u.idUser === user.idUser);
                             if (idx >= 0) {
@@ -226,7 +226,7 @@ function GroupInfoModal(props) {
                     <div className="btn-next" onClick={(e) => {
                         e.preventDefault();
                         this.submitAndClose(e);
-                    }}>OK</div>
+                    }} style={{background: '#4B7DEF', color: '#fff'}}>OK</div>
                     <div className="btn-next" onClick={(e) => {
                         this.clearModelSession();
                         this.props.onCancel();

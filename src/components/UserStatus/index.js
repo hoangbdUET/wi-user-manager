@@ -1,4 +1,5 @@
 module.exports = UserStatus;
+require('./style.less');
 const React = require('react');
 const apiUser = require('./../../services/apiUser');
 const CenteredModal = require('./../CenteredModal');
@@ -35,21 +36,24 @@ function UserStatus(props) {
 
     this.render = function() {
         return (
-            <React.Fragment>
+            <div className="UserStatus">
                 <div className={"name"}>{localStorage.getItem('username') || "Guest"}/{localStorage.getItem('company') || "I2G"}</div>
                 <div className={"logout-btn"} style={{cursor: 'pointer'}} onClick = {(e)=>{
                     this.openModal();
                 }}>Logout</div>
                 <div className={"user-picture"} />
 
-            <CenteredModal active={this.state.modalOpen} onCancel={()=>{this.onCancelModal();}}>
-                <div>
-                    <h1>Confirm logout ?</h1>
-                    <button onClick = {()=>{this.logout();}}>Yes</button>
-                    <button onClick = {()=>{this.onCancelModal();}}>No</button>
-                </div>
-            </CenteredModal>
-            </React.Fragment>
+                <CenteredModal active={this.state.modalOpen} onCancel={()=>{this.onCancelModal();}}>
+                    <div className={'header-dialog'}>Confirm logout?</div>
+                    <div className="content-dialog">
+                        Changes you made may be not saved.
+                    </div>
+                    <div className="footer-dialog">
+                        <div className="btn-next" onClick = {()=>{this.onCancelModal();}}>Cancel</div>
+                        <div className="btn-next" onClick = {()=>{this.logout();}} style={{background: '#4B7DEF', color: '#fff'}}>Logout</div>
+                    </div>
+                </CenteredModal>
+            </div>
         );
     }
 }
