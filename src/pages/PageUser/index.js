@@ -31,7 +31,6 @@ function PageUser(props) {
             filter: "",
             companyFilter: -1
         });
-        this.companyName = apiUser.getRole() > 0 ? (apiUser.getCompanyName()||"").toString().toLowerCase() + '_' : "";
     }
 
     this.initFromServer = function () {
@@ -227,7 +226,7 @@ function PageUser(props) {
                     />
                     <UserAddModal isOpen={this.state.isAddingUser} onOk={this.callApiAddUser} action={"add"}
                         onCancel={(e) => this.setState({ isAddingUser: false })}
-                        companies={this.state.companies} licensePackages={this.state.licensePackages} prefix={this.companyName}/>
+                        companies={this.state.companies} licensePackages={this.state.licensePackages} />
                     <ConfirmationModal isOpen={this.state.isDeletingUser} title={"Confirmation"}
                         message={"Are you sure to delete selected user?"}
                         onCancel={() => this.setState({ isDeletingUser: false })}
