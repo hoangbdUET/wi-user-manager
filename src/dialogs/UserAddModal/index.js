@@ -220,7 +220,7 @@ function UserInfoModal(props) {
                         <div className="fieldset">
                             <div>Role:</div>
                             <SearchableDropdown maxHeight="200px"
-                                choices={this.role} value={this.state.role} onChange={(e) => { this.setState({ role: e }); }}
+                                choices={this.role.filter((e)=>e.value >= userService.getRole())} value={this.state.role} onChange={(e) => { this.setState({ role: e }); }}
                             />
                         </div>
                         <div className="fieldset">
