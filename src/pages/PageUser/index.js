@@ -95,7 +95,7 @@ function PageUser(props) {
             toast.error('Your confirm password is not match');
             return;
         }
-        if (!user.email.match(/[a-z0-9_\.]+@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}$/)) {
+        if (!user.email.match(/[a-z0-9_\.]+@[a-z0-9]{2,}(\.[a-z0-9]+){1,2}$/)) {
             toast.error('Email is not valid');
             return;
         }
@@ -119,7 +119,7 @@ function PageUser(props) {
     this.callApiUpdateUser = callApiUpdateUser.bind(this);
 
     function callApiUpdateUser(user) {
-        if (!user.email.match(/[a-z0-9_\.]+@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}$/)) {
+        if (!user.email.match(/[a-z0-9_\.]+@[a-z0-9]{2,}(\.[a-z0-9]+){1,2}$/)) {
             toast.error('Email is not valid');
             return;
         }
