@@ -57,7 +57,7 @@ function Login(props) {
                         <input className="input-login" placeholder="Username" value={this.state.username} onChange={(e) => { this.setState({ username: e.target.value }) }} />
                         <input className="input-login" placeholder="Password" type="password" value={this.state.password} onChange={(e) => { this.setState({ password: e.target.value }) }} />
                         <input className="submit-login" type="Submit" value="LOGIN" onChange={(e) => { e.preventDefault() }} onClick={(e) => { this.login(); }} />
-                        <div style={{ fontSize: '10px', fontStyle: 'italic', marginTop: '20px' }}> Please contact us via support@i2g.cloud for any trouble signing in to I2G User Manager.</div>
+                        <div style={{ fontSize: '10px', fontStyle: 'italic', marginTop: '20px' }}> Contact <a href="https://www.i2g.cloud/contact-us/" target="_blank">i2g.cloud/contact-us</a> for support and service.</div>
                     </div>
                 </div>
             </div>
