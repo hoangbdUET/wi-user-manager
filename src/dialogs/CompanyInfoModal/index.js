@@ -53,7 +53,7 @@ function CompanyInfoModal(props) {
                         <div>ShortName:</div>
                         <Editable value={this.state.shortname || ""}
                             formatValue={(v) => (((v !== null || v != undefined) && v.length) ? v : '[empty]')}
-                            onValueChanged={(name) => this.setState({shortname: shortname})} />
+                            onValueChanged={(shortname) => this.setState({shortname: shortname})} />
                     </div>
                     <div className="fieldset">
                         <div>Location:</div>
