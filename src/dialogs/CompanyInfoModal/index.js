@@ -21,7 +21,8 @@ function CompanyInfoModal(props) {
         location: "",
         description: "",
         licenses: 10,
-        idCompany: null
+        idCompany: null,
+        shortname: null
     }
 
     this.updateProps = function() {
@@ -30,7 +31,8 @@ function CompanyInfoModal(props) {
             location: (this.props.company || {}).location || "",
             description: (this.props.company || {}).description || "",
             licenses: (this.props.company || {}).licenses || 10,
-            idCompany: (this.props.company || {}).idCompany || null
+            idCompany: (this.props.company || {}).idCompany || null,
+            shortname: (this.props.company || {}).shortname
         });
     }
 
@@ -46,6 +48,12 @@ function CompanyInfoModal(props) {
                         <Editable value={this.state.name || ""}
                             formatValue={(v) => (((v !== null || v != undefined) && v.length) ? v : '[empty]')}
                             onValueChanged={(name) => this.setState({name: name})} />
+                    </div>
+                    <div className="fieldset">
+                        <div>ShortName:</div>
+                        <Editable value={this.state.shortname || ""}
+                            formatValue={(v) => (((v !== null || v != undefined) && v.length) ? v : '[empty]')}
+                            onValueChanged={(name) => this.setState({shortname: shortname})} />
                     </div>
                     <div className="fieldset">
                         <div>Location:</div>

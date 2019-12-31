@@ -50,7 +50,7 @@ function PageCompany() {
                     isAddingCompany: false
                 }
             });
-        }).catch(error => console.error(error));
+        }).catch(error => toast.error(error));
     }
 
     this.startDeleteCompany = startDeleteCompany.bind(this);
@@ -83,7 +83,7 @@ function PageCompany() {
     function listCompany(selectedCompany) {
         api.getCompaniesPromise().then((companies) => {
             this.setState({ items: companies })
-        }).catch();
+        }).catch(error => toast.error(error));
     }
 
     this.startEditCompany = startEditCompany.bind(this);
@@ -109,7 +109,7 @@ function PageCompany() {
                     isEditingCompany: false
                 }
             });
-        }).catch(e => console.error(e))
+        }).catch(error => toast.error(error));
     }
 
     this.render = function () {

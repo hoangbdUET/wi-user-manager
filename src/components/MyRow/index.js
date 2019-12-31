@@ -58,6 +58,7 @@ function MyRow(props) {
     let typicalCell = (cell, idx, len) => (
         <div key={idx} style={colWidths[idx] && idx < len - 1 ? {width: colWidths[idx]} : {flex: 1}}>
             {cell}
+            
         </div>
     )
     let len = props.cells.length;
