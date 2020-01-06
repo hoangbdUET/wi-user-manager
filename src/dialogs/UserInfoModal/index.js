@@ -63,7 +63,7 @@ function UserInfoModal(props) {
         },
         {
             value: 3.2,
-            display: "Company Storage (Edit only)"
+            display: "Company Storage (Organize only)"
         },
         {
             value: 3.3,

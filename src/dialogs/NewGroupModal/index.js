@@ -6,6 +6,7 @@ const api = require('../../services/apiClient');
 const Editable = require('../../components/Editable');
 const DropDown = require('../../components/DropDown');
 const {toast} = require('react-toastify');
+const userService = require('./../../services/apiUser');
 
 function NewGroupModal(props) {
     React.Component.call(this, props);
@@ -31,7 +32,7 @@ function NewGroupModal(props) {
     }
 
     this.submitAndClose = function(e) {
-        if (this.state.name !== "" && this.state.idCompany) {
+        if (this.state.name !== "") {
             this.createNewGroup().then((rs)=>{
                 this.clearModelSession();
                 toast.success("Create new group successfully");
@@ -44,8 +45,6 @@ function NewGroupModal(props) {
         } else {
             if (this.state.name == "") {
                 toast.error("Name can not empty");
-            } else {
-                toast.error("Company can not empty");
             }
         }
     }
@@ -82,7 +81,11 @@ function NewGroupModal(props) {
                                     };
                                 })}/>
                     </div>
-                    <div className="fieldset">
+                    {   
+                        userService.getRole() > 0 ?
+                        null
+                        :
+                        <div className="fieldset">
                         <div>Company:</div>
                         <DropDown disabled={disabled} getItem={(company) => (
                             <div style={{ height: '18px', display: 'flex', alignItems: 'center' }}>{company ? company.name : "[select company]"}</div>)}
@@ -102,6 +105,7 @@ function NewGroupModal(props) {
                             group.company = clickedCompany;
                         }} */}
                     </div>
+                    }
                 </div>
                 <div className="footer-dialog">
                     <div className="btn-next" onClick={(e) => {
