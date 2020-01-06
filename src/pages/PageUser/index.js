@@ -103,6 +103,10 @@ function PageUser(props) {
             toast.error("User must have license packge");
             return;
         }
+        if (user.username.toString().trim().length == 0) {
+            toast.error("Username can be empty");
+            return;
+        }
         api.newUser(user)
             .then((rs) => {
                 toast.success('Create user successfully');

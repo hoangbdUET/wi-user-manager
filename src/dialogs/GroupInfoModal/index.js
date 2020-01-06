@@ -177,7 +177,6 @@ function GroupInfoModal(props) {
                     </div>
                 </div>
                 <div className="content-dialog">
-                    
                     <div style={{flex:2, position: 'relative'}}>
                         <div style={{height: '400px'}}></div>
                         <div className={"tab-content"} style={{visibility:this.state.tabIdx===0?'visible':'hidden'}}>
