@@ -158,18 +158,6 @@ function UserInfoModal(props) {
                             />
                         </div>
                         <div className="fieldset">
-                            <div>Username</div>
-                            <Editable value={this.state.username}
-                                      formatValue={(v) => ((v === null || v === undefined || v.length === 0) ? "[empty]" : v)}
-                                      onValueChanged={(value) => this.setState((state) => {
-                                          return {
-                                              username: value
-                                          };
-                                      })}
-                                      disabled={true}
-                            />
-                        </div>
-                        <div className="fieldset">
                             <div>Email</div>
                             <Editable value={this.state.email}
                                       formatValue={(v) => ((v === null || v === undefined || v.length === 0) ? "[empty]" : v)}
