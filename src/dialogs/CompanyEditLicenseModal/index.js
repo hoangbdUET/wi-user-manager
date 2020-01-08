@@ -28,7 +28,6 @@ function CompanyEditLicenseModal(props) {
         });
         apiService.getListLicenseInCompany(this.props.company.idCompany)
             .then((rs) => {
-                console.log(rs);
                 this.setState({
                     licenses: rs
                 });
