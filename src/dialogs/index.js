@@ -7,5 +7,6 @@ module.exports = {
 	LicensePackageInfoModal: require('./LicensePackageInfoModal'),
 	LicensePackageNewModal: require('./LicensePackageNewModal'),
 	UserInfoModal: require('./UserInfoModal'),
-	UserAddModal: require('./UserAddModal')
+	UserAddModal: require('./UserAddModal'),
+	CompanyEditLicenseModal: require('./CompanyEditLicenseModal')
 };

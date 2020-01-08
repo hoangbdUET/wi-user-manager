@@ -2,7 +2,7 @@ module.exports = PageCompany;
 require('./style.less');
 const api = require("../../services/apiClient");
 const React = require('react');
-const { CompanyInfoModal, ConfirmationModal } = require('../../dialogs');
+const { CompanyInfoModal, ConfirmationModal, CompanyEditLicenseModal } = require('../../dialogs');
 const ListCompany = require('../../components/ListCompany');
 const { toast } = require('react-toastify');
 const LeftNavigation = require('./../LeftNavigation');
@@ -16,6 +16,7 @@ function PageCompany() {
         items: [],
         isAddingCompany: false,
         isEditingCompany: false,
+        isEditingLicense: false,
         filter: ""
     };
     this.componentDidMount = function () {
@@ -27,6 +28,15 @@ function PageCompany() {
     function startAddCompany(selectedCompany) {
         this.setState({
             isAddingCompany: true
+        });
+    }
+
+    this.startEditLicense = startEditLicense.bind(this);
+
+    function startEditLicense(selectedCompany) {
+        this.setState({
+            isEditingLicense: true,
+            selectedCompany: selectedCompany
         });
     }
 
@@ -112,9 +122,58 @@ function PageCompany() {
         }).catch(error => toast.error(error));
     }
 
+    this.editLicenseCompany = editLicenseCompany.bind(this);
+
+    function editLicenseCompany(licenses, idCompany) {
+        licenses = licenses.licenses;
+        let promises = licenses.map((e)=>{
+            return api.licenseUpdate(idCompany, e.idLicensePackage, e.value)
+        });
+        Promise.all(promises)
+        .then((rs)=>{
+            this.setState(state => {
+                return {
+                    isEditingLicense: false
+                }
+            });
+        })
+        .catch(error => toast.error(error));
+    }
+
     this.render = function () {
+
         if (apiUser.getRole() > 0) return <Redirect to={{pathname: "/", from: "/"}}/>;
         if (!apiUser.isLoggedIn()) return <Redirect to={{pathname:"/login", from:"/company"}} />;
+
+        let action = apiUser.getRole() == 0 ?
+        [
+            {
+                name: "Add", handler: startAddCompany.bind(this), show: true
+            }, {
+                name: "Delete", handler: this.startDeleteCompany, show: true
+            }, {
+                name: "Edit", handler: this.startEditCompany, show: true
+            },
+            {
+                name: "Edit Licenses", handler: startEditLicense.bind(this), show: true
+            },
+            {
+                name: "Refresh", handler: listCompany.bind(this), show: true
+            }
+        ] :
+        [
+            {
+                name: "Add", handler: startAddCompany.bind(this), show: true
+            }, {
+                name: "Delete", handler: this.startDeleteCompany, show: true
+            }, {
+                name: "Edit", handler: this.startEditCompany, show: true
+            },
+            {
+                name: "Refresh", handler: listCompany.bind(this), show: true
+            }
+        ]
+
         return (
             <div className={"PageCompany"} style={{ width: '100%', display: 'flex', flexDirection: 'row' }}>
                 <LeftNavigation routes={
@@ -141,19 +200,13 @@ function PageCompany() {
                         <UserStatus />
                     </div>
 
-                    <ListCompany itemPerPage={10} actions={[{
-                        name: "Add", handler: startAddCompany.bind(this), show: true
-                    }, {
-                        name: "Delete", handler: this.startDeleteCompany, show: true
-                    }, {
-                        name: "Edit", handler: this.startEditCompany, show: true
-                    }, {
-                        name: "Refresh", handler: listCompany.bind(this), show: true
-                    }]} items={this.getItemList()} />
+                    <ListCompany itemPerPage={10} actions={action} items={this.getItemList()} />
                     <CompanyInfoModal isOpen={this.state.isAddingCompany}
                         onOk={this.addCompany} onCancel={(e) => this.setState({ isAddingCompany: false })} />
                     <CompanyInfoModal isOpen={this.state.isEditingCompany} company={this.state.selectedCompany}
                         onOk={this.editCompany} onCancel={(e) => this.setState({ isEditingCompany: false })} />
+                    <CompanyEditLicenseModal isOpen={this.state.isEditingLicense} company={this.state.selectedCompany}
+                        onOk={this.editLicenseCompany} onCancel={(e) => this.setState({ isEditingLicense: false })} />
                     <ConfirmationModal isOpen={this.state.isDeletingCompany} title="Confirmation"
                         message="Are you sure to delete selected company?"
                         onCancel={() => this.setState({ isDeletingCompany: false })}

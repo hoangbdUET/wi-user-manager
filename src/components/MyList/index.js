@@ -155,6 +155,7 @@ function MyList(props) {
             icon: "ti ti-plus"
         },
         "Edit": {style: {color: "#4B7DEF", fontWeight: "bold"}, icon: "ti ti-pencil"},
+        "Edit Licenses": {style: {color: "#4B7DEF", fontWeight: "bold"}, icon: "ti ti-pencil"},
         "Delete": {style: {color: "#F44336", fontWeight: "bold", border: "1px solid #F44336"}, icon: "ti ti-close"},
         "Refresh": {style: {color: "#4B7DEF", fontWeight: "bold"}, icon: "ti ti-reload"},
         "Manage Users": {style: {color: "#4B7DEF", fontWeight: "bold"}, icon: "ti ti-settings"},
