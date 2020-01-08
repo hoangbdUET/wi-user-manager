@@ -131,6 +131,7 @@ function PageCompany() {
         });
         Promise.all(promises)
         .then((rs)=>{
+            toast.success("Edit license successfully");
             this.setState(state => {
                 return {
                     isEditingLicense: false
