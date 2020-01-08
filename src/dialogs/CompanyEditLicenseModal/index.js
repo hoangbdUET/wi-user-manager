@@ -50,7 +50,7 @@ function CompanyEditLicenseModal(props) {
                                 <div key={idx} className="fieldset">
                                     <div>{e.name}</div>
                                     <Editable value={e.value} disabled={false}
-                                        formatValue={(v) => (((v !== null || v != undefined)) ? (v - e.left) + '/'+ v : '???')}
+                                        formatValue={(v) => (((v !== null || v != undefined)) ? e.used + '/'+ v : '???')}
                                         onValueChanged={(value) => this.setState((state)=>{
                                             state.licenses[idx].value = value;
                                             return {
