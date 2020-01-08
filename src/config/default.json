@@ -4,7 +4,7 @@
     "wi_backend": "http://localhost:3000"
   },
   "dev": {
-    "wi_auth": "https:/users.i2g.cloud",
+    "wi_auth": "https://users.i2g.cloud",
     "wi_backend": "https://users.i2g.cloud"
   },
   "production": {

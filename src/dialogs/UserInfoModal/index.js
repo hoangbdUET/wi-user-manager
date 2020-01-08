@@ -10,6 +10,10 @@ const apiUser = require('./../../services/apiUser');
 
 const SearchableDropdown = require('./../../components/SearchableDropdown').default;
 
+const apiService = require('./../../services/apiClient');
+
+const { toast } = require('react-toastify');
+
 UserInfoModal.protoTypes = {
     isOpen: PropTypes.bool,
     onOk: PropTypes.func,
@@ -26,7 +30,8 @@ function UserInfoModal(props) {
         role: "",
         idLicensePackage: "",
         password: "",
-        repassword: ""
+        repassword: "",
+        lefts: []
     };
 
     this.status = [
@@ -81,8 +86,18 @@ function UserInfoModal(props) {
             fullname: (this.props.user || {}).fullname,
             status: (this.props.user || {}).status,
             role: (this.props.user || {}).role,
-            idLicensePackage: (this.props.user || {}).idLicensePackage
+            idLicensePackage: (this.props.user || {}).idLicensePackage,
+            lefts: []
         });
+        apiService.getListLicensePackageLeft()
+        .then((rs)=>{
+            this.setState({
+                lefts: rs
+            })
+        })
+        .catch((e)=>{
+            toast.error(e);
+        })
     }
 
 
@@ -184,7 +199,7 @@ function UserInfoModal(props) {
                         </div>
                         <div className="fieldset">
                             <div>License:</div>
-                            <SearchableDropdown choices = {this.props.licensePackages.map((e)=>({value: e.idLicensePackage, display: e.name}))} 
+                            <SearchableDropdown choices={this.state.lefts.map((e) => ({ value: e.idLicensePackage, display: e.name + " (" +  e.left + " left)"}))}
                                                 value = {this.state.idLicensePackage} onChange = {(e)=>{this.setState({idLicensePackage: e})}}
                             />
                         </div>

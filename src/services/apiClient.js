@@ -26,7 +26,8 @@ module.exports = {
     getFeatures,
     deleteLicensePackage,
     deleteFeature,
-    getCompanyInfo
+    getCompanyInfo,
+    getListLicensePackageLeft
 };
 
 const env = process.env.NODE_ENV;
@@ -70,6 +71,10 @@ function doPost(url, params, token, service) {
             reject(e.message);
         });
     });
+}
+
+function getListLicensePackageLeft() {
+    return doPost('/company/get-licenses-left');
 }
 
 function getCompaniesPromise() {

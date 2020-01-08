@@ -5,10 +5,14 @@ Modal.setAppElement('#react-app');
 const PropTypes = require('prop-types');
 require('./style.less');
 const Editable = require('../../components/Editable');
-const DropDown = require('../../components/DropDown');
+//const DropDown = require('../../components/DropDown');
 
 const SearchableDropdown = require('./../../components/SearchableDropdown').default;
 const userService = require('./../../services/apiUser');
+
+const apiService = require('./../../services/apiClient');
+
+const { toast } = require('react-toastify');
 
 // const DropDownWithOutSearchBar = require('../../components/DropDownWithoutSearchBar');
 
@@ -29,7 +33,8 @@ function UserInfoModal(props) {
         password: "",
         repassword: "",
         idCompany: null,
-        idLicensePackage: null
+        idLicensePackage: null,
+        lefts: []
     };
 
     this.status = [
@@ -84,8 +89,19 @@ function UserInfoModal(props) {
             password: "",
             repassword: "",
             idCompany: null,
-            idLicensePackage: null
+            idLicensePackage: null,
+            lefts: []
         });
+        
+        apiService.getListLicensePackageLeft()
+        .then((rs)=>{
+            this.setState({
+                lefts: rs
+            })
+        })
+        .catch((e)=>{
+            toast.error(e);
+        })
     }
 
 
@@ -203,7 +219,7 @@ function UserInfoModal(props) {
                                           });
                                       }}
                             /> */}
-                            <SearchableDropdown choices={this.props.licensePackages.map((e) => ({ value: e.idLicensePackage, display: e.name }))}
+                            <SearchableDropdown choices={this.state.lefts.map((e) => ({ value: e.idLicensePackage, display: e.name + " (" +  e.left + " left)"}))}
                                 value={this.state.idLicensePackage} onChange={(e) => { this.setState({ idLicensePackage: e }) }}
                             />
                         </div>
