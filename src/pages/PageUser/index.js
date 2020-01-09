@@ -39,6 +39,11 @@ function PageUser(props) {
         listLicensePackage.call(this);
     }
 
+    this.refreshListUser = function() {
+        listUser.call(this);
+    }
+    this.refreshListUser = this.refreshListUser.bind(this);
+
     // function myStringify(item) {
     //     return Object.values(item).filter(value => typeof value !== 'object').join(',');
     //     // return JSON.stringify(item).toLowerCase()
@@ -123,6 +128,10 @@ function PageUser(props) {
     this.callApiUpdateUser = callApiUpdateUser.bind(this);
 
     function callApiUpdateUser(user) {
+        if (user.username.toString().trim().length == 0) {
+            toast.error("Username can be empty");
+            return;
+        }
         if (!user.email.match(/[a-z0-9_\.]+@[a-z0-9]{2,}(\.[a-z0-9]+){1,2}$/)) {
             toast.error('Email is not valid');
             return;
@@ -132,13 +141,19 @@ function PageUser(props) {
             return;
         }
         delete user.repassword;
-        api.updateUserPromise(user).then(() => {
+        let promises = [];
+        promises.push(api.updateUserPromise(user));
+        for (let i = 0; i < user.removeGroups.length; i++) {
+            promises.push(api.removeUserFromGroup(user.removeGroups[i].idGroup, user.idUser));
+        }
+        Promise.all(promises)
+        .then(() => {
             toast.success('Update user successfully');
             this.initFromServer();
             this.setState({ isEditingUser: false })
         }).catch(err => {
             toast.error(err);
-        })
+        });
     }
 
     this.callApiDeleteUser = callApiDeleteUser.bind(this);
@@ -173,7 +188,6 @@ function PageUser(props) {
     this.startEditUser = startEditUser.bind(this);
 
     function startEditUser(user) {
-        console.log("edit user", user)
         this.setState({ isEditingUser: true, selectedUser: user });
     }
 
@@ -227,6 +241,7 @@ function PageUser(props) {
                         onCancel={(e) => this.setState({ isEditingUser: false })}
                         user={this.state.selectedUser}
                         licensePackages={this.state.licensePackages}
+                        refreshListUser = {this.refreshListUser}
                     />
                     <UserAddModal isOpen={this.state.isAddingUser} onOk={this.callApiAddUser} action={"add"}
                         onCancel={(e) => this.setState({ isAddingUser: false })}
