@@ -93,7 +93,9 @@ function UserInfoModal(props) {
             lefts: [],
             groups: Object.assign([], (this.props.user || {}).groups || []),
             removeGroups: [],
-            tabIdx: 0
+            tabIdx: 0,
+            password: "",
+            repassword: ""
         });
         apiService.getListLicensePackageLeft()
             .then((rs) => {
