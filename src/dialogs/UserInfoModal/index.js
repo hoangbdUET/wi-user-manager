@@ -36,6 +36,7 @@ function UserInfoModal(props) {
         tabIdx: 0,
         groups: [],
         removeGroups: [],
+        idCompany: null
     };
 
     this.status = [
@@ -91,6 +92,7 @@ function UserInfoModal(props) {
             status: (this.props.user || {}).status,
             role: (this.props.user || {}).role,
             idLicensePackage: (this.props.user || {}).idLicensePackage,
+            idCompany: (this.props.user || {}).idCompany,
             lefts: [],
             groups: Object.assign([], (this.props.user || {}).groups || []),
             removeGroups: [],
@@ -217,19 +219,6 @@ function UserInfoModal(props) {
                                 :
                                 <div className="fieldset">
                                     <div>Company:</div>
-                                    {/* <DropDown  getItem={(company) => (
-                                    <div style={{ height: '18px', display: 'flex', alignItems: 'center' }}>{company ? company.name : "[select company]"}</div>)}
-                                    items = {this.props.companies}
-                                    itemHeight={18}
-                                    selectedItem={this.props.companies.find((e) => e.idCompany === this.state.idCompany)}
-                                    onItemClicked = {(clickedCompany)=>{
-                                        this.setState((state)=>{
-                                            return {
-                                                idCompany: clickedCompany.idCompany
-                                            }
-                                        });
-                                    }}
-                                /> */}
                                     <SearchableDropdown choices={this.props.companies.map((e) => ({ value: e.idCompany, display: e.name }))}
                                         value={this.state.idCompany} onChange={(e) => { this.setState({ idCompany: e }) }}
                                     />
