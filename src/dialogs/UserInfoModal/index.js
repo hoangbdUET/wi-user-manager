@@ -11,6 +11,7 @@ const apiUser = require('./../../services/apiUser');
 const SearchableDropdown = require('./../../components/SearchableDropdown').default;
 
 const apiService = require('./../../services/apiClient');
+const userService = require('./../../services/apiUser');
 
 const { toast } = require('react-toastify');
 
@@ -71,7 +72,7 @@ function UserInfoModal(props) {
         },
         {
             value: 3.2,
-            display: "Company Storage (Edit only)"
+            display: "Company Storage (Organize only)"
         },
         {
             value: 3.3,
@@ -211,6 +212,29 @@ function UserInfoModal(props) {
                                     })}
                                 />
                             </div>
+                            {userService.getRole() > 0 ? 
+                                <React.Fragment></React.Fragment>
+                                :
+                                <div className="fieldset">
+                                    <div>Company:</div>
+                                    {/* <DropDown  getItem={(company) => (
+                                    <div style={{ height: '18px', display: 'flex', alignItems: 'center' }}>{company ? company.name : "[select company]"}</div>)}
+                                    items = {this.props.companies}
+                                    itemHeight={18}
+                                    selectedItem={this.props.companies.find((e) => e.idCompany === this.state.idCompany)}
+                                    onItemClicked = {(clickedCompany)=>{
+                                        this.setState((state)=>{
+                                            return {
+                                                idCompany: clickedCompany.idCompany
+                                            }
+                                        });
+                                    }}
+                                /> */}
+                                    <SearchableDropdown choices={this.props.companies.map((e) => ({ value: e.idCompany, display: e.name }))}
+                                        value={this.state.idCompany} onChange={(e) => { this.setState({ idCompany: e }) }}
+                                    />
+                                </div>
+                            }
                             <div className="fieldset">
                                 <div>Role:</div>
                                 <SearchableDropdown maxHeight="200px"

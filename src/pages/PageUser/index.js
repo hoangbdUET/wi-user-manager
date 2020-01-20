@@ -242,6 +242,7 @@ function PageUser(props) {
                         user={this.state.selectedUser}
                         licensePackages={this.state.licensePackages}
                         refreshListUser = {this.refreshListUser}
+                        companies={this.state.companies}
                     />
                     <UserAddModal isOpen={this.state.isAddingUser} onOk={this.callApiAddUser} action={"add"}
                         onCancel={(e) => this.setState({ isAddingUser: false })}
