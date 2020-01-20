@@ -33,10 +33,6 @@ function Login(props) {
             .catch((e) => {
                 toast.error(e);
             });
-        this.setState({
-            username: "",
-            password: ""
-        });
     }
 
     this.render = function () {
