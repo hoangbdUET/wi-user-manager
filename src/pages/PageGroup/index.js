@@ -113,7 +113,7 @@ function PageGroup(props) {
                     isAddingGroup: false
                 }
             });
-        }).catch(e => console.log(e))
+        }).catch(e => toast.error(e.name || e))
     }
 
     this.render = function () {

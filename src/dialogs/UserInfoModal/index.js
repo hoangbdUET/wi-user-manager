@@ -100,6 +100,7 @@ function UserInfoModal(props) {
             password: "",
             repassword: ""
         });
+        
         apiService.getListLicensePackageLeft()
             .then((rs) => {
                 this.setState({
@@ -124,6 +125,7 @@ function UserInfoModal(props) {
 
 
     this.render = function () {
+        //console.log(this.state);
         return (
             <Modal isOpen={this.props.isOpen} portalClassName="ModalStyle"
                 className="UserInfoModal" overlayClassName="modal-backdrop"
