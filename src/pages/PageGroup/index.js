@@ -62,6 +62,7 @@ function PageGroup(props) {
                 items: (groups || []).map(g => transform(g))
             });
         }).catch(e => {
+            console.log('run');
             toast.error(e);
         });
     }
@@ -113,7 +114,11 @@ function PageGroup(props) {
                     isAddingGroup: false
                 }
             });
-        }).catch(e => toast.error(e.name || e))
+        }).catch(e => {
+            //console.log(e);
+            //console.log(typeof(e) == "string" ? e : (e.errors || [{message: "Your input is not valid"}])[0].message);
+            //toast.error((typeof(e) == "string" ? e : e.errors || [{message: "Your input is not valid"}])[0].message);
+        })
     }
 
     this.render = function () {
@@ -214,7 +219,7 @@ function PageGroup(props) {
     }
     function getGroupUsers(group) {
         if (!group) return;
-        console.log(_groups);
+        //console.log(_groups);
         let oriGroup = (_groups|| []).find(g => g.idGroup === group.idGroup);
         if (oriGroup) return oriGroup.users;
         else return [];
