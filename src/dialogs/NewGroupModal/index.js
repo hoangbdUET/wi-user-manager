@@ -32,7 +32,13 @@ function NewGroupModal(props) {
     }
 
     this.submitAndClose = function(e) {
-        if (this.state.name !== "" && this.state.idCompany) {
+        if (userService.getRole() <= 0) {
+            if (!this.state.idCompany) {
+                toast.error("Company can not empty");
+                return;
+            }
+        }
+        if (this.state.name !== "") {
             this.createNewGroup().then((rs)=>{
                 this.clearModelSession();
                 toast.success("Create new group successfully");
@@ -45,8 +51,6 @@ function NewGroupModal(props) {
         } else {
             if (this.state.name == "") {
                 toast.error("Name can not empty");
-            } else {
-                toast.error("Company can not be null");
             }
         }
     }
