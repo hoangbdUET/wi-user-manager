@@ -12,6 +12,12 @@ const apiUser = require('../../services/apiUser');
 const Redirect = require('react-router-dom').Redirect;
 const UserStatus = require('../../components/UserStatus');
 
+function myStringify(item) {
+    return Object.values(item).filter(value => typeof value !== 'object').join(',').toLowerCase();
+    // return JSON.stringify(item).toLowerCase()
+}
+
+
 function PageUser(props) {
     React.Component.call(this, props);
     this.state = {
@@ -152,7 +158,7 @@ function PageUser(props) {
             this.initFromServer();
             this.setState({ isEditingUser: false })
         }).catch(err => {
-            toast.error(err);
+            toast.error(err.length);
         });
     }
 
@@ -191,6 +197,16 @@ function PageUser(props) {
         this.setState({ isEditingUser: true, selectedUser: user });
     }
 
+    this.filter = function (items) {
+        return items.filter((e)=>{if (this.state.companyFilter >= 0) return (e.idCompany == this.state.companyFilter)
+             else return true})
+             .filter((item) => {
+                let str = myStringify(item);
+                return str.includes((this.state.filter||"").toLowerCase());
+            });
+    }
+
+
 
     this.render = function () {
         if (!apiUser.isLoggedIn()) return <Redirect to={{ pathname: "/login", from: "/user" }} />;
@@ -226,7 +242,7 @@ function PageUser(props) {
                         </div>
                         <UserStatus />
                     </div>
-                    <ListUser itemPerPage={20} items={this.state.items || []} searchStr={this.state.filter} companyFilter={this.state.companyFilter}
+                    <ListUser itemPerPage={20} items={this.filter(this.state.items || [])}
                         actions={[{
                             name: "Add", handler: this.startAddUser, show: true
                         }, {

@@ -10,6 +10,11 @@ const Redirect = require('react-router-dom').Redirect;
 const apiUser = require('../../services/apiUser');
 const UserStatus = require('../../components/UserStatus');
 
+function myStringify(item) {
+    return Object.values(item).filter(value => typeof value !== 'object').join(',').toLowerCase();
+    // return JSON.stringify(item).toLowerCase()
+}
+
 function PageCompany() {
     React.Component.call(this);
     this.state = {
@@ -42,10 +47,11 @@ function PageCompany() {
 
 
     this.getItemList = function () {
-        if (this.state.filter == "") return this.state.items;
-        return this.state.items.filter((item) => {
-            return JSON.stringify(item).toLowerCase().includes(this.state.filter.toLowerCase());
-        });
+        return this.state.items
+            .filter((item) => {
+               let str = myStringify(item);
+               return str.includes((this.state.filter||"").toLowerCase());
+           });
     }
 
     this.addCompany = addCompany.bind(this);
@@ -92,6 +98,8 @@ function PageCompany() {
 
     function listCompany(selectedCompany) {
         api.getCompaniesPromise().then((companies) => {
+            //companies = companies.sort((a,b)=>(a.name || "").localeCompare(b.name || ""));
+            // console.log(companies);
             this.setState({ items: companies })
         }).catch(error => toast.error(error));
     }

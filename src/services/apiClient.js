@@ -92,7 +92,7 @@ function getListLicensePackageLeft() {
 }
 
 function getCompaniesPromise() {
-    return doPost('/company/list', {});
+    return doPost('/company/list', {}).then(rs => rs.sort((a,b)=>(a.name || "").localeCompare(b.name || "")));
 }
 
 function deleteCompanyPromise(idCompany) {

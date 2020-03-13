@@ -38,8 +38,7 @@ function ListUser(props) {
                         onCellClicked={this.onHeaderClicked}
                     />
                     <div>{
-                        this.filterAndSort(items.filter((e)=>{if (this.props.companyFilter >= 0) return (e.idCompany == this.props.companyFilter) 
-                            else return true})).map((item, idx) => (
+                        this.filterAndSort(items).map((item, idx) => (
                             <RowUser onClick={(e) => this.handleRowClick(item)}
                                      key={idx + this.state.startAt}
                                      idx={idx + this.state.startAt} item={item}

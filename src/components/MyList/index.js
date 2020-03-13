@@ -13,13 +13,13 @@ MyList.propTypes = {
     startAt: PropTypes.number,
     searchStr: PropTypes.string,
     actions: PropTypes.array
-};
+}; 
 
 function MyList(props) {
     React.Component.call(this, props);
     const MIN_WIDTH = 60;
     this.listName = "abstractTab";
-    let searchStr = props.searchStr || "";
+    //let searchStr = props.searchStr || "";
     this.itemCount = 0;
     this.state = {
         startAt: props.startAt || 0,
@@ -32,17 +32,18 @@ function MyList(props) {
         this.setState({
             itemPerPage: 20
         });
-        this.filterAndSort(this.props.items);
+        //this.filterAndSort(this.props.items);
     }
 
     //
     this.handleNextClick = handleNextClick.bind(this);
 
     function handleNextClick(e) {
+        //console.log('clicked!');
         this.setState((state) => {
             let newStartAt = state.startAt + this.state.itemPerPage;
             return {
-                startAt: newStartAt > this.itemCount ? this.state.startAt : newStartAt
+                startAt: newStartAt > this.props.items.length ? this.state.startAt : newStartAt
             }
         });
     }
@@ -87,17 +88,11 @@ function MyList(props) {
     }
 
     this.filterAndSort = filterAndSort.bind(this);
-    function myStringify(item) {
-        return Object.values(item).filter(value => typeof value !== 'object').join(',');
-        // return JSON.stringify(item).toLowerCase()
-    }
+
     function filterAndSort(items) {
         let key = this.state.orderByText.toLowerCase();
         //console.log('filter and sort:', items);
-        let newItems = items.filter((item) => {
-            let str = myStringify(item);
-            return str.includes((this.props.searchStr||"").toLowerCase());
-        }).sort((a, b) => {
+        let newItems = items.sort((a, b) => {
             let aKey = a[key];
             let bKey = b[key];
             if (typeof(a[key]) == 'object') {
@@ -108,7 +103,8 @@ function MyList(props) {
                 return ((aKey || "").toString()).localeCompare((bKey || "").toString());
             return -((aKey || "").toString()).localeCompare((bKey || "").toString());
         });
-        this.itemCount = newItems.length;
+        // this.itemCount = newItems.length;
+        // console.log('RUN:', this.itemCount);
         return newItems.filter((item, idx) => (
             idx >= this.state.startAt && idx < this.state.startAt + this.state.itemPerPage
         ));
@@ -202,7 +198,7 @@ function MyList(props) {
                     <div className={"btn-next"} onClick={this.handlePrevClick}>
                         <div className={"ti ti-angle-left"} style={{marginRight: '0px'}}/>         
                     </div>
-                    <div style={{marginLeft: '10px'}}><p>Page: {Math.round(this.state.startAt/this.state.itemPerPage) + 1}/{Math.ceil(this.itemCount/this.state.itemPerPage)}</p></div>
+                    <div style={{marginLeft: '10px'}}><p>Page: {Math.round(this.state.startAt/this.state.itemPerPage) + 1}/{Math.ceil(this.props.items.length/this.state.itemPerPage)}</p></div>
                     <div className={"btn-next"} onClick={this.handleNextClick}>
                         <div className={"ti ti-angle-right"} style={{marginLeft: '0px'}}/>
                     </div>

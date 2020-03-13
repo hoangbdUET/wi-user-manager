@@ -10,6 +10,10 @@ const apiUser = require('../../services/apiUser');
 const UserStatus = require('../../components/UserStatus');
 const {toast} = require('react-toastify');
 
+function myStringify(item) {
+    return Object.values(item).filter(value => typeof value !== 'object').join(',').toLowerCase();
+    // return JSON.stringify(item).toLowerCase()
+}
 
 function LicensePackage(props) {
     React.Component.call(this, props);
@@ -67,6 +71,14 @@ function LicensePackage(props) {
         })
     }
 
+    this.filter = function (items) {
+        return items
+             .filter((item) => {
+                let str = myStringify(item);
+                return str.includes((this.state.filter||"").toLowerCase());
+            });
+    }
+
 
     this.editLicensePackage = editLicensePackage.bind(this);
 
@@ -114,7 +126,7 @@ function LicensePackage(props) {
                         </div>
                         <UserStatus/>
                     </div>
-                    <ListLicensePackage itemPerPage={10} items={this.state.licensePackages} actions={[
+                    <ListLicensePackage itemPerPage={10} items={this.filter(this.state.licensePackages || [])} actions={[
                         {
                             name: "Add", handler: () => {
                                 this.setState({

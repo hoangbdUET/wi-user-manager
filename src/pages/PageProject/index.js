@@ -8,6 +8,11 @@ const Redirect = require('react-router-dom').Redirect;
 const apiUser = require('../../services/apiUser');
 const UserStatus = require('../../components/UserStatus');
 
+function myStringify(item) {
+    return Object.values(item).filter(value => typeof value !== 'object').join(',').toLowerCase();
+    // return JSON.stringify(item).toLowerCase()
+}
+
 function PageProject() {
     this.state = {
         items: [],
@@ -62,6 +67,15 @@ function PageProject() {
         })
     }
 
+    this.filter = function (items) {
+        return items
+             .filter((item) => {
+                let str = myStringify(item);
+                return str.includes((this.state.filter||"").toLowerCase());
+            });
+    }
+    
+
     this.render = function () {
         if (!apiUser.isLoggedIn()) return <Redirect to={{pathname:"/login", from:"/project"}} />;
         return (
@@ -102,7 +116,7 @@ function PageProject() {
                             },
                             { name: "Refresh", handler: self.listProjects, show: true }
 
-                        ]} items={this.state.items || []} searchStr={this.state.filter}
+                        ]} items={this.filter(this.state.items || [])} searchStr={this.state.filter}
                     />
                 </div>
             </div>

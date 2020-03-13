@@ -9,6 +9,12 @@ const apiUser = require('../../services/apiUser');
 const UserStatus = require('../../components/UserStatus');
 const {toast} = require('react-toastify');
 
+
+function myStringify(item) {
+    return Object.values(item).filter(value => typeof value !== 'object').join(',').toLowerCase();
+    // return JSON.stringify(item).toLowerCase()
+}
+
 function PageFeature(pops) {
     this.state = {
         items: [],
@@ -31,11 +37,12 @@ function PageFeature(pops) {
         })
     };
     this.getItemList = function () {
-        if (this.state.filter === "") return this.state.items;
-        return this.state.items.filter((item) => {
-            return JSON.stringify(item).toLowerCase().includes(this.state.filter.toLowerCase());
-        });
-    };
+        return this.state.items
+            .filter((item) => {
+               let str = myStringify(item);
+               return str.includes((this.state.filter||"").toLowerCase());
+           });
+    }
     this.render = function () {
         if (apiUser.getRole() > 0) return <Redirect to={{pathname: "/", from: "/"}}/>;
         if (!apiUser.isLoggedIn()) return <Redirect to={{pathname: "/login", from: "/company"}}/>;
