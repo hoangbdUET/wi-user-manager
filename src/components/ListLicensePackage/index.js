@@ -18,7 +18,7 @@ function ListLicensePackage(props) {
         let controlBar = superRender.call(this);
         return <div className={"MyList"}>
             {controlBar}
-            <div style={{flex: 1}}>
+            <div className="overflow-auto">
                 <RowLicensePackage onClick={e => {
                 }}
                                    idx={undefined} selected={false}
