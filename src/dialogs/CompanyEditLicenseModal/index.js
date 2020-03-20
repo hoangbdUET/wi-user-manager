@@ -42,7 +42,7 @@ function CompanyEditLicenseModal(props) {
             className="CompanyEditLicenseModal" overlayClassName="modal-backdrop"
             onAfterOpen={() => { this.updateProps(); }} >
             <h4>Company Edit License Package</h4>
-            <div className="content-dialog">
+            <div className="content-dialog" style={{overflow: "auto"}}>
                 <div style={{ flex: 1, overflow: 'visible' }}>
                     {
                         this.state.licenses.map(
