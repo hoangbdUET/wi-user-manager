@@ -42,11 +42,22 @@ function MyList(props) {
         //console.log('clicked!');
         this.setState((state) => {
             let newStartAt = state.startAt + this.state.itemPerPage;
+            // console.log(newStartAt);
+            // console.log(this.props.items.length);
+            // console.log(newStartAt > this.props.items.length);
             return {
-                startAt: newStartAt > this.props.items.length ? this.state.startAt : newStartAt
+                startAt: newStartAt+1 > (this.props.items.length)  ? this.state.startAt : newStartAt
             }
         });
     }
+
+    // this.componentDidUpdate = function(prevProps) {
+    //     if ((prevProps.items.length > this.props.items.length ) && (this.state.startAt + 1 > this.props.items.length)) {
+    //         this.setState({
+    //             startAt: 0
+    //         });
+    //     }
+    // }
 
     this.handleRowClick = handleRowClick.bind(this);
 
