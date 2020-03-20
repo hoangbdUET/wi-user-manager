@@ -79,12 +79,14 @@ function GroupInfoModal(props) {
     };
 
     this.submitAndClose = function(e) {
+        //console.log('RUN');
         this.updateToServer().then((rs)=>{
             toast.success("Update group successfully");
             this.clearModelSession();
             this.props.onOk();
         }).catch(e=>{
-            toast.error(e.message);
+            //console.log(e.message);
+            toast.error(typeof(e) == "string" ? e : (typeof(e.message) == "string" ? e.message : JSON.stringify(e.message)));
         });
     }
 
