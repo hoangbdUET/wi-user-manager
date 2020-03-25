@@ -67,7 +67,7 @@ function PageGroup(props) {
                 items: (groups || []).map(g => transform(g))
             });
         }).catch(e => {
-            console.log('run');
+            //console.log('run');
             toast.error(e);
         });
     }
@@ -109,9 +109,14 @@ function PageGroup(props) {
                     items: state.items,
                     isDeletingGroup: false
                 }
+            },()=>{
+                toast.success("Delete group successfully");
             });
             this.initListFromServer();
-        }).catch(e => console.error(e));
+        }).catch(e => {
+            console.error(e);
+            toast.error(e);
+        });
     }
 
     this.addGroup = addGroup.bind(this);

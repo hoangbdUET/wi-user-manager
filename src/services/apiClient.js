@@ -42,6 +42,7 @@ if (env === "development") {
 }
 
 
+
 const WI_AUTH_URL = config.wi_auth;
 const WI_BACKEND_URL = config.wi_backend;
 
@@ -64,7 +65,7 @@ function doPost(url, params, token, service) {
                 } else if (parseInt(payload.code) === 200) {
                     resolve(payload.content);
                 } else {
-                    reject(payload.reason);
+                    reject(`${payload.reason}: ${JSON.stringify(payload.content)}`);
                 }
             }).catch(e => {
                 reject(e.message);

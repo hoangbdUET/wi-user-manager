@@ -71,6 +71,7 @@ function PageUser(props) {
             this.setState({ items: users.sort((a,b)=>a.username.toString().localeCompare(b.username.toString())) });
         }).catch(err => {
             console.log(err);
+            console.error(e);
         })
     }
 
@@ -83,6 +84,7 @@ function PageUser(props) {
             });
         }).catch((e) => {
             toast.error(e);
+            console.error(e);
         })
     }
 
@@ -96,6 +98,7 @@ function PageUser(props) {
             });
         }).catch((e) => {
             toast.error(e);
+            console.error(e);
         })
     }
 
@@ -128,6 +131,7 @@ function PageUser(props) {
             })
             .catch(e => {
                 toast.error(e);
+                console.error(e);
             });
     }
 
@@ -158,7 +162,8 @@ function PageUser(props) {
             this.initFromServer();
             this.setState({ isEditingUser: false })
         }).catch(err => {
-            toast.error(err.length);
+            toast.error(err);
+            console.error(err);
         });
     }
 
