@@ -46,7 +46,7 @@ function GroupInfoModal(props) {
         this.setState({
             users: this.props.users || [],
             group: this.props.group || {},
-            groupUsers: this.props.groupUsers || []
+            groupUsers: [...(this.props.groupUsers || [])]
         });
     }
 
