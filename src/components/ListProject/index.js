@@ -14,7 +14,7 @@ function ListProject(props) {
     this.render = () => {
         let controlBar = superRender.call(this);
         let headerObj = {
-            name: "Name",
+            alias: "Alias",
             company: "Company",
             location: "Location",
             department: "Department",

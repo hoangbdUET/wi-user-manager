@@ -11,7 +11,7 @@ function RowProject(props) {
                cells={[
                    isNaN(idx) ? "" : idx,
                    <div className="cell-ellipsis">
-                        {props.item.name}
+                        {props.item.alias}
                     </div>,
                     <div className="cell-ellipsis">
                         {props.item.company}

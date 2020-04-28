@@ -62,6 +62,7 @@ function MyRow(props) {
         </div>
     )
     let len = props.cells.length;
+    console.log(props.cells)
     return (
         <div className={`MyRow ${props.className} ${selectedClass} ${headerClass}`}
              onClick={props.onClick}>
