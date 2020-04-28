@@ -211,11 +211,13 @@ function GroupInfoModal(props) {
                                 <div className="column" style={{marginRight: "20px"}}>
                                     <SearchableList disabled={!disabled} getItem={this.getUser}
                                         items={this.state.users}
+                                        filterFn = {(item, searchStr) => {return item.username.includes(searchStr)}}
                                         itemHeight={32} />
                                 </div>
                                 <div className="column">
                                     <SearchableList disabled={!disabled} getItem={this.getGroupUser}
                                         items={this.state.groupUsers}
+                                        filterFn = {(item, searchStr) => {return item.username.includes(searchStr)}}
                                         itemHeight={32} />
                                 </div>
                             </div>

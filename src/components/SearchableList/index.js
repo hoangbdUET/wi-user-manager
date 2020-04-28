@@ -26,7 +26,7 @@ class SearchableList extends React.Component {
         return {
             searchStr: props.searchStr || state.searchStr,
             items: state.searchStr == "" ? props.items : props.items.filter(item => {
-                return JSON.stringify(item).toLowerCase().includes(state.searchStr);
+                return props.filterFn ? props.filterFn(item, state.searchStr) : JSON.stringify(item).toLowerCase().includes(state.searchStr);
             })
         };
     }
