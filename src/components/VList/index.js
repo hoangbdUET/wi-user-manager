@@ -45,6 +45,7 @@ function VList(props) {
         itemHeight: props.itemHeight || 18
     }
     this.scrollContainer = React.createRef();
+
     function defaultGetItem(item) {
         return item.index;
     }
@@ -102,6 +103,14 @@ function VList(props) {
             }
         });
     }
+
+    this.componentDidUpdate = function(prevProps) {
+        if (this.props.reset.value) {
+            this.props.reset.value = false;
+            this.scrollContainer.current.scrollTop = 0;
+        }
+    }
+
     this.render = function() {
         //console.log('num:', this.state.startAt, this.state.viewLength, evaluate(this.state.totalItems))
         return (

@@ -18,7 +18,10 @@ class SearchableList extends React.Component {
             searchStr:"",
             startAt: props.startAt,
             totalItems: props.totalItems,
-            items: props.items
+            items: props.items,
+            reset: {
+                value: false
+            }
         }
     }
 
@@ -40,14 +43,18 @@ class SearchableList extends React.Component {
                         // items: this.props.items.filter(item => {
                         //     return JSON.stringify(item).toLowerCase().includes(e.target.value);
                         // })
+                        reset: {
+                            value: true
+                        }
                     });
                 }} placeholder="Search ..."/>
             </div>
             <div style={{flex:1, overflow:'hidden'}}>
                 <VList startAt={this.state.startAt} 
-                    totalItems={() => (this.state.items || []).length} 
+                    totalItems={() => (this.state.items || []).length}
                     itemHeight={this.props.itemHeight}
                     onItemClicked={this.props.onItemClicked}
+                    reset={this.state.reset}
                     getItem={this.props.getItem}
                     getRawItem={(idx) => this.state.items[idx]} />
             </div>
