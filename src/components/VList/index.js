@@ -105,10 +105,13 @@ function VList(props) {
     }
 
     this.componentDidUpdate = function(prevProps) {
-        if (this.props.reset.value) {
-            this.props.reset.value = false;
-            this.scrollContainer.current.scrollTop = 0;
+        if (this.props.reset) {
+            if (this.props.reset.value) {
+                this.props.reset.value = false;
+                this.scrollContainer.current.scrollTop = 0;
+            }
         }
+        
     }
 
     this.render = function() {
