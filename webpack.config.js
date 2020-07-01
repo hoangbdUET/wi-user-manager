@@ -49,7 +49,8 @@ webpackConfigure = {
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
-			template: "./src/index.html"
+			template: "./src/index.html",
+			favicon: "./src/i2g_fav.png",
 		}),
 		new MiniCssExtractPlugin({
 			filename: devMode ? '[name].css' : '[name].[hash].css',
