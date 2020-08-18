@@ -82,7 +82,6 @@ function UserInfoModal(props) {
     ];
 
     this.updateProps = function () {
-        
         //console.log(this.props.licensePackages);
         this.setState({
             idUser: (this.props.user || {}).idUser,
@@ -98,9 +97,10 @@ function UserInfoModal(props) {
             removeGroups: [],
             tabIdx: 0,
             password: "",
-            repassword: ""
+            repassword: "",
+            quota: (this.props.user || {}).quota || {}
         });
-        
+
         apiService.getListLicensePackageLeft()
             .then((rs) => {
                 this.setState({
@@ -112,9 +112,9 @@ function UserInfoModal(props) {
             })
     }
 
-    this.getOutOfGroup = function(idx) {
-        this.setState((state)=>{
-            state.removeGroups.push({idGroup: state.groups[idx].idGroup, idUser: (this.props.user || {}).idUser});
+    this.getOutOfGroup = function (idx) {
+        this.setState((state) => {
+            state.removeGroups.push({ idGroup: state.groups[idx].idGroup, idUser: (this.props.user || {}).idUser });
             state.groups.splice(idx, 1);
             return {
                 removeGroups: state.removeGroups,
@@ -141,120 +141,146 @@ function UserInfoModal(props) {
                         <div className={this.state.tabIdx == 1 ? "active-tab" : ""} onClick={() => this.setState({
                             tabIdx: 1
                         })}>Groups</div>
+                        <div className={this.state.tabIdx == 2 ? "active-tab" : ""} onClick={() => this.setState({
+                            tabIdx: 2
+                        })}>Quota</div>
                     </div>
                 </div>
                 <div className="content-dialog">
                     <div style={{ flex: 1, overflow: 'visible' }}>
                         {
                             this.state.tabIdx == 0 ?
-                            <div>
-                            <div className="fieldset">
-                                <div>Username</div>
-                                <Editable value={this.state.username}
-                                    formatValue={(v) => ((v === null || v === undefined || v.length === 0) ? "[empty]" : v)}
-                                    onValueChanged={(value) => this.setState((state) => {
-                                        return {
-                                            username: value
-                                        };
-                                    })}
-                                    disabled={true}
-                                />
-                            </div>
-                            <div className="fieldset">
-                                <div>Password</div>
-                                <Editable value={this.state.password}
-                                    formatValue={(v) => {
-                                        if (v.length === 0) {
-                                            return '[empty]';
-                                        }
-                                        return new Array(v.length).fill('*', 0, v.length);
-                                    }}
-                                    onValueChanged={(value) => this.setState((state) => {
-                                        return {
-                                            password: value
-                                        };
-                                    })}
-                                    hideText
-                                />
-                            </div>
-                            <div className="fieldset">
-                                <div>Re-password</div>
-                                <Editable value={this.state.repassword}
-                                    formatValue={(v) => {
-                                        if (v.length === 0) {
-                                            return '[empty]';
-                                        }
-                                        return new Array(v.length).fill('*', 0, v.length);
-                                    }}
-                                    onValueChanged={(value) => this.setState((state) => {
-                                        return {
-                                            repassword: value
-                                        };
-                                    })}
-                                    hideText
-                                />
-                            </div>
-                            <div className="fieldset">
-                                <div>Email</div>
-                                <Editable value={this.state.email}
-                                    formatValue={(v) => ((v === null || v === undefined || v.length === 0) ? "[empty]" : v)}
-                                    onValueChanged={(value) => this.setState((state) => {
-                                        return {
-                                            email: value
-                                        };
-                                    })}
-                                />
-                            </div>
-                            <div className="fieldset">
-                                <div>Full Name</div>
-                                <Editable value={this.state.fullname}
-                                    formatValue={(v) => ((v === null || v === undefined || v.length === 0) ? "[empty]" : v)}
-                                    onValueChanged={(value) => this.setState((state) => {
-                                        return {
-                                            fullname: value
-                                        };
-                                    })}
-                                />
-                            </div>
-                            {userService.getRole() > 0 ? 
-                                <React.Fragment></React.Fragment>
-                                :
-                                <div className="fieldset">
-                                    <div>Company:</div>
-                                    <SearchableDropdown choices={this.props.companies.map((e) => ({ value: e.idCompany, display: e.name }))}
-                                        value={this.state.idCompany} onChange={(e) => { this.setState({ idCompany: e }) }}
-                                    />
-                                </div>
-                            }
-                            <div className="fieldset">
-                                <div>Role:</div>
-                                <SearchableDropdown maxHeight="200px"
-                                    choices={this.role.filter((e) => e.value >= apiUser.getRole())} value={this.state.role} onChange={(e) => { this.setState({ role: e }); }}
-                                />
-                            </div>
-                            <div className="fieldset">
-                                <div>License:</div>
-                                <SearchableDropdown choices={this.state.lefts.map((e) => ({ value: e.idLicensePackage, display: e.name + " (" + e.left + " left)" }))}
-                                    value={this.state.idLicensePackage} onChange={(e) => { this.setState({ idLicensePackage: e }) }}
-                                />
-                            </div>
-                            <div className="fieldset">
-                                <div>Status:</div>
-                                <SearchableDropdown
-                                    choices={this.status} value={this.state.status} onChange={(e) => { this.setState({ status: e }); }}
-                                />
-                            </div>
-                            </div>
-                            :
-                            <div>
-                                <div style={{height: "400px", overflow: "auto", margin: "30px"}}>
-                                    {
-                                        this.state.groups.map((e, idx)=>{
-                                        return <div key={idx} className={"group-element"}>{e.name}<span onClick={()=>{this.getOutOfGroup(idx)}} className={"ti ti-close"}></span></div>
-                                        })
+                                <div>
+                                    <div className="fieldset">
+                                        <div>Username</div>
+                                        <Editable value={this.state.username}
+                                            formatValue={(v) => ((v === null || v === undefined || v.length === 0) ? "[empty]" : v)}
+                                            onValueChanged={(value) => this.setState((state) => {
+                                                return {
+                                                    username: value
+                                                };
+                                            })}
+                                            disabled={true}
+                                        />
+                                    </div>
+                                    <div className="fieldset">
+                                        <div>Password</div>
+                                        <Editable value={this.state.password}
+                                            formatValue={(v) => {
+                                                if (v.length === 0) {
+                                                    return '[empty]';
+                                                }
+                                                return new Array(v.length).fill('*', 0, v.length);
+                                            }}
+                                            onValueChanged={(value) => this.setState((state) => {
+                                                return {
+                                                    password: value
+                                                };
+                                            })}
+                                            hideText
+                                        />
+                                    </div>
+                                    <div className="fieldset">
+                                        <div>Re-password</div>
+                                        <Editable value={this.state.repassword}
+                                            formatValue={(v) => {
+                                                if (v.length === 0) {
+                                                    return '[empty]';
+                                                }
+                                                return new Array(v.length).fill('*', 0, v.length);
+                                            }}
+                                            onValueChanged={(value) => this.setState((state) => {
+                                                return {
+                                                    repassword: value
+                                                };
+                                            })}
+                                            hideText
+                                        />
+                                    </div>
+                                    <div className="fieldset">
+                                        <div>Email</div>
+                                        <Editable value={this.state.email}
+                                            formatValue={(v) => ((v === null || v === undefined || v.length === 0) ? "[empty]" : v)}
+                                            onValueChanged={(value) => this.setState((state) => {
+                                                return {
+                                                    email: value
+                                                };
+                                            })}
+                                        />
+                                    </div>
+                                    <div className="fieldset">
+                                        <div>Full Name</div>
+                                        <Editable value={this.state.fullname}
+                                            formatValue={(v) => ((v === null || v === undefined || v.length === 0) ? "[empty]" : v)}
+                                            onValueChanged={(value) => this.setState((state) => {
+                                                return {
+                                                    fullname: value
+                                                };
+                                            })}
+                                        />
+                                    </div>
+                                    {userService.getRole() > 0 ?
+                                        <React.Fragment></React.Fragment>
+                                        :
+                                        <div className="fieldset">
+                                            <div>Company:</div>
+                                            <SearchableDropdown choices={this.props.companies.map((e) => ({ value: e.idCompany, display: e.name }))}
+                                                value={this.state.idCompany} onChange={(e) => { this.setState({ idCompany: e }) }}
+                                            />
+                                        </div>
                                     }
+                                    <div className="fieldset">
+                                        <div>Role:</div>
+                                        <SearchableDropdown maxHeight="200px"
+                                            choices={this.role.filter((e) => e.value >= apiUser.getRole())} value={this.state.role} onChange={(e) => { this.setState({ role: e }); }}
+                                        />
+                                    </div>
+                                    <div className="fieldset">
+                                        <div>License:</div>
+                                        <SearchableDropdown choices={this.state.lefts.map((e) => ({ value: e.idLicensePackage, display: e.name + " (" + e.left + " left)" }))}
+                                            value={this.state.idLicensePackage} onChange={(e) => { this.setState({ idLicensePackage: e }) }}
+                                        />
+                                    </div>
+                                    <div className="fieldset">
+                                        <div>Status:</div>
+                                        <SearchableDropdown
+                                            choices={this.status} value={this.state.status} onChange={(e) => { this.setState({ status: e }); }}
+                                        />
+                                    </div>
                                 </div>
-                            </div>
+                                :
+                                this.state.tabIdx == 1 ?
+                                    <div>
+                                        <div style={{ height: "400px", overflow: "auto", margin: "30px" }}>
+                                            {
+                                                this.state.groups.map((e, idx) => {
+                                                    return <div key={idx} className={"group-element"}>{e.name}<span onClick={() => { this.getOutOfGroup(idx) }} className={"ti ti-close"}></span></div>
+                                                })
+                                            }
+                                        </div>
+                                    </div>
+                                    :
+                                    <div>
+                                        {
+                                            Object.keys(this.state.quota).map(e => {
+                                                return (
+                                                    <div key={e} className="fieldset">
+                                                        <div>{e}</div>
+                                                        <Editable value={this.state.quota[e]}
+                                                            formatValue={(v) => ((v === null || v === undefined || v.length === 0) ? "[empty]" : v)}
+                                                            onValueChanged={(value) => this.setState((state) => {
+                                                                let newQuota = {...state.quota}
+                                                                newQuota[e] = value
+                                                                return {
+                                                                    quota: newQuota
+                                                                };
+                                                            })}
+                                                        />
+                                                    </div>
+                                                )
+                                            })
+                                        }
+                                    </div>
                         }
                     </div>
                 </div>
