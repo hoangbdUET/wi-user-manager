@@ -20,7 +20,7 @@ function CompanyInfoModal(props) {
         name: "",
         location: "",
         description: "",
-        licenses: 10,
+        // licenses: 10,
         idCompany: null,
         shortname: null
     }
@@ -30,7 +30,7 @@ function CompanyInfoModal(props) {
             name: (this.props.company || {}).name || "",
             location: (this.props.company || {}).location || "",
             description: (this.props.company || {}).description || "",
-            licenses: (this.props.company || {}).licenses || 10,
+            // licenses: (this.props.company || {}).licenses || 10,
             idCompany: (this.props.company || {}).idCompany || null,
             shortname: (this.props.company || {}).shortname
         });
@@ -67,13 +67,13 @@ function CompanyInfoModal(props) {
                             formatValue={(v) => (((v !== null || v != undefined) && v.length) ? v : '[empty]')}
                             onValueChanged={(description) => this.setState({description: description})} />
                     </div>
-                    <div className="fieldset">
+                    {/* <div className="fieldset">
                         <div>Licenses:</div>
                         <Editable value={this.state.licenses}
                             formatValue={(v) => (((v !== null || v != undefined) && !isNaN(v)) ? v : '[empty]')}
                             setValue={input => isNaN(parseInt(input)) ? 0 : parseInt(input)}
                             onValueChanged={(licenses) => this.setState({licenses: licenses})} />
-                    </div>
+                    </div> */}
                 </div>
             </div>
             <div className="footer-dialog">

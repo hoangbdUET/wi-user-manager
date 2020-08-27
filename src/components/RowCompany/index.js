@@ -16,9 +16,6 @@ function RowCompany(props) {
                         {props.item.location}
                     </div>,
                     <div className="cell-ellipsis">
-                        {props.item.licenses}
-                    </div>,
-                    <div className="cell-ellipsis">
                         {props.item.description}
                     </div>
                ]}

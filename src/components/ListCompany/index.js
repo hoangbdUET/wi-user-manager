@@ -9,7 +9,7 @@ function ListCompany(props) {
     this.listName = "Company";
     this.state = Object.assign(this.state, {
         orderByText: "",
-        colWidths: [100, 150, 150, 150, 150]
+        colWidths: [100, 200, 200, 200]
     });
     let supperRender = this.render;
     this.render = function () {
