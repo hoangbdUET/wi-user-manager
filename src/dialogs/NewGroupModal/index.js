@@ -38,6 +38,10 @@ function NewGroupModal(props) {
                 return;
             }
         }
+        if (/[`!@#$%^&*()+\=\[\]{};':"\\|,.<>\/?~]/.test(this.state.name.toString())) {
+            toast.error("Name/Company cannot include special character")
+            return
+        }
         if (this.state.name.toString().trim() !== "") {
             this.createNewGroup().then((rs)=>{
                 this.clearModelSession();
@@ -45,7 +49,7 @@ function NewGroupModal(props) {
                 this.props.onOk();
             }).catch((e)=>{
                 this.clearModelSession();
-                toast.error((typeof(e) == "string" ? e : e.errors || [{message: "Your input is not valid"}])[0].message);
+                toast.error(e);
                 this.props.onCancel();
             });
         } else {

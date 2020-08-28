@@ -134,7 +134,7 @@ function PageGroup(props) {
                 }
             });
         }).catch(e => {
-            //console.log(e);
+            console.log(e);
             //console.log(typeof(e) == "string" ? e : (e.errors || [{message: "Your input is not valid"}])[0].message);
             //toast.error((typeof(e) == "string" ? e : e.errors || [{message: "Your input is not valid"}])[0].message);
         })
