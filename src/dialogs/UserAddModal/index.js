@@ -1,4 +1,4 @@
-module.exports = UserInfoModal;
+module.exports = UserAddModal;
 const React = require("react");
 const Modal = require('react-modal');
 Modal.setAppElement('#react-app');
@@ -16,13 +16,13 @@ const { toast } = require('react-toastify');
 
 // const DropDownWithOutSearchBar = require('../../components/DropDownWithoutSearchBar');
 
-UserInfoModal.protoTypes = {
+UserAddModal.protoTypes = {
     isOpen: PropTypes.bool,
     onOk: PropTypes.func,
     onCancel: PropTypes.func
 };
 
-function UserInfoModal(props) {
+function UserAddModal(props) {
     React.Component.call(this, props);
     this.state = {
         username: "",
@@ -34,7 +34,8 @@ function UserInfoModal(props) {
         repassword: "",
         idCompany: null,
         idLicensePackage: null,
-        lefts: []
+        lefts: [],
+        loading: false,
     };
 
     this.status = [
@@ -92,23 +93,32 @@ function UserInfoModal(props) {
             idLicensePackage: null,
             lefts: []
         });
-        
+
         apiService.getListLicensePackageLeft()
-        .then((rs)=>{
-            this.setState({
-                lefts: rs
+            .then((rs) => {
+                this.setState({
+                    lefts: rs
+                })
             })
-        })
-        .catch((e)=>{
-            toast.error(e);
-        })
+            .catch((e) => {
+                toast.error(e);
+            })
+    }
+
+    this.onOk = async () => {
+        try {
+            this.setState({ loading: true });
+            await props.onOk({ ...this.state });
+        } finally {
+            this.setState({ loading: false });
+        }
     }
 
 
     this.render = function () {
         return (
             <Modal isOpen={this.props.isOpen} portalClassName="ModalStyle"
-                className="UserInfoModal" overlayClassName="modal-backdrop"
+                className="UserAddModal" overlayClassName="modal-backdrop"
                 onAfterOpen={() => { this.updateProps(); }}>
                 <h4>New User</h4>
                 <div className="content-dialog">
@@ -177,7 +187,7 @@ function UserInfoModal(props) {
                                 })}
                             />
                         </div>
-                        {userService.getRole() > 0 ? 
+                        {userService.getRole() > 0 ?
                             <React.Fragment></React.Fragment>
                             :
                             <div className="fieldset">
@@ -219,7 +229,7 @@ function UserInfoModal(props) {
                                           });
                                       }}
                             /> */}
-                            <SearchableDropdown choices={this.state.lefts.map((e) => ({ value: e.idLicensePackage, display: e.name + " (" +  e.left + " left)"}))}
+                            <SearchableDropdown choices={this.state.lefts.map((e) => ({ value: e.idLicensePackage, display: e.name + " (" + e.left + " left)" }))}
                                 value={this.state.idLicensePackage} onChange={(e) => { this.setState({ idLicensePackage: e }) }}
                             />
                         </div>
@@ -236,7 +246,7 @@ function UserInfoModal(props) {
                         <div className="fieldset">
                             <div>Role:</div>
                             <SearchableDropdown maxHeight="200px"
-                                choices={this.role.filter((e)=>e.value >= userService.getRole())} value={this.state.role} onChange={(e) => { this.setState({ role: e }); }}
+                                choices={this.role.filter((e) => e.value >= userService.getRole())} value={this.state.role} onChange={(e) => { this.setState({ role: e }); }}
                             />
                         </div>
                         <div className="fieldset">
@@ -247,7 +257,7 @@ function UserInfoModal(props) {
                         </div>
                         {/* <div className="fieldset">
                             <div>Role</div>
-                            <Editable value={this.state.role} formatValue={(v) => ((v === null || v === undefined || v.length === 0 )? "[empty]" : v)} 
+                            <Editable value={this.state.role} formatValue={(v) => ((v === null || v === undefined || v.length === 0 )? "[empty]" : v)}
                                             onValueChanged={(value) => this.setState((state)=>{
                                                 return {
                                                     role: value
@@ -273,8 +283,12 @@ function UserInfoModal(props) {
                     </div>
                 </div>
                 <div className="footer-dialog">
-                    <div className="btn-next" onClick={(e) => props.onOk(Object.assign({}, this.state))} style={{background: '#4B7DEF', color: '#fff'}}>Ok</div>
-                    <div className="btn-next" onClick={props.onCancel}>Close</div>
+                    <button className="btn-next" onClick={this.onOk}
+                        style={{ background: '#4B7DEF', color: '#fff', opacity: this.state.loading ? 0.5 : null }}
+                        disabled={this.state.loading}>
+                        {this.state.loading ? 'Creating...' : 'Ok'}
+                    </button>
+                    <button className="btn-next" onClick={props.onCancel} style={{ opacity: this.state.loading ? 0.5 : null }} disabled={this.state.loading}>Close</button>
                 </div>
 
             </Modal>
@@ -282,4 +296,4 @@ function UserInfoModal(props) {
     };
 }
 
-UserInfoModal.prototype = Object.create(React.Component.prototype);
+UserAddModal.prototype = Object.create(React.Component.prototype);

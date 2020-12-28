@@ -121,7 +121,7 @@ function PageUser(props) {
             toast.error("Username can be empty");
             return;
         }
-        api.newUser(user)
+        return api.newUser(user)
             .then((rs) => {
                 toast.success('Create user successfully');
                 this.initFromServer();
