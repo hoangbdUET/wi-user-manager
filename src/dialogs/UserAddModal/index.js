@@ -64,19 +64,19 @@ function UserAddModal(props) {
         },
         {
             value: 3,
-            display: "Company Storage (Full permission)"
+            display: "CODB Admin"
         },
         {
             value: 3.1,
-            display: "Company Storage (Upload only)"
+            display: "CODB Sub-Admin"
         },
         {
             value: 3.2,
-            display: "Company Storage (Organize only)"
+            display: "CODB User (Organize)"
         },
         {
             value: 3.3,
-            display: "Company Storage (View only)"
+            display: "CODB User (View and Download)"
         }
     ];
 
