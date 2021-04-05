@@ -21,7 +21,8 @@ function ListUser(props) {
             role: "Role",
             fullname: "FullName",
             company: "Company",
-            license_package: "License Package"
+            license_package: "License Package",
+            createdAt: "Date Created"
         };
 
         return (

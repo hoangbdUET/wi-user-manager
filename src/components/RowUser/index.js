@@ -45,7 +45,8 @@ function RowUser(props) {
                         </div>,
                         <div className="cell-ellipsis">
                             {props.isHeader ? props.item.license_package : props.item.license_package ? props.item.license_package.name : ""}
-                        </div>
+                        </div>,
+                        <div className="cell-ellipsis">{ props.item.createdAt }</div>
                    ]
                }
                colWidths={props.colWidths}
