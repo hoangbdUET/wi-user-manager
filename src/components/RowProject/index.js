@@ -30,6 +30,9 @@ function RowProject(props) {
                     </div>,
                     <div className="cell-ellipsis">
                         {props.item.shareKey}
+                    </div>,
+                    <div className="cell-ellipsis">
+                        {props.item.createdAt}
                     </div>
                ]}
                colWidths={props.colWidths}

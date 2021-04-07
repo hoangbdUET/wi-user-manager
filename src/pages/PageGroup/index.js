@@ -44,7 +44,8 @@ function PageGroup(props) {
         idGroup: group.idGroup,
         name: group.name,
         description: group.description,
-        company: (group.company || {}).name || ""
+        company: (group.company || {}).name || "",
+        createdAt: group.createdAt
     });
 
     this.listCompanies = listCompanies.bind(this);

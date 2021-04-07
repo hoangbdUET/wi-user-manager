@@ -20,7 +20,8 @@ function ListProject(props) {
             department: "Department",
             createdBy: "Created By",
             description: "Description",
-            shareKey: "Sharing Key"
+            shareKey: "Sharing Key",
+            createdAt: "Date created"
         };
         return (
             <div className={"MyList ListProject"}>
