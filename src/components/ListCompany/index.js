@@ -14,7 +14,7 @@ function ListCompany(props) {
     let supperRender = this.render;
     this.render = function () {
         let items = this.props.items;
-        let headerObj = {name: "Name", location: "Location", licenses: "Licenses", description: "Description"};
+        let headerObj = {name: "Name", location: "Location", licenses: "Licenses", description: "Description", createdAt: "Date Created"};
         let controlBar = supperRender.call(this);
         return (<div className={"MyList"}>
             {controlBar}

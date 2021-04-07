@@ -17,7 +17,10 @@ function RowCompany(props) {
                     </div>,
                     <div className="cell-ellipsis">
                         {props.item.description}
-                    </div>
+                    </div>,
+                    <div className="cell-ellipsis">
+                        {props.item.createdAt}
+                </div>
                ]}
                colWidths={props.colWidths}
                onColWidthChanged={props.onColWidthChanged}

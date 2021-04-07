@@ -16,7 +16,8 @@ function ListGroup(props) {
         let headerObj = {
             name: "Name",
             description: 'Description',
-            company: 'Company'
+            company: 'Company',
+            createdAt: "Date Created"
         };
         return (<div className="MyList ListGroup">
             {controlBar}

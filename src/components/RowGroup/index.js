@@ -17,7 +17,10 @@ function RowGroup(props) {
                     </div>,
                     <div className="cell-ellipsis">
                         {props.item.company}
-                    </div>
+                    </div>,
+                    <div className="cell-ellipsis">
+                        {props.item.createdAt}
+                </div>
                ]}
                colWidths={props.colWidths}
                onColWidthChanged={props.onColWidthChanged}
