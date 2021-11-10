@@ -8,7 +8,7 @@ function ListProject(props) {
     this.listName = "Project";
     this.state = Object.assign(this.state, {
         orderByText: "",
-        colWidths: [50, 200, 200, 150, 200, 100, 250, 0]
+        colWidths: [50, 200, 200, 150, 200, 100, 250, 100, 0]
     });
     let superRender = this.render;
     this.render = () => {

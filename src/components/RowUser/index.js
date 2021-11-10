@@ -46,7 +46,9 @@ function RowUser(props) {
                         <div className="cell-ellipsis">
                             {props.isHeader ? props.item.license_package : props.item.license_package ? props.item.license_package.name : ""}
                         </div>,
-                        <div className="cell-ellipsis">{ props.item.createdAt }</div>
+                        <div className="cell-ellipsis">{ props.item.createdAt }</div>,
+                        <div className="cell-ellipsis">{ props.isHeader ? props.item.last_logged_in : props.item.last_logged_in ? Math.ceil((new Date().getTime() -  new Date(props.item.last_logged_in).getTime()) / (1000*3600*24)) - 1 + "days" : "None"}</div>
+
                    ]
                }
                colWidths={props.colWidths}

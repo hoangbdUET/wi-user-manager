@@ -102,7 +102,7 @@ function MyList(props) {
 
     function filterAndSort(items) {
         let key = this.state.orderByText.toLowerCase();
-        //console.log('filter and sort:', items);
+        console.log('filter and sort:', items);
         let newItems = items.sort((a, b) => {
             let aKey = a[key];
             let bKey = b[key];
@@ -147,11 +147,15 @@ function MyList(props) {
 
     function onHeaderClicked(headerIdx, headerCellElem) {
         let headerText = _.get(headerCellElem, 'props.children');
+        if(headerText === "Date Created") headerText = "createdAt";
+        if(headerText === "Last Login") headerText = "last_logged_in";
         if (!headerText) return;
         if (!this.props.items || !this.props.items.length) return;
-        if (!this.props.items[0].hasOwnProperty(headerText.toLowerCase())) return;
+        if (!this.props.items[0].hasOwnProperty(headerText.toLowerCase() || headerText)) return;
+        console.log((headerCellElem.props || {children: "NULL"}).children)
         this.setState(state => ({
-            orderByText: (headerCellElem.props || {children: "NULL"}).children,
+            // orderByText: (headerCellElem.props || {children: "NULL"}).children,
+            orderByText: headerText,
             reverse: !state.reverse
         }));
     }

@@ -8,7 +8,7 @@ function ListGroup(props) {
     this.listName = "Group";
     this.state = Object.assign(this.state, {
         orderByText: "",
-        colWidths: [100, 200, 200, 200]
+        colWidths: [100, 200, 200, 200, 200]
     });
     let superRender = this.render;
     this.render = function () {

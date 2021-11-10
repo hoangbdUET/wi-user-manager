@@ -8,7 +8,7 @@ function ListUser(props) {
     this.listName = "User";
     this.state = Object.assign(this.state, {
         orderByText: "",
-        colWidths: [50, 100, 250, 150, 150, 250, 150]
+        colWidths: [50, 100, 150, 150, 150, 150, 100, 150, 150, 0]
     });
     let superRender = this.render;
     this.render = function () {
@@ -22,7 +22,8 @@ function ListUser(props) {
             fullname: "FullName",
             company: "Company",
             license_package: "License Package",
-            createdAt: "Date Created"
+            createdAt: "Date Created",
+            last_logged_in: "Last Login"
         };
 
         return (
