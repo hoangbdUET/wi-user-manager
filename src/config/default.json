@@ -1,14 +1,14 @@
 {
   "default": {
-    "wi_auth": "http://localhost:2999",
-    "wi_backend": "http://localhost:3000"
+    "wi_auth": "http://192.168.122.1:30000",
+    "wi_backend": "http://192.168.122.1:30001"
   },
   "dev": {
-    "wi_auth": "https://users.i2g.cloud",
-    "wi_backend": "https://api-1.i2g.cloud"
+    "wi_auth": "http://192.168.122.1:30000",
+    "wi_backend": "http://192.168.122.1:30001"
   },
   "production": {
-    "wi_auth": "https://users.i2g.cloud",
-    "wi_backend": "https://api-1.i2g.cloud"
+    "wi_auth": "http://192.168.122.1:30000",
+    "wi_backend": "http://192.168.122.1:30001"
   }
 }
